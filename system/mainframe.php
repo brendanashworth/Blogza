@@ -8,13 +8,33 @@
  * We hope you enjoy the software! - boboman13
  */
 
-function start() {
-	// Load all the .php structure files
-	require __DIR__.'/blog.php';
-	require __DIR__.'/routes.php';
-	require __DIR__.'/templates.php';
+class Blogza {
+
+	/**
+	* The name of the software.
+	* @access public
+	**/
+	public static $name = "Blogza";
+
+	/**
+	* Starts Blogza.
+	* @access public
+	**/
+	public function start() {
+		// Begin session
+		session_start();
+
+		// Load all the .php structure files
+		require 'blog.php';
+		require 'routes.php';
+		require 'templates.php';
+		require 'settings.php';
+
+		// Start templates
+		$templatemanager = new TemplateManager("default");
+	}
+
+
 
 
 }
-
-
