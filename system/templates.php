@@ -2,8 +2,6 @@
 
 class TemplateManager {
 
-	public $name;
-
 	public $page;
 
 	/**
@@ -12,10 +10,9 @@ class TemplateManager {
 	* @param template The name of the template file to use.
 	*
 	**/
-	public function __construct($template) {
-		$this->name = $template;
+	public function __construct($template = "default") {
 
-		$this->loadTemplate();
+		$this->loadTemplate($template);
 	}
 
 	/**
@@ -23,11 +20,14 @@ class TemplateManager {
 	*
 	* @access private
 	**/
-	private function loadTemplate() {
+	private function loadTemplate($template) {
+		$location = __DIR__.'/../templates/'.$template.'/';
+
 		// First the header
-		$this->page = file_get_contents(__DIR__.'/../templates/'.$this->name.'/header.html');
+		$this->page = $this->page . file_get_contents($location.'header.html');
 
 		// Then the sidebar
+		$this->page = $this->page . file_get_contents($location.'sidebar.html');
 
 		// Then the body
 
