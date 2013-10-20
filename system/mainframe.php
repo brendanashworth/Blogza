@@ -24,11 +24,17 @@ class Blogza {
 		// Begin session
 		session_start();
 
+		// Load the database and start load
+		require 'dbloader.php';
+
+		$databasemanager = new DatabaseManager();
+
 		// Load all the .php structure files
 		require 'blog.php';
 		require 'routes.php';
 		require 'templates.php';
 		require 'settings.php';
+		require 'caches.php';
 
 		// Start templates
 		$templatemanager = new TemplateManager("default");
