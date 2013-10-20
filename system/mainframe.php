@@ -41,10 +41,16 @@ class Blogza {
 		$this->databasemanager = new DatabaseManager();
 
 		// Load all the .php structure files
+		require 'router.php';
+
+		$router = new Router;
 		require 'routes.php';
+		
 		require 'templates.php';
 		require 'settings.php';
 		//require 'caches.php';
+
+		$router->go();
 
 		// Start templates
 		$this->templatemanager = new TemplateManager($this, "default");
