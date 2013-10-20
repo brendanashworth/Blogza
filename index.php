@@ -8,8 +8,6 @@
  * We hope you enjoy the software! - boboman13
  */
 
-error_reporting(E_ALL);
-
 /* Load 'mainframe.php'
  *
  * Includes basic mainframe code
@@ -28,4 +26,3 @@ $blogza = new Blogza();
  * No more functions are needed in this file.
  */
 $blogza->start();
-

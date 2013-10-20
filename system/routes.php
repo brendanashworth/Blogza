@@ -7,3 +7,16 @@
  *
  * We hope you enjoy the software! - boboman13
  */
+
+class Routes {
+
+	public $home = array(
+		"header.html",
+		"sidebar.html",
+		"body.html",
+		"footer.html",
+		);
+
+	
+
+}

@@ -13,7 +13,7 @@ class DatabaseManager {
 	/**
 	* Gets all the posts in array format.
 	*
-	* @access public
+	* @access	public
 	**/
 	public function getPosts() {
 		return array(
