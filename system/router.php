@@ -71,7 +71,7 @@ class Router {
 	 * given in the route. 
 	 *
 	 * @param 	array 		$paths
-	 * @return	callable
+	 * @return	callable|boolean
 	 */
 	private function pather($paths) {
 		$urlParts = explode('/', trim($this->path, '/'));
@@ -102,7 +102,7 @@ class Router {
 				}
 			}
 
-			return true;
+			return $function;
 		}
 
 		return false;
