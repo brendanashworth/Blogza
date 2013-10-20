@@ -17,30 +17,46 @@ class Blogza {
 	public static $name = "Blogza";
 
 	/**
+	* The DatabaseManager, used for referencing data from the database storage.
+	* @access private
+	**/
+	private $databasemanager;
+
+	/**
+	* The TemplateManager, used to create and manage templates.
+	* @access private
+	**/
+	private $templatemanager;
+
+	/**
 	* Starts Blogza.
 	* @access public
 	**/
 	public function start() {
-		// Begin session
 		session_start();
 
 		// Load the database and start load
 		require 'dbloader.php';
 
-		$databasemanager = new DatabaseManager();
+		$this->databasemanager = new DatabaseManager();
 
 		// Load all the .php structure files
-		require 'blog.php';
 		require 'routes.php';
 		require 'templates.php';
 		require 'settings.php';
-		require 'caches.php';
+		//require 'caches.php';
 
 		// Start templates
-		$templatemanager = new TemplateManager("default");
+		$this->templatemanager = new TemplateManager($this, "default");
 	}
 
-
+	/**
+	* Gets the DatabaseManager instance.
+	* @access public
+	**/
+	public function getDatabaseManager() {
+		return $this->databasemanager;
+	}
 
 
 }

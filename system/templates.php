@@ -3,6 +3,7 @@
 class TemplateManager {
 
 	public $page;
+	private $blogza;
 
 	/**
 	* Creates the TemplateManager instance.
@@ -10,7 +11,8 @@ class TemplateManager {
 	* @param template The name of the template file to use.
 	*
 	**/
-	public function __construct($template = "default") {
+	public function __construct($blogza, $template = "default") {
+		$this->blogza = $blogza;
 
 		$this->loadTemplate($template);
 	}
@@ -42,8 +44,35 @@ class TemplateManager {
 	* @access private
 	**/
 	private function processPage() {
-		$this->page = str_replace("{blog-name}", BLOG_NAME, $this->page);
 
+		/* An array of settings and values to change. */
+		$replaceables = array(
+			"{blog-name}" => BLOG_NAME,
+			"{blog-description}" => BLOG_DESC,
+			);
+
+		/* Now lets retrieve all the posts */
+		$posts = $this->blogza->getDatabaseManager()->getPosts(); // Gets all the posts.
+
+		foreach($posts as $post) {
+			// Now for each post.
+			$author = $post["author"];
+			$title = $post["title"];
+			$content = $post["content"];
+
+			$postID = $post["id"];
+
+			// Format these.
+			$replaceables["{post-".$postID."-author}"] = $author;
+			$replaceables["{post-".$postID."-title}"] = $title;
+			$replaceables["{post-".$postID."-content}"] = $content;
+		}
+
+		foreach($replaceables as $key => $value) {
+			$this->page = str_replace($key, $value, $this->page);
+		}
+
+		// Display the page.
 		$this->displayPage();
 	}
 
