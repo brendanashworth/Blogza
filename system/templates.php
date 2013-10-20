@@ -2,14 +2,14 @@
 
 class TemplateManager {
 
-	public $page;
+	private $page;
 	private $blogza;
 
 	/**
 	* Creates the TemplateManager instance.
 	*
 	* @param template The name of the template file to use.
-	*
+	* @access private
 	**/
 	public function __construct($blogza, $template = "default") {
 		$this->blogza = $blogza;
@@ -27,16 +27,11 @@ class TemplateManager {
 
 		// TODO: Make the routes system to allow for more pages.
 
-		// First the header
+		// Load all the necessary pages.
 		$this->page = $this->page . file_get_contents($location.'header.html');
-
-		// Then the sidebar
 		$this->page = $this->page . file_get_contents($location.'sidebar.html');
-
-		// Then the body
 		$this->page = $this->page . file_get_contents($location.'body.html');
-
-		// Lastly, the footer
+		$this->page = $this->page . file_get_contents($location.'footer.html');
 
 		$this->processPage();
 	}
@@ -52,6 +47,8 @@ class TemplateManager {
 		$replaceables = array(
 			"{blog-name}" => BLOG_NAME,
 			"{blog-description}" => BLOG_DESC,
+			"{date}" => date("M-D-Y"),
+			"{date-year}" => date("Y"),
 			);
 
 		/* Now lets retrieve all the posts */
@@ -65,7 +62,7 @@ class TemplateManager {
 
 			$postID = $post["id"];
 
-			// Format these.
+			// Format these. {post-ID-author}, {post-ID-title}, {post-ID-content}
 			$replaceables["{post-".$postID."-author}"] = $author;
 			$replaceables["{post-".$postID."-title}"] = $title;
 			$replaceables["{post-".$postID."-content}"] = $content;
