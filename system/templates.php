@@ -8,8 +8,8 @@ class TemplateManager {
 	/**
 	* Creates the TemplateManager instance.
 	*
-	* @param template The name of the template file to use.
-	* @access private
+	* @param	string	$template	The name of the template file to use.
+	* @return	void
 	**/
 	public function __construct($blogza, $template = "default") {
 		$this->blogza = $blogza;
@@ -20,18 +20,16 @@ class TemplateManager {
 	/**
 	* Loads the template from the files.
 	*
-	* @access private
+	* @access	private
+	* @return	void
 	**/
 	private function loadTemplate($template) {
 		$location = __DIR__.'/../templates/'.$template.'/';
 
-		// TODO: Make the routes system to allow for more pages.
-
-		// Load all the necessary pages.
-		$this->page = $this->page . file_get_contents($location.'header.html');
-		$this->page = $this->page . file_get_contents($location.'sidebar.html');
-		$this->page = $this->page . file_get_contents($location.'body.html');
-		$this->page = $this->page . file_get_contents($location.'footer.html');
+		// Go through the routes system to grab the necessary files.
+		foreach($this->blogza->getRoutes()->home as $page) {
+			$this->page = $this->page . file_get_contents($location.$page);
+		}
 
 		$this->processPage();
 	}
@@ -39,7 +37,7 @@ class TemplateManager {
 	/**
 	* Processes the page. This includes changing all variables to their specified values.
 	*
-	* @access private
+	* @return	void
 	**/
 	private function processPage() {
 
@@ -47,6 +45,7 @@ class TemplateManager {
 		$replaceables = array(
 			"{blog-name}" => BLOG_NAME,
 			"{blog-description}" => BLOG_DESC,
+			// Custom variables
 			"{date}" => date("M-D-Y"),
 			"{date-year}" => date("Y"),
 			);
@@ -71,17 +70,14 @@ class TemplateManager {
 		foreach($replaceables as $key => $value) {
 			$this->page = str_replace($key, $value, $this->page);
 		}
-
-		// Display the page.
-		$this->displayPage();
 	}
 
 	/**
 	* Displays the page.
 	*
-	* @access private
+	* @return	void
 	**/
-	private function displayPage() {
+	public function displayPage() {
 		echo $this->page;
 	}
 	
