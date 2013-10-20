@@ -25,6 +25,8 @@ class TemplateManager {
 	private function loadTemplate($template) {
 		$location = __DIR__.'/../templates/'.$template.'/';
 
+		// TODO: Make the routes system to allow for more pages.
+
 		// First the header
 		$this->page = $this->page . file_get_contents($location.'header.html');
 
@@ -32,6 +34,7 @@ class TemplateManager {
 		$this->page = $this->page . file_get_contents($location.'sidebar.html');
 
 		// Then the body
+		$this->page = $this->page . file_get_contents($location.'body.html');
 
 		// Lastly, the footer
 
