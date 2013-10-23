@@ -18,19 +18,18 @@ class Router {
 	}
 
 	/**
-	 * Handles route creation. Call it like $route->method($path, $function).
-	 * For example, $route->get('/home', function(){ echo "Hello World!"; });
+	 * Handles route creation. Call it like Router::method($path, $function).
+	 * For example, Router::get('/home', function(){ echo "Hello World!"; });
 	 *
 	 * @param 	string	$method 	HTTP method
 	 * @param 	array 	$arguments 	Should be exactly two arguments. First the
 	 * 								path, second a callable.
 	 * @return	void
 	 */
-	public function __call($method, $arguments) {
+	public static function __callStatic($method, $arguments) {
 		if (count($arguments) !== 2) {
 			throw new Exception('Undefined Router method ' . $method);
 		}
-
 		list($path, $function) = $arguments;
 
 		$this->methods[strtolower($method)][$path] = $function;
