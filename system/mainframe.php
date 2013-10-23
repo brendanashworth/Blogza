@@ -14,39 +14,41 @@ class Blogza {
 
 	private $databasemanager;
 	private $templatemanager;
+	private $router;
 	private $routes;
 
 	/**
 	* Starts Blogza.
 	* @access	public
+	* @return	void
 	**/
 	public function start() {
 		session_start();
-		ini_set('error_reporting', E_ALL);
 
 		/* Load all the .php files that are critical to the existance of the software:
 		* - DatabaseManager, loads and manages the database for us
 		* - Router, creates, manages, and handles all URL routes used
+		* - Routes, which holds and stores all the pages necessary to build the template files per URL
 		* - TemplateManager, manages and loads all the necessary template files and processes them
 		* - settings.php, very generic configuration file, but necessary for all
 		*/
 
 		require 'settings.php';
-
 		require 'dbloader.php';
+		require 'router.php';
+		require 'routes.php';
+		require 'templates.php';
+
 		$this->databasemanager = new DatabaseManager();
 
-		require 'router.php';
-		$router = new Router();
+		$this->router = new Router("/home");
+		$this->routes = new Routes($this);
 
-		require 'routes.php';
-		$this->routes = new Routes(); // This holds all the pages!
+		$this->templatemanager = new TemplateManager($this);
 
-		require 'templates.php';
-		$this->templatemanager = new TemplateManager($this, "default");
-
-		$router->get('/home', $this->templatemanager->displayPage());
-
+		$this->routes->prepareRouter();
+		
+		/* Display the generated info. */
 		$router->go();
 	}
 
@@ -56,6 +58,22 @@ class Blogza {
 	**/
 	public function getDatabaseManager() {
 		return $this->databasemanager;
+	}
+
+	/**
+	* Gets the Router instance.
+	* @access	public
+	**/
+	public function getRouter() {
+		return $this->router;
+	}
+
+	/**
+	* Gets the TemplateManager instance.
+	* @access	public
+	**/
+	public function getTemplateManager() {
+		return $this->templatemanager;
 	}
 
 	/**

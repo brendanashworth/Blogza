@@ -11,23 +11,23 @@ class TemplateManager {
 	* @param	string	$template	The name of the template file to use.
 	* @return	void
 	**/
-	public function __construct($blogza, $template = "default") {
+	public function __construct($blogza) {
 		$this->blogza = $blogza;
 
-		$this->loadTemplate($template);
+		//$this->loadTemplate($template);
 	}
 
 	/**
 	* Loads the template from the files.
 	*
-	* @access	private
+	* @access	public
 	* @return	void
 	**/
-	private function loadTemplate($template) {
+	public function loadTemplate($pages, $template = "default") {
 		$location = __DIR__.'/../templates/'.$template.'/';
 
 		// Go through the routes system to grab the necessary files.
-		foreach($this->blogza->getRoutes()->home as $page) {
+		foreach($pages as $page) {
 			$this->page = $this->page . file_get_contents($location.$page);
 		}
 
@@ -58,18 +58,21 @@ class TemplateManager {
 			$author = $post["author"];
 			$title = $post["title"];
 			$content = $post["content"];
-
+			$link = $post["link"];
 			$postID = $post["id"];
 
-			// Format these. {post-ID-author}, {post-ID-title}, {post-ID-content}
+			// Format these. {post-ID-author}, {post-ID-title}, {post-ID-content}, {post-ID-link}
 			$replaceables["{post-".$postID."-author}"] = $author;
 			$replaceables["{post-".$postID."-title}"] = $title;
 			$replaceables["{post-".$postID."-content}"] = $content;
+			$replaceables["{post-".$postID."-link}"] = $link;
 		}
 
 		foreach($replaceables as $key => $value) {
 			$this->page = str_replace($key, $value, $this->page);
 		}
+
+		$this->displayPage();
 	}
 
 	/**

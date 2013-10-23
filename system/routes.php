@@ -10,13 +10,43 @@
 
 class Routes {
 
-	public $home = array(
-		"header.html",
-		"sidebar.html",
-		"body.html",
-		"footer.html",
+	private $blogza;
+
+	/**
+	* Creates the Routes instance.
+	*
+	* @param	blogza	$blogza The Blogza instance for the blog
+	* @return	void
+	* @access	public
+	**/
+	public function __construct($blogza) {
+		$this->blogza = $blogza;
+	}
+
+	public $routes = array(
+		"/home" => array(
+			"header.html",
+			"sidebar.html",
+			"homebody.html",
+			"footer.html",
+			),
+		"/post/{?id}" => array(
+			"header.html",
+			"body.html",
+			"footer.html",
+			),
 		);
 
-	
+	public function prepareRouter() {
+		foreach($this->routes as $route => $value) {
+			
+			$this->blogza->getTemplateManager()->loadTemplate($value);
+
+			Router::post($route, function() use ($value) {
+				echo "called.";
+				$this->blogza->getTemplateManager()->loadTemplate($value);
+			} );
+		}
+	}
 
 }
