@@ -50,18 +50,6 @@ class DatabaseManager {
 	}
 
 	/**
-	* Sees whether a username is valid or not.
-	*
-	* @access	public
-	* @return	boolean
-	**/
-	public function isValidUser($username) {
-		$username = mysqli_real_escape_string($this->mysqli, $username);
-		$query = "SELECT * FROM `users` WHERE ";
-
-	}
-
-	/**
 	* Querys the database.
 	*
 	* @access	private
