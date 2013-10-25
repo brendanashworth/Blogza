@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/boboman13/Blogza.png?label=ready)](https://waffle.io/boboman13/Blogza)  
 Blogza
 ======
 
