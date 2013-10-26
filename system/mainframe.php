@@ -1,13 +1,11 @@
 <?php
 
-/* Welcome to Blogza! Blogza is an open source blogging software, designed to
- *  1) Allow customization down to the hard HTML
- *  2) Keep blogging simple and easy
- *  3) Keep setup fast and simple
- *
- * We hope you enjoy the software! - boboman13
- */
-
+/**
+* Blogza, the open source, simple to use blogging software.
+*
+* @author	boboman13 <me@boboman13.net>
+* @version	1.0
+**/
 class Blogza {
 
 	public static $name = "Blogza";
@@ -16,6 +14,17 @@ class Blogza {
 	private $templatemanager;
 	private $router;
 	private $routes;
+
+	/**
+	* Creates the Blogza instance.
+	*
+	* @access 	public
+	* @return 	Blogza 	The Blogza instance.
+	**/
+	public function __construct() {
+		// Creates the Blogza instance. This requires all the .class.php files!
+		//require __DIR__.'/includes/user.class.php';
+	}
 
 	/**
 	* Starts Blogza.
@@ -47,9 +56,10 @@ class Blogza {
 		$this->templatemanager = new TemplateManager($this);
 
 		$this->routes->prepareRouter();
-		
+
 		/* Display the generated info. */
 		$router->go();
+
 	}
 
 	/**
