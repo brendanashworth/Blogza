@@ -11,11 +11,25 @@
 class Routes {
 
 	private $blogza;
+	
+	public $routes = array(
+	"/" => array(
+		"header.html",
+		"sidebar.html",
+		"homebody.html",
+		"footer.html",
+		),
+	"/post/:number" => array(
+		"header.html",
+		"body.html",
+		"footer.html",
+		),
+	);
 
 	/**
 	* Creates the Routes instance.
 	*
-	* @param	blogza	$blogza The Blogza instance for the blog
+	* @param	blogza	$blogza 	The Blogza instance for the blog
 	* @return	void
 	* @access	public
 	**/
@@ -23,30 +37,13 @@ class Routes {
 		$this->blogza = $blogza;
 	}
 
-	public $routes = array(
-		"/home" => array(
-			"header.html",
-			"sidebar.html",
-			"homebody.html",
-			"footer.html",
-			),
-		"/post/{?id}" => array(
-			"header.html",
-			"body.html",
-			"footer.html",
-			),
-		);
-
 	public function prepareRouter() {
+		$array = array();
 		foreach($this->routes as $route => $value) {
-			
-			$this->blogza->getTemplateManager()->loadTemplate($value);
-
-			Router::post($route, function() use ($value) {
-				echo "called.";
-				$this->blogza->getTemplateManager()->loadTemplate($value);
-			} );
+			$array[$route] = "TemplateManager";
 		}
+
+		Toro::serve($array);
 	}
 
 }

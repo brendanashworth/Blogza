@@ -4,11 +4,13 @@ class TemplateManager {
 
 	private $page;
 	private $blogza;
+	private $template;
 
 	/**
 	* Creates the TemplateManager instance.
 	*
-	* @param	string	$template	The name of the template file to use.
+	* @access 	public
+	* @param	Blogza 	$blogza 	The Blogza instance to use.
 	* @return	void
 	**/
 	public function __construct($blogza) {
@@ -23,7 +25,9 @@ class TemplateManager {
 	* @access	public
 	* @return	void
 	**/
-	public function loadTemplate($pages, $template = "default") {
+	public static function loadTemplate($pages, $template = "default") {
+		$this->template = $template;
+
 		$location = __DIR__.'/../templates/'.$template.'/';
 
 		// Go through the routes system to grab the necessary files.
@@ -37,6 +41,7 @@ class TemplateManager {
 	/**
 	* Processes the page. This includes changing all variables to their specified values.
 	*
+	* @access 	private
 	* @return	void
 	**/
 	private function processPage() {
@@ -45,6 +50,7 @@ class TemplateManager {
 		$replaceables = array(
 			"{blog-name}" => BLOG_NAME,
 			"{blog-description}" => BLOG_DESC,
+			"{template-name}" => $this->template,
 			// Custom variables
 			"{date}" => date("M-D-Y"),
 			"{date-year}" => date("Y"),
@@ -74,15 +80,16 @@ class TemplateManager {
 			$this->page = str_replace($key, $value, $this->page);
 		}
 
-		$this->displayPage();
+		//$this->displayPage();
 	}
 
 	/**
 	* Displays the page.
 	*
+	* @access 	public
 	* @return	void
 	**/
-	public function displayPage() {
+	public function get() {
 		echo $this->page;
 	}
 	

@@ -3,14 +3,19 @@
 <head>
 	<title>{blog-name}</title>
 
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/2.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="templates/{template-name}/css/bootstrap.min.css">
 	<meta name="description" content="{blog-description}" />
+	<meta name="author" content="boboman13" />
 
 	<style>
 	body {
 		margin-top: 40px;
 	}
 	</style>
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="templates/{template-name}/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -21,6 +26,22 @@
 				<ul class="nav">
 					<li><a href="#">Blog</a></li>
 				</ul>
+
+				<!-- Floated right section of the nav bar -->
+				<ul class="nav pull-right">
+					<li class="dropdown">
+						<a data-toggle="dropdown" href="#">
+							Account
+							<b class="caret"></b>
+						</a>
+
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+							<li><a href="register/">Register</a></li>
+							<li><a href="login/">Login</a></li>
+						</ul>
+					</li>
+				</ul>
+
 			</div>
 		</div>
 	</div>
