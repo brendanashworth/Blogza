@@ -49,16 +49,10 @@ class Blogza {
 		require 'templates.php';
 
 		$this->databasemanager = new DatabaseManager();
-
-		$this->router = new Router("/home");
-		$this->routes = new Routes($this);
-
 		$this->templatemanager = new TemplateManager($this);
 
+		$this->routes = new Routes($this);
 		$this->routes->prepareRouter();
-
-		/* Display the generated info. */
-		$router->go();
 
 	}
 
