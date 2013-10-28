@@ -31,8 +31,7 @@ class TemplateManager {
 	* @param 	string 	$template 	The name of the template to be used, defaults to "default".
 	* @return	void
 	**/
-	public static function loadTemplate($pages, $template = "default") {
-		echo "loading.";
+	public function loadTemplate($pages, $template = "default") {
 		$this->template = $template;
 
 		$location = __DIR__.'/../templates/'.$template.'/';
