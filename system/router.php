@@ -1,6 +1,67 @@
 <?php
 
 /**
+* Blogza, the open source, simple to use blogging software.
+*
+* @author	boboman13 <me@boboman13.net>
+* @version	1.0
+**/
+class Router {
+	private $routes = array();
+
+	/**
+	* Adds a route to the Router.
+	*
+	* @access 	public
+	* @param 	string 	$route 	The route to be added.
+	* @param 	array 	$pages 	Pages to be shown upon route usage.
+	* @return 	bool 	Whether or not the add succeeded.
+	**/
+	public static function addRoute($route = null, $pages = null){
+		if($route == null || $pages == null) {
+			throw new Exception("The Route or Pages cannot be null!");
+		}
+
+		echo $route."<br />";
+		$this->routes[$route] = $pages;
+		echo "worked";
+	}
+
+	/**
+	* Tells the Router to go.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public static function go() {
+		// Checks to find which route is which.
+		foreach($this->routes as $route => $pages) {
+
+			// Method stolen from Toro, @author anandkunal
+	        $path = '/';
+	        if (!empty($_SERVER['PATH_INFO'])) {
+	            $path = $_SERVER['PATH_INFO'];
+	        } else if (!empty($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO'] !== '/index.php') {
+	            $path = $_SERVER['ORIG_PATH_INFO'];
+	        } else {
+	            if (!empty($_SERVER['REQUEST_URI'])) {
+	                $path = (strpos($_SERVER['REQUEST_URI'], '?') > 0) ? strstr($_SERVER['REQUEST_URI'], '?', true) : $_SERVER['REQUEST_URI'];
+	            }
+	        }
+	        echo $path;
+
+			if($path == $route) {
+				echo "Found.";
+			}
+		}
+		echo "did we get a 404";
+	}
+}
+
+
+
+
+/**
 * Toro, a PHP router. Thanks for the source.
 *
 * @author 	anandkunal
@@ -28,6 +89,7 @@ class Toro
         $discovered_handler = null;
         $regex_matches = array();
 
+        // Did we discover the route?
         if (isset($routes[$path_info])) {
             $discovered_handler = $routes[$path_info];
         }
@@ -39,6 +101,7 @@ class Toro
             );
             foreach ($routes as $pattern => $handler_name) {
                 $pattern = strtr($pattern, $tokens);
+                // How about now, did we get it?
                 if (preg_match('#^/?' . $pattern . '/?$#', $path_info, $matches)) {
                     $discovered_handler = $handler_name;
                     $regex_matches = $matches;
@@ -51,11 +114,13 @@ class Toro
 
         $handler_instance = null;
         if ($discovered_handler) {
+        	// Is this a string?
             if (is_string($discovered_handler)) {
                 $handler_instance = new $discovered_handler();
             }
-            elseif (is_callable($discovered_handler)) {
-                $handler_instance = $discovered_handler();
+            // Is this discovered handler callable?
+            else if (is_callable($discovered_handler)) {
+                $handler_instance = $discovered_handler(); // EDIT: remove ()
             }
         }
 
@@ -64,6 +129,7 @@ class Toro
 
             // Is this a xhr_request ?
             if (self::is_xhr_request() && method_exists($handler_instance, $request_method . '_xhr')) {
+
                 header('Content-type: application/json');
                 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
                 header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
@@ -79,6 +145,7 @@ class Toro
                 ToroHook::fire('after_handler', compact('routes', 'discovered_handler', 'request_method', 'regex_matches', 'result'));
             }
             else {
+            	echo "404:1";
                 ToroHook::fire('404', compact('routes', 'discovered_handler', 'request_method', 'regex_matches'));
             }
         }

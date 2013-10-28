@@ -1,5 +1,11 @@
 <?php
 
+/**
+* Blogza, the open source, simple to use blogging software.
+*
+* @author	boboman13 <me@boboman13.net>
+* @version	1.0
+**/
 class TemplateManager {
 
 	private $page;
@@ -15,17 +21,18 @@ class TemplateManager {
 	**/
 	public function __construct($blogza) {
 		$this->blogza = $blogza;
-
-		//$this->loadTemplate($template);
 	}
 
 	/**
 	* Loads the template from the files.
 	*
 	* @access	public
+	* @param 	array 	$pages 		The array of pages that are used to load the page needed.
+	* @param 	string 	$template 	The name of the template to be used, defaults to "default".
 	* @return	void
 	**/
 	public static function loadTemplate($pages, $template = "default") {
+		echo "loading.";
 		$this->template = $template;
 
 		$location = __DIR__.'/../templates/'.$template.'/';
@@ -80,7 +87,7 @@ class TemplateManager {
 			$this->page = str_replace($key, $value, $this->page);
 		}
 
-		//$this->displayPage();
+		$this->displayPage();
 	}
 
 	/**

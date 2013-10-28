@@ -6,14 +6,26 @@
 * @author	boboman13 <me@boboman13.net>
 * @version	1.0
 **/
-class User {
+class User extends BlogzaUser {
+
+	// You can use the User class as your own functions.
+
+}
+
+/**
+* Blogza, the open source, simple to use blogging software.
+*
+* @author	boboman13 <me@boboman13.net>
+* @version	1.0
+**/
+class BlogzaUser {
 
 	private $username;
 	private $password;
 	private $posts;
 
 	/**
-	* Creates the User instance.
+	* Creates the BlogzaUser instance.
 	*
 	* @access	public
 	* @param 	$username 	The user's display name.
@@ -60,5 +72,4 @@ class User {
 	public function getPosts() {
 		return $this->posts;
 	}
-
 }
