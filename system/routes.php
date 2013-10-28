@@ -1,18 +1,16 @@
 <?php
 
-/* Welcome to Blogza! Blogza is an open source blogging software, designed to
- *  1) Allow customization down to the hard HTML
- *  2) Keep blogging simple and easy
- *  3) Keep setup fast and simple
- *
- * We hope you enjoy the software! - boboman13
- */
-
+/**
+* Blogza, the open source, simple to use blogging software.
+*
+* @author	boboman13 <me@boboman13.net>
+* @version	1.0
+**/
 class Routes {
 
 	private $blogza;
-	
-	public $routes = array(
+
+	private $routes = array(
 	"/" => array(
 		"header.html",
 		"sidebar.html",
@@ -29,21 +27,33 @@ class Routes {
 	/**
 	* Creates the Routes instance.
 	*
+	* @access	public
 	* @param	blogza	$blogza 	The Blogza instance for the blog
 	* @return	void
-	* @access	public
 	**/
 	public function __construct($blogza) {
 		$this->blogza = $blogza;
 	}
 
+	/**
+	* Prepares the Router.
+	*
+	* @access 	public
+	* @return 	void
+	**/
 	public function prepareRouter() {
-		$array = array();
-		foreach($this->routes as $route => $value) {
-			$array[$route] = "TemplateManager";
-		}
+		//ToroHook::add('404', function() { echo "404 error."; } );
 
-		Toro::serve($array);
+		echo "1";
+		foreach($this->routes as $route => $pages) {
+			echo $route."<br />";
+			Router::addRoute($route, $pages);
+			echo "passed";
+		}
+		echo "2";
+
+		Router::go();
+		//Toro::serve($array);
 	}
 
 }
