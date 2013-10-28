@@ -8,7 +8,7 @@
 **/
 class Routes {
 
-	private $blogza;
+	private $router;
 
 	private $routes = array(
 	"/" => array(
@@ -28,32 +28,27 @@ class Routes {
 	* Creates the Routes instance.
 	*
 	* @access	public
-	* @param	blogza	$blogza 	The Blogza instance for the blog
+	* @param	blogza	$router 	The Router instance.
 	* @return	void
 	**/
-	public function __construct($blogza) {
-		$this->blogza = $blogza;
+	public function __construct($router) {
+		$this->router = $router;;
 	}
 
 	/**
 	* Prepares the Router.
 	*
 	* @access 	public
+	* @param 	TemplateManager 	$templatemanager 	The TemplateManager class to pass to the Router.
 	* @return 	void
 	**/
-	public function prepareRouter() {
-		//ToroHook::add('404', function() { echo "404 error."; } );
+	public function prepareRouter($templatemanager) {
 
-		echo "1";
 		foreach($this->routes as $route => $pages) {
-			echo $route."<br />";
-			Router::addRoute($route, $pages);
-			echo "passed";
+			$this->router->addRoute($route, $pages);
 		}
-		echo "2";
 
-		Router::go();
-		//Toro::serve($array);
+		$this->router->go($templatemanager);
 	}
 
 }

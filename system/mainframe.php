@@ -23,7 +23,9 @@ class Blogza {
 	**/
 	public function __construct() {
 		// Creates the Blogza instance. This requires all the .class.php files!
-		//require __DIR__.'/includes/user.class.php';
+		session_start();
+
+		require __DIR__.'/includes/user.class.php';
 	}
 
 	/**
@@ -32,16 +34,6 @@ class Blogza {
 	* @return	void
 	**/
 	public function start() {
-		session_start();
-
-		/* Load all the .php files that are critical to the existance of the software:
-		* - DatabaseManager, loads and manages the database for us
-		* - Router, creates, manages, and handles all URL routes used
-		* - Routes, which holds and stores all the pages necessary to build the template files per URL
-		* - TemplateManager, manages and loads all the necessary template files and processes them
-		* - settings.php, very generic configuration file, but necessary for all
-		*/
-
 		require 'settings.php';
 		require 'dbloader.php';
 		require 'router.php';
@@ -51,8 +43,10 @@ class Blogza {
 		$this->databasemanager = new DatabaseManager();
 		$this->templatemanager = new TemplateManager($this);
 
-		$this->routes = new Routes($this);
-		$this->routes->prepareRouter();
+		$router = new Router();
+
+		$this->routes = new Routes($router);
+		$this->routes->prepareRouter($this->templatemanager);
 
 	}
 

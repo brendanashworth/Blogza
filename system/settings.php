@@ -5,6 +5,7 @@
  */
 define("BLOG_NAME", "My Blog");
 define("BLOG_DESC", "This is a blog powered by the Blogza blog framework.");
+define("BLOG_TEMPLATE", "default");
 
 define("MYSQL_HOST", "localhost");
 define("MYSQL_USER", "dbuser");
