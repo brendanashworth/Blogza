@@ -10,6 +10,9 @@ class DatabaseManager {
 
 	private $mysqli;
 
+	/* These are the cached query results. */
+	private $posts = null;
+
 	/**
 	* Creates the DatabaseManager instance.
 	*
@@ -68,6 +71,11 @@ class DatabaseManager {
 	* @return	mixed
 	**/
 	public function getPosts() {
+		if($this->posts !== null) {
+			// The program has already sent this query and we can return the cached result.
+			return $this->posts;
+		}
+
 		$query = "SELECT * FROM `posts`"; // Direct query into DB, no variables.
 
 		$result = $this->queryDB($query);
@@ -83,10 +91,11 @@ class DatabaseManager {
 				"title" => $row['title'],
 				"content" => $row['content'],
 				"date" => $row['date'],
-				"link" => "",
+				"link" => "/post/".$id,
 				);
 		}
 
+		$this->posts = $posts; // Assign cached variable.
 		return $posts;
 	}
 

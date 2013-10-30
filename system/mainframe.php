@@ -34,6 +34,8 @@ class Blogza {
 	* @return	void
 	**/
 	public function start() {
+		$this->preStart();
+
 		require 'settings.php';
 		require 'dbloader.php';
 		require 'router.php';
@@ -45,14 +47,25 @@ class Blogza {
 
 		$router = new Router();
 
-		$this->routes = new Routes($router);
+		$this->routes = new Routes($router, $this);
 		$this->routes->prepareRouter($this->templatemanager);
 
 	}
 
 	/**
+	* Handles the general pre-start functions of Blogza. This usually includes direct system work.
+	*
+	* @access 	private
+	* @return 	void
+	**/
+	private function preStart() {
+		require 'prestart.php';
+	}
+
+	/**
 	* Gets the DatabaseManager instance.
 	* @access	public
+	* @return 	void
 	**/
 	public function getDatabaseManager() {
 		return $this->databasemanager;
@@ -61,6 +74,7 @@ class Blogza {
 	/**
 	* Gets the Router instance.
 	* @access	public
+	* @return 	void
 	**/
 	public function getRouter() {
 		return $this->router;
@@ -69,6 +83,7 @@ class Blogza {
 	/**
 	* Gets the TemplateManager instance.
 	* @access	public
+	* @return 	void
 	**/
 	public function getTemplateManager() {
 		return $this->templatemanager;

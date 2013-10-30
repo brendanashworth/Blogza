@@ -38,7 +38,19 @@ class TemplateManager {
 
 		// Go through the routes system to grab the necessary files.
 		foreach($pages as $page) {
-			$this->page .= file_get_contents($location.$page);
+			$fileinfo = pathinfo($location.$page);
+
+			if($fileinfo['extension'] == "php") {
+				// Ends in .php, have to load it as a .php file.
+				ob_start();
+				require($location.$page);
+				$this->page .= ob_get_clean();
+				ob_end_clean();
+			} else {
+				// Ends in something else, we can't filter it.
+				$this->page .= file_get_contents($location.$page);
+			}
+			
 		}
 
 		$this->processPage();
@@ -56,6 +68,7 @@ class TemplateManager {
 		$replaceables = array(
 			"{blog-name}" => BLOG_NAME,
 			"{blog-description}" => BLOG_DESC,
+			"{blog-url}" => BLOG_URL,
 			"{template-name}" => $this->template,
 			// Custom variables
 			"{date}" => date("M-D-Y"),
@@ -95,7 +108,7 @@ class TemplateManager {
 	* @access 	public
 	* @return	void
 	**/
-	public function get() {
+	public function displayPage() {
 		echo $this->page;
 	}
 	
