@@ -27,7 +27,7 @@ class Routes {
 	"/register/" => array(
 		"header.html",
 		"sidebar.html",
-		"register.html",
+		"register.php",
 		"footer.html",
 		),
 	"404" => array(
