@@ -1,6 +1,6 @@
 <?php
 
-namespace Models\Router;
+//namespace Models\Router;
 
 /**
 * Blogza, the open source, simple to use blogging software.
@@ -67,7 +67,7 @@ class Router {
 	* @return 	model 	The model used to control the page.
 	**/
 	public function go() {
-        $path = self::getPath();
+        $path = Router::getPath();
 
 		// Checks to find which route is which.
 		foreach($this->routes as $route => $model) {
