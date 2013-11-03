@@ -1,9 +1,5 @@
 <?php
 
-/*namespace Blogza;
-
-use Models\ModelManager;*/
-
 /**
 * Blogza, the open source, simple to use blogging software.
 *
@@ -14,6 +10,7 @@ use Models\ModelManager;*/
 class Blogza {
 
 	protected $modelmanager;
+	protected $errorhandler;
 
 	/**
 	* Creates the Blogza instance. This class is the Controller class for the entire blog.
@@ -22,6 +19,7 @@ class Blogza {
 	**/
 	public function __construct() {
 		require __DIR__ . "/../models/ModelManager.class.php";
+		require __DIR__ . "/ErrorHandler.php";
 	}
 
 	/**
@@ -31,11 +29,15 @@ class Blogza {
 	* @return 	void
 	**/
 	public function start() {
-		echo "a";
-		$this->modelmanager = new ModelManager(); echo "b";
-		// Prepare, then launch the ModelManager.
-		$this->modelmanager->prepare(); echo "c";
-		$this->modelmanager->go(); echo "d";
+		// ErrorHandler
+		$this->errorhandler = new ErrorHandler();
+
+		// ModelManager
+		$this->modelmanager = new ModelManager();
+		$this->modelmanager->prepare();
+		$this->modelmanager->go();
+
+		trigger_error("Error triggered.");
 	}
 
 

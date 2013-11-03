@@ -1,7 +1,5 @@
 <?php
 
-namespace Models\ModelManager;
-
 /**
 * The ModelManager class, which appropriates the Routing and then the Models.
 *
@@ -64,9 +62,11 @@ class ModelManager {
 			"Model.interface.php",
 			);
 
+
+
 		// Iterate over all the files in this directory that end in .php
-		$files = glob(__DIR__ . '*.php', GLOB_BRACE);
-		foreach($files as $file) {
+		//$files = glob(__DIR__ . '*.php', GLOB_BRACE);
+		/*foreach($files as $file) {
 			// Is the file exempt?
 			if(!in_array($file, $exempt)) {
 				// It isn't, lets load it.
@@ -77,7 +77,7 @@ class ModelManager {
 				
 				$this->router->addRoute($route, $file);
 			}
-		}
+		}*/
 	}
 
 }
