@@ -8,9 +8,9 @@ CREATE TABLE `posts` {
 }
 
 CREATE TABLE `users` {
-	`id` int(10) AUTO_INCREMENT NOT NULL,
+	`id` int AUTO_INCREMENT NOT NULL,
 	`user_name` varchar(16) NOT NULL,
 	`user_password` varchar(256) NOT NULL,
-	`user_posts` int(10) NOT NULL,
+	`user_posts` int NOT NULL,
 	PRIMARY KEY (id)
 }

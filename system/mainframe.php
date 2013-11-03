@@ -8,7 +8,7 @@
 **/
 class Blogza {
 
-	public static $name = "Blogza";
+	public static $name = 'Blogza';
 
 	private $databasemanager;
 	private $templatemanager;
@@ -25,7 +25,10 @@ class Blogza {
 		// Creates the Blogza instance. This requires all the .class.php files!
 		session_start();
 
-		require __DIR__.'/includes/user.class.php';
+		// We need all the settings before we can do anything.
+		require 'settings.php';
+
+		require __DIR__ . '/includes/user.class.php';
 	}
 
 	/**
@@ -34,9 +37,6 @@ class Blogza {
 	* @return	void
 	**/
 	public function start() {
-		$this->preStart();
-
-		require 'settings.php';
 		require 'dbloader.php';
 		require 'router.php';
 		require 'routes.php';
@@ -48,18 +48,23 @@ class Blogza {
 		$router = new Router();
 
 		$this->routes = new Routes($router, $this);
+
+		// Do preStart, because even though we've already started the program, we haven't initiated any pathing and page display.
+		$this->preStart();
+
 		$this->routes->prepareRouter($this->templatemanager);
 
 	}
 
 	/**
-	* Handles the general pre-start functions of Blogza. This usually includes direct system work.
+	* Redirect the visitor to a different page.
 	*
-	* @access 	private
-	* @return 	void
+	* @access 	public
+	* @param 	string 	$url 	The URL of the new page.
+	* @return 	mixed
 	**/
-	private function preStart() {
-		require 'prestart.php';
+	public static function redirect($url = BLOG_URL) {
+		header("location:".$url);
 	}
 
 	/**
@@ -96,6 +101,24 @@ class Blogza {
 	**/
 	public function getRoutes() {
 		return $this->routes;
+	}
+
+	/*
+	*  OOO   OOO   OOO  O   O    O    OOO  OOO
+	*  O  O  O  O   O   O   O   O O    O   O
+	*  OOO   OOO    O    O O    OOO    O   OOO
+	*  O     O  O   O    O O   O   O   O   O
+	*  O     O  O  OOO    O    O   O   O   OOO
+	**/
+
+	/**
+	* Handles the general pre-start functions of Blogza. This usually includes direct system work.
+	*
+	* @access 	private
+	* @return 	void
+	**/
+	private function preStart() {
+		require 'prestart.php';
 	}
 
 }
