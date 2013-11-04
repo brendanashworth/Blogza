@@ -19,13 +19,13 @@ class Blogza {
 	* @access 	public
 	**/
 	public function __construct() {
-		require __DIR__ . "/../settings.php";
+		require __DIR__ . "/settings.php";
 
-		require __DIR__ . "/ErrorHandler.php";
-		require __DIR__ . "/Util.class.php";
+		require __DIR__ . "/controllers/ErrorHandler.php";
+		require __DIR__ . "/controllers/Util.class.php";
 
-		require __DIR__ . "/../models/ModelManager.class.php";
-		require __DIR__ . "/../packages/Database.class.php";
+		require __DIR__ . "/models/ModelManager.class.php";
+		require __DIR__ . "/packages/Database.class.php";
 	}
 
 	/**

@@ -13,7 +13,7 @@
  * Includes basic mainframe code
  */
 
-require('system/mainframe.php');
+require('system/Blogza.php');
 
 /* Creates Blogza object.
  *
