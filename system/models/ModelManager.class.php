@@ -49,11 +49,13 @@ class ModelManager {
 		// Gets the Router's correct controller
 		$res = $this->router->go();
 
+		if($res == null) $res = "404.controller.php@404";
+
 		// Split it by '@', which gives us the file and the class name.
-		list($file, $class) = explode($res, "@");
+		list($file, $class) = explode("@", $res);
 
 		// Require the $file for the controller and create the $class.
-		require $file;
+		require __DIR__ . "/../controllers/" . $file;
 		$controller = new $class();
 
 		// Start the controller.
@@ -67,11 +69,7 @@ class ModelManager {
 	* @return 	void
 	**/
 	private function prepareRouter() {
-		$exempt = array(
-			"ModelManager.class.php",
-			"Router.class.php",
-			"Model.interface.php",
-			);
+		require __DIR__ . "/../controllers/Controller.interface.php";
 
 		$controllers = array(
 			"/" => "Home.controller.php@Home",
@@ -81,20 +79,6 @@ class ModelManager {
 			$this->router->addRoute($route, $class);
 		}
 
-		// Iterate over all the files in this directory that end in .php
-		//$files = glob(__DIR__ . '*.php', GLOB_BRACE);
-		/*foreach($files as $file) {
-			// Is the file exempt?
-			if(!in_array($file, $exempt)) {
-				// It isn't, lets load it.
-				include $file;
-
-				// Now lets add the route.
-				$route = $file->getRoute();
-				
-				$this->router->addRoute($route, $file);
-			}
-		}*/
 	}
 
 }

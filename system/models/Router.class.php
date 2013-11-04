@@ -1,9 +1,7 @@
 <?php
 
-//namespace Models\Router;
-
 /**
-* Blogza, the open source, simple to use blogging software.
+* The Router, used for locating the correct route for the software.
 *
 * @author	boboman13 <me@boboman13.net>
 * @version	1.0
@@ -47,14 +45,11 @@ class Router {
 	**/
 	public static function getPath() {
 		$path = '/';
+		
         if (!empty($_SERVER['PATH_INFO'])) {
             $path = $_SERVER['PATH_INFO'];
         } else if (!empty($_SERVER['ORIG_PATH_INFO']) && $_SERVER['ORIG_PATH_INFO'] !== '/index.php') {
             $path = $_SERVER['ORIG_PATH_INFO'];
-        } else {
-            if (!empty($_SERVER['REQUEST_URI'])) {
-                $path = (strpos($_SERVER['REQUEST_URI'], '?') > 0) ? strstr($_SERVER['REQUEST_URI'], '?', true) : $_SERVER['REQUEST_URI'];
-            }
         }
 
         return $path;
