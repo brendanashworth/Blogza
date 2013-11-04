@@ -14,9 +14,10 @@ class Blogza {
 	protected $databasemanager;
 
 	/**
-	* Creates the Blogza instance. This class is the Controller class for the entire blog.
+	* Creates the Blogza instance. This class is the controller for the entire blog.
 	*
 	* @access 	public
+	* @return 	Blogza
 	**/
 	public function __construct() {
 		require __DIR__ . "/settings.php";
