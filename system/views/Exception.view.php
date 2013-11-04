@@ -37,7 +37,7 @@ if(!isset($exception)) {
 						<h4> <?php echo $exception->err_msg; ?></h4>
 					</div>
 
-					<h2>Code <small> <?php echo $exception->file; ?></small></h2>
+					<h2>Code <small> <?php echo $exception->err_file; ?></small></h2>
 					<pre class="pre-scrollable">
 						<ol class="linenums">
 
