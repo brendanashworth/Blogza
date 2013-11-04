@@ -46,7 +46,18 @@ class ModelManager {
 	* @return 	void
 	**/
 	public function go() {
-		$model = $this->router->go();
+		// Gets the Router's correct controller
+		$res = $this->router->go();
+
+		// Split it by '@', which gives us the file and the class name.
+		list($file, $class) = explode($res, "@");
+
+		// Require the $file for the controller and create the $class.
+		require $file;
+		$controller = new $class();
+
+		// Start the controller.
+		$controller->start();
 	}
 
 	/**
@@ -62,7 +73,13 @@ class ModelManager {
 			"Model.interface.php",
 			);
 
+		$controllers = array(
+			"/" => "Home.controller.php@Home",
+			);
 
+		foreach($controllers as $route => $class) {
+			$this->router->addRoute($route, $class);
+		}
 
 		// Iterate over all the files in this directory that end in .php
 		//$files = glob(__DIR__ . '*.php', GLOB_BRACE);

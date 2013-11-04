@@ -1,0 +1,28 @@
+.container {
+	margin-top: 20px;
+}
+
+.nav-error-files > li > a {
+	border: 1px solid #999;
+	color: #000;
+
+	background-color: #eee;
+	text-overflow: ellipsis;
+}
+
+.nav-error-files > li > a:hover {
+	background-color: #fefefe;
+	box-shadow: 0px 0px 10px #eee inset;
+}
+
+pre .culprit {
+	background-color: #aaa;
+}
+
+.linenums > li.culprit {
+	background-color: #a5a5a5;
+}
+
+.linenums > li.culprit-helper {
+	background-color: #c6c6c6;
+}

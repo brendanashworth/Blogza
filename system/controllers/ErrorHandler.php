@@ -29,22 +29,16 @@ class ErrorHandler {
 	* @param 	array 	errcontext	The context in which the error occurred.
 	**/
 	public static function handle($errno, $errstring, $errfile, $errline, $errcontext = null) {
+		$view = __DIR__ . "/../views/Exception.view.php";
 
+		// Prepare the variables needed for the View, then start the View.
+		require __DIR__ . "/../models/BlogzaException.class.php";
+		$exception = new BlogzaException($errno, $errstring, $errfile, $errline, $errcontext);
 
-		?>
-		<br />
-		<div style="background-color: lightblue; padding: 5px; border-radius: 5px; border: 1px solid #999; font-family: Arial;">
-			<h3>An error has occurred.</h3>
-			<h5>Level of: <?php echo $errno; ?></h5>
-			<h4><?php echo $errstring; ?></h4>
-			<hr />
+		require $view;
 
-			<h4>The error occured in file <strong><?php echo $errfile; ?></strong>, on line <?php echo $errline; ?>.</h4>
-			<p> <?php echo $errcontext; ?> </p>
-		</div>
-		<br />
-		<?php
-		exit;
+		// exit out
+		exit();
 	}
 
 	/**
