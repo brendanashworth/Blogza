@@ -1,9 +1,7 @@
 <?php
 
-namespace \Database;
-
 /**
-* The DatabaseManager class
+* The DatabaseManager class, used to simplify management of the database.
 *
 * @author	boboman13 <me@boboman13.net>
 * @version	1.0

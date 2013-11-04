@@ -1,14 +1,12 @@
 <?php
 
-namespace \Models\Model;
-
 /**
-* The Model interface, which all Models must implement.
+* The Controller interface, which all Controllers must implement.
 *
 * @author	boboman13 <me@boboman13.net>
 * @version	1.0
 **/
-interface Model {
+interface Controller {
 
 	/**
 	* Creates the Model.

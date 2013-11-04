@@ -30,12 +30,12 @@ class Router {
 	* @param 	class 	$model 	The model used to get the page.
 	* @return 	bool 	Whether or not the add succeeded.
 	**/
-	public function addRoute($route = null, $model = null){
-		if($route == null || $model == null) {
+	public function addRoute($route = null, $controller = null){
+		if($route == null || $controller == null) {
 			throw new Exception("The Route or Model cannot be null!");
 		}
 
-		$this->routes[$route] = $model;
+		$this->routes[$route] = $controller;
 	}
 
 	/**
@@ -70,11 +70,11 @@ class Router {
         $path = Router::getPath();
 
 		// Checks to find which route is which.
-		foreach($this->routes as $route => $model) {
+		foreach($this->routes as $route => $controller) {
 
 	        // Now we check whether this is the correct page.
 	        if($path == $route) {
-	        	return $model;
+	        	return $controller;
 	        }
 
 		}
