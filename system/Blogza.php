@@ -22,11 +22,12 @@ class Blogza {
 	public function __construct() {
 		require __DIR__ . "/settings.php";
 
-		require __DIR__ . "/controllers/ErrorHandler.php";
-		require __DIR__ . "/controllers/Util.class.php";
-
 		require __DIR__ . "/models/ModelManager.class.php";
+		require __DIR__ . "/models/Util.class.php";
+
 		require __DIR__ . "/packages/Database.class.php";
+
+		require __DIR__ . "/controllers/ErrorHandler.php";
 	}
 
 	/**
@@ -38,9 +39,6 @@ class Blogza {
 	public function start() {
 		// ErrorHandler
 		$this->errorhandler = new ErrorHandler();
-
-		// DatabaseManager
-		$this->databasemanager = new Database();
 
 		// ModelManager
 		$this->modelmanager = new ModelManager();

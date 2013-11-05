@@ -8,24 +8,16 @@
 **/
 class Database {
 
-	private $mysqli;
-
 	/* These are the cached query results. */
-	private $posts = null;
+	private static $posts = null;
 
 	/**
 	* Creates the DatabaseManager instance.
 	*
-	* @access	public
+	* @access	private
 	* @return	DatabaseManager
 	**/
-	public function __construct() {
-		$this->mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
-
-		// Check for error.
-		if(mysqli_connect_errno($this->mysqli)) {
-			die("Error: Could not connect to MySQL database.");
-		}
+	private function __construct() {
 
 	}
 
@@ -38,7 +30,7 @@ class Database {
 	* @param	string 	$content 	The content of the post.
 	* @return 	bool|result
 	**/
-	public function createPost($author = null, $title = null, $content = null) {
+	public static function createPost($author = null, $title = null, $content = null) {
 		// If any were null, throw an exception.
 		if($author == null || $title == null || $content == null) {
 			throw new DBException("The author, title, or content cannot be null!");
@@ -52,7 +44,7 @@ class Database {
 		// Here is the query and execution.
 		$query = "INSERT INTO `posts` (author, title, content) VALUES ('$author', '$title', '$content')";
 
-		$result = $this->queryDB($query);
+		$result = self::queryDB($query);
 
 		// Give a result.
 		if($result == true || $result == false) {
@@ -70,15 +62,10 @@ class Database {
 	* @access	public
 	* @return	array
 	**/
-	public function getPosts() {
-		if($this->posts !== null) {
-			// The program has already sent this query and we can return the cached result.
-			return $this->posts;
-		}
-
+	public static function getPosts() {
 		$query = "SELECT * FROM `posts`"; // Direct query into DB, no variables.
 
-		$result = $this->queryDB($query);
+		$result = self::queryDB($query);
 
 		/* Now we format it into our standard post format. */
 		$posts = array();
@@ -95,7 +82,6 @@ class Database {
 				);
 		}
 
-		$this->posts = $posts; // Assign cached variable.
 		return $posts;
 	}
 
@@ -107,7 +93,7 @@ class Database {
 	* @param	string	$password	The user's password. This will be hashed in this function.
 	* @return	bool|result
 	**/
-	public function createUser($username = null, $password = null) {
+	public static function createUser($username = null, $password = null) {
 		// If any given variables were null, throw an exception.
 		if($username == null || $password == null) {
 			throw new DBException("The username or password cannot be null!");
@@ -124,7 +110,7 @@ class Database {
 
 		$query = "INSERT INTO `users` (user_name, user_password, user_posts) VALUES ('$username', '$password', '0')";
 
-		$result = $this->queryDB($query);
+		$result = self::queryDB($query);
 
 		// Give a result.
 		if($result == true || $result == false) {
@@ -142,10 +128,10 @@ class Database {
 	* @param	string	$username	The user's name.
 	* @return	User	Returns the User object if found; null if not found.
 	**/
-	public function getUser($username) {
+	public static function getUser($username) {
 		$query = "SELECT * FROM `users`";
 
-		$result = $this->queryDB($query);
+		$result = self::queryDB($query);
 
 		$found = false;
 		// Lets find our user.
@@ -170,13 +156,15 @@ class Database {
 	* @param	string 	$query 		The string of SQL to query the database with.
 	* @return	mixed
 	**/
-	private function queryDB($query = null) {
+	private static function queryDB($query = null) {
 		if($query == null) {
 			throw new DBException("The query cannot be null!");
 		}
+		
+		$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
 
 		// Query!
-		$result = mysqli_query($this->mysqli, $query);
+		$result = mysqli_query($mysqli, $query);
 
 		// Did we encounter an error?
 		if( !$result ) {

@@ -16,7 +16,7 @@ class Home implements Controller {
 		$view = __DIR__ . "/../views/Home.view.php";
 
 		// Prepare the variables needed for the View, then start the View.
-
+		$posts = Database::getPosts();
 
 		require $view;
 	}

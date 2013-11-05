@@ -39,5 +39,9 @@ class Util {
 		header("Content-type: " . $content);
 	}
 
+	public static function kill($message = "An error has occurred.") {
+		die($message);
+	}
+
 
 }
