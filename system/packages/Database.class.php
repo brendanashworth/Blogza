@@ -168,7 +168,7 @@ class Database {
 
 		// Did we encounter an error?
 		if( !$result ) {
-			die("MySQL Query Error.");
+			Util::kill("MySQL error occurred.");
 		}
 
 		return $result;

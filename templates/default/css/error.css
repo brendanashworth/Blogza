@@ -1,22 +1,95 @@
-.container {
-	margin-top: 20px;
+/* General Styling */
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Lucida Grande", Geneva, Verdana, sans-serif;
+}
+
+body {
+	font-family: "Source Code Pro", Monaco, Arial, sans-serif;
+}
+
+/* Navigation for the error files */
+.col-md-4 {
+	padding-right: 0px;
+}
+.col-md-8 {
+	padding-left: 0px;
 }
 
 .nav-error-files > li > a {
 	border: 1px solid #999;
+	border-radius: 0px;
 	color: #000;
 
-	background-color: #eee;
 	text-overflow: ellipsis;
 }
 
-.nav-error-files > li > a:hover {
-	background-color: #fefefe;
-	box-shadow: 0px 0px 10px #eee inset;
+/* Error overview */
+.error-overview {
+	border-left: 5px solid #FF7400;
+
+	background-color: #eee;
+	padding: 10px;
+	border-bottom: 1px dotted #06266F;
+
+	white-space: nowrap;
+	overflow: hidden;
 }
 
-pre .culprit {
-	background-color: #aaa;
+.error-overview h1 {
+	color: #FF7400;
+}
+
+/* Code Overview */
+.code-overview {
+	padding: 10px;
+	background-color: #f5f5f5;
+
+	border-bottom: 1px dotted #06266F;
+	border-left: 5px solid #FFB273;
+}
+
+/* Variables Overview */
+.var-overview {
+	padding: 10px;
+
+	border-left: 5px solid #FFD773;
+}
+
+/* Code box pre */
+.pre-fix {
+	border: 2px solid #FF7400;
+
+	background-color: #333;
+	padding: 4px;
+	padding-top: 12px;
+
+	margin-right: 5px;
+}
+
+.pre-fix > p {
+	color: #FFF;
+	text-align: center;
+}
+
+.pre-scrollable {
+	border-radius: 0px;
+	border: 2px solid #FF7400;
+	border-top: none;
+
+	margin-right: 5px;
+	padding-right: 0px;
+}
+
+.pre-scrollable > ol {
+	padding-top: 0px;
+}
+
+/* Lines */
+.linenums > li {
+	border-left: 1px solid black;
+	padding-left: 2px;
+
+	background-color: #e5e5e5;
 }
 
 .linenums > li.culprit {
