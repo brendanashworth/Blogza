@@ -55,7 +55,7 @@ class ModelManager {
 		list($file, $class) = explode("@", $res);
 
 		// Require the $file for the controller and create the $class.
-		require __DIR__ . "/../controllers/" . $file;
+		require BLOGZA_DIR . "/system/controllers/" . $file;
 		$controller = new $class();
 
 		// Start the controller.
@@ -69,13 +69,13 @@ class ModelManager {
 	* @return 	void
 	**/
 	private function prepareRouter() {
-		require __DIR__ . "/../controllers/Controller.interface.php";
+		// Require what the controller needs to implement
+		require BLOGZA_DIR . "/system/controllers/Controller.interface.php";
 
-		$controllers = array(
-			"/" => "Home.controller.php@Home",
-			);
+		// Get the routes.
+		require BLOGZA_DIR . "/system/routes.php";
 
-		foreach($controllers as $route => $class) {
+		foreach($routes as $route => $class) {
 			$this->router->addRoute($route, $class);
 		}
 

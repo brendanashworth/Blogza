@@ -20,33 +20,37 @@ if(!isset($exception)) {
 	</head>
 
 	<body>
-		<div class="container">
-			<div class="row">
+		<div class="row">
 
-				<div class="col-md-4">
-					<ul class="nav nav-pills nav-stacked nav-error-files">
-						<li><a href="#1">
-							<?php echo $exception->err_file; ?> : <?php echo $exception->err_line; ?>
-						</a></li>
-					</ul>
+			<div class="col-md-4">
+				<ul class="nav nav-pills nav-stacked nav-error-files">
+					<li><a href="#1">
+						<?php echo $exception->err_file; ?> : <?php echo $exception->err_line; ?>
+					</a></li>
+				</ul>
+			</div>
+
+			<div class="col-md-8">
+				<div class="error-overview">
+					<h1>Error level <?php echo $exception->err_level; ?></h1>
+					<h4> <?php echo $exception->err_msg; ?></h4>
 				</div>
 
-				<div class="col-md-8">
-					<div class="alert alert-danger">
-						<h2>Error level <?php echo $exception->err_level; ?></h2>
-						<h4> <?php echo $exception->err_msg; ?></h4>
+				<div class="code-overview">
+					<h2>Code <a href="#culprit" align="right" class="btn btn-warning">#<?php echo $exception->err_line; ?></a></h2>
+					<div class="pre-fix">
+						<p> <?php echo $exception->err_file; ?> </p>
 					</div>
-
-					<h2>Code <small> <?php echo $exception->err_file; ?></small></h2>
 					<pre class="pre-scrollable">
 						<ol class="linenums">
 
 							<?php
 							foreach($exception->err_file_lines as $linenum => $line) {
+								$line = htmlentities($line);
 								// Is this the culprit :O
 								// $linenum+1 - the +1 is an ugly hack to make the actual line show.
 								if($linenum+1 == $exception->err_line) {
-									echo '<li class="culprit">' . $line . '</li>';
+									echo '<li class="culprit" id="culprit">' . $line . '</li>';
 								} else if ($linenum+1 > $exception->err_line-2 && $linenum+1 < $exception->err_line+2 ) {
 									echo '<li class="culprit-helper">' . $line . '</li>';
 								} else {
@@ -60,44 +64,44 @@ if(!isset($exception)) {
 						</ol>
 
 					</pre>
+				</div>
 
+				<div class="var-overview">
 					<h2>Variables</h2>
 
-					<table class="table table-striped table-bordered">
+					<table class="table table-striped table-bordered table-condensed">
 						<tbody>
-							<th>
-								<td>Key</td>
-								<td>Value</td>
-							</th>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
 
 							<?php
-							// $_GET variables
-							foreach($_GET as $key => $value) {
-								?>
-								<tr>
-									<td> $_GET <?php echo $key; ?> </td>
-									<td> <?php echo $value; ?> </td>
-								</tr>
-								<?php
+							// Get all the variables.
+							$vars = array();
+
+							/* Go through all the vars. */
+							while (list($var,$value) = each ($_SERVER)) {
+								$vars[$var] = $value;
 							}
-							// $_POST variables
-							foreach($_POST as $key => $value) {
-								?>
-								<tr>
-									<td> $_POST <?php echo $key; ?> </td>
-									<td> <?php echo $value; ?> </td>
-								</tr>
-								<?php
+
+							$out = array();
+
+							foreach($vars as $key => $value) {
+								echo "<tr>";
+								echo "<td> $key </td>";
+								echo "<td> $value </td>";
+								echo "</tr>";
 							}
 
 							?>
 						</tbody>
 
 					</table>
-
 				</div>
 
 			</div>
+
 		</div>
 	</body>
 

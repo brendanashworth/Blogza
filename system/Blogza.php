@@ -20,14 +20,15 @@ class Blogza {
 	* @return 	Blogza
 	**/
 	public function __construct() {
-		require __DIR__ . "/settings.php";
+		require BLOGZA_DIR . "/system/settings.php";
+		require BLOGZA_DIR . "/system/views/View.php";
 
-		require __DIR__ . "/models/ModelManager.class.php";
-		require __DIR__ . "/models/Util.class.php";
+		require BLOGZA_DIR . "/system/models/ModelManager.class.php";
+		require BLOGZA_DIR . "/system/models/Util.class.php";
 
-		require __DIR__ . "/packages/Database.class.php";
+		require BLOGZA_DIR . "/system/packages/Database.class.php";
 
-		require __DIR__ . "/controllers/ErrorHandler.php";
+		require BLOGZA_DIR . "/system/controllers/ErrorHandler.php";
 	}
 
 	/**
@@ -45,6 +46,5 @@ class Blogza {
 		$this->modelmanager->prepare();
 		$this->modelmanager->go();
 	}
-
 
 }

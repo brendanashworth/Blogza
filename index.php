@@ -5,6 +5,16 @@ ini_set('display_errors', 'on');
 error_reporting(E_ALL);
 
 /* ----------------------------------------
+ | Sets the Blogza directory folder.
+ | ----------------------------------------
+ | This sets BLOGZA_DIR to the directory
+ | where this file is located. All file
+ | locations are based off this setting,
+ | so you can modify this based on that.
+ */
+ define("BLOGZA_DIR", __DIR__);
+
+/* ----------------------------------------
  | Requires the Blogza mainframe PHP file
  | ----------------------------------------
  | This loads the Blogza mainframe code
