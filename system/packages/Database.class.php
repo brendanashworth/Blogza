@@ -66,7 +66,7 @@ class Database {
 		$content = mysqli_real_escape_string($content);
 
 		// Here is the query and execution.
-		$query = "INSERT INTO `posts` (author, title, content) VALUES ('$author', '$title', '$content')";
+		$query = "INSERT INTO `posts` (post_author, post_title, post_content) VALUES ('$author', '$title', '$content')";
 
 		$result = self::queryDB($query);
 
@@ -98,10 +98,10 @@ class Database {
 
 			$posts[$id] = array(
 				"id" => $id,
-				"author" => $row['author'],
-				"title" => $row['title'],
-				"content" => $row['content'],
-				"date" => $row['date'],
+				"author" => $row['post_author'],
+				"title" => $row['post_title'],
+				"content" => $row['post_content'],
+				"date" => $row['post_date'],
 				"link" => "/post/".$id,
 				);
 		}
@@ -130,10 +130,10 @@ class Database {
 
 			return array(
 				"id" => $row['id'],
-				"author" => $row['author'],
-				"title" => $row['title'],
-				"content" => $row['content'],
-				"date" => $row['date'],
+				"author" => $row['post_author'],
+				"title" => $row['post_title'],
+				"content" => $row['post_content'],
+				"date" => $row['post_date'],
 				"link" => "/post/".$row['id'],
 				);
 		}
