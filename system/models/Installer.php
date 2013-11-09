@@ -16,6 +16,7 @@ class Installer extends Model {
 
 			"BLOG_TEMPLATE" => "default",
 			"BLOG_URL" => "http://myblog.com",
+			"BLOG_TIMEZONE" => "America/New_York",
 
 			"MYSQL_HOST" => "localhost",
 			"MYSQL_USER" => "dbuser",
@@ -73,6 +74,7 @@ public function __construct() {
 // All the settings for the blog. ';
 		$endfile=
 '
+date_default_timezone_set(BLOG_TIMEZONE);
 }
 }
 ';
