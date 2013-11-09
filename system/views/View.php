@@ -37,12 +37,9 @@ class View {
 		$this->smarty->setConfigDir  (BLOGZA_DIR . "/system/views/smarty/configs/");
 		$this->smarty->setCacheDir   (BLOGZA_DIR . "/system/views/smarty/cache/");
 
-		$this->smarty->debugging = true;
 		$this->smarty->error_reporting = E_ALL & ~E_NOTICE; 
 
 		$this->addVariables();
-
-		
 
 		$this->smarty->muteExpectedErrors();
 	}

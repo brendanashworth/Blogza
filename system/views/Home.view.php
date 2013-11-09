@@ -30,6 +30,7 @@ $vars = array(
 
 $pages = array(
 	"header.tpl",
+	"navigation.tpl",
 	"sidebar.tpl",
 	"homebody.tpl",
 	"footer.tpl",

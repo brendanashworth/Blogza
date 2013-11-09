@@ -1,5 +1,7 @@
 <?php
 
+$routes = array(
+
 /* ----------------------------------------
  | This file contains the file routes.
  | ----------------------------------------
@@ -9,10 +11,19 @@
  | every page for the simplicity of users.
  */
 
-$routes = array(
-	// The routes.
+/*
+ | Route style:
+ | "/path/to/page" => "FileName.controller.php@ControllerClass@methodForRoute",
+ */
 
-	"/" => "Home.controller.php@Home",
+"/" => "Home.controller.php@Home@start",
 
+"/install/" => "Installer.controller.php@InstallerController@start",
+"/install/step/([1-4])" => "Installer.controller.php@InstallerController@step",
+
+"/register/" => "Authentication.controller.php@AuthenticationController@register",
+"/login/" => "Authentication.controller.php@AuthenticationController@login",
+
+"/post/([0-9]+)" => "Post.controller.php@PostController@viewPost",
 
 );

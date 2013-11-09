@@ -12,13 +12,37 @@ class Database {
 	private static $posts = null;
 
 	/**
-	* Creates the DatabaseManager instance.
+	* Creates the Database instance.
+	*
+	* Private to restrict creation of the object.
 	*
 	* @access	private
-	* @return	DatabaseManager
+	* @return	Database
 	**/
 	private function __construct() {
 
+	}
+
+	/**
+	* Checks whether the Database is initialized.
+	*
+	* This test only tests for the `posts` table.
+	*
+	* @access 	public
+	* @return 	boolean 	Returns true if it is initialized, returns false if isn't initialized.
+	**/
+	public static function isInitialized() {
+		$query = "SELECT * FROM `posts`";
+
+		$result = self::queryDB($query, true);
+
+		return $result;
+	}
+
+	public static function initialize() {
+		$load = file_get_contents(BLOGZA_DIR . "/system/assets/sql/initialize_db.sql");
+
+		self::multipleQueryDB($load);
 	}
 
 	/**
@@ -85,6 +109,37 @@ class Database {
 		return $posts;
 	}
 
+	public static function getPost($id) {
+		if($id == null) {
+			throw new DBException("The post ID cannot be null!");
+		} else if (!is_numeric($id)) {
+			throw new DBException("The post ID needs to be an integer!");
+		}
+
+		//$id = mysqli_real_escape_string($id);
+
+		$query = "SELECT * FROM `posts` WHERE id='$id'";
+
+		$result = self::queryDB($query);
+
+		// Now we format.
+		if($result->num_rows != 1) {
+			return null;
+		} else {
+			$row = $result->fetch_assoc();
+
+			return array(
+				"id" => $row['id'],
+				"author" => $row['author'],
+				"title" => $row['title'],
+				"content" => $row['content'],
+				"date" => $row['date'],
+				"link" => "/post/".$row['id'],
+				);
+		}
+
+	}
+
 	/**
 	* Creates and inserts a new user into the database.
 	*
@@ -103,10 +158,8 @@ class Database {
 		$username = mysqli_real_escape_string($username);
 		$password = mysqli_real_escape_string($password);
 
-		// Hash the password. (Iterate 16 times for security!)
-		for($i = 0; $i < 16; $i++) {
-			$password = hash('sha256', $password);
-		}
+		// Hash the password.
+		$password = Util::hashPassword($password);
 
 		$query = "INSERT INTO `users` (user_name, user_password, user_posts) VALUES ('$username', '$password', '0')";
 
@@ -150,13 +203,32 @@ class Database {
 	}
 
 	/**
+	* This function checks the connection to the database. 
+	*
+	* Via mysqli_connect, it returns whether or not the connection was successful.
+	*
+	* @access 	public
+	* @return 	boolean 	Whether or not the connection was successful.
+	**/
+	public static function checkConnection() {
+		try {
+			$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+		} catch (mysqli_sql_exception $e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
 	* Querys the database.
 	*
 	* @access	private
-	* @param	string 	$query 		The string of SQL to query the database with.
+	* @param	string 		$query 	The string of SQL to query the database with.
+	* @param 	boolean 	$bool 	If true, the query does not die on error, it simply returns false.
 	* @return	mixed
 	**/
-	private static function queryDB($query = null) {
+	private static function queryDB($query = null, $bool = false) {
 		if($query == null) {
 			throw new DBException("The query cannot be null!");
 		}
@@ -167,13 +239,35 @@ class Database {
 		$result = mysqli_query($mysqli, $query);
 
 		// Did we encounter an error?
-		if( !$result ) {
+		if( !$result && !$bool ) {
 			Util::kill("MySQL error occurred.");
 		}
 
 		return $result;
 	}
 
+	/**
+	* Querys the database with multiple queries.
+	*
+	* @access	private
+	* @param	string 		$query 	The string of SQL queries for the database.
+	* @param 	boolean 	$bool 	If true, the query does not die on error, it simply returns false.
+	* @return	mixed
+	**/
+	private static function multipleQueryDB($query = null, $bool = false) {
+		if($query == null) {
+			throw new DBException("The query cannot be null!");
+		}
 
+		$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+
+		$result = mysqli_multi_query($mysqli, $query);
+
+		if( !$result && !$bool ) {
+			Util::kill("MySQL error occurred.");
+		}
+
+		return $result;
+	}
 	
 }

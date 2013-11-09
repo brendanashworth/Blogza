@@ -9,6 +9,7 @@
 class Router {
 
 	protected $routes = array();
+	protected $matched;
 
 	/**
 	* Creates the Router instance.
@@ -30,7 +31,7 @@ class Router {
 	**/
 	public function addRoute($route = null, $controller = null){
 		if($route == null || $controller == null) {
-			throw new Exception("The Route or Model cannot be null!");
+			throw new Exception("The Route or Controller cannot be null!");
 		}
 
 		$this->routes[$route] = $controller;
@@ -70,10 +71,23 @@ class Router {
 	        // Now we check whether this is the correct page.
 	        if($path == $route) {
 	        	return $controller;
+	        } else if (preg_match('#^/?' . $route . '/?$#', $path, $matches)) {
+	        	$this->matched = $matches;
+	        	return $controller;
 	        }
 
 		}
 
         return null;
+	}
+
+	/**
+	* Gets the matched expressions from the go() method.
+	*
+	* @access 	public
+	* @return 	array
+	**/
+	public function getMatchedExpressions() {
+		return $this->matched;
 	}
 }

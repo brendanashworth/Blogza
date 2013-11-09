@@ -1,0 +1,23 @@
+/* Basic styling */
+.post p {
+	text-indent: 20px;
+}
+
+a:hover {
+	text-decoration: none;
+	color: #BF3030;
+}
+
+input[type="text"],
+input[type="password"] {
+	height: 30px;
+}
+
+/* Sidebar styling */
+.nav-pills.nav-stacked.nav > li > a {
+	border: 1px solid transparent;
+}
+
+.nav-pills.nav-stacked.nav > li > a:hover {
+	border: 1px solid #e3e3e3;
+}

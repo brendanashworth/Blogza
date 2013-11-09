@@ -29,10 +29,10 @@ class ErrorHandler {
 	* @param 	array 	errcontext	The context in which the error occurred.
 	**/
 	public static function handle($errno, $errstring, $errfile, $errline, $errcontext = null) {
-		$view = __DIR__ . "/../views/Exception.view.php";
+		$view = BLOGZA_DIR . "/system/views/Exception.view.php";
 
 		// Prepare the variables needed for the View, then start the View.
-		require __DIR__ . "/../models/BlogzaException.class.php";
+		require BLOGZA_DIR . "/system/models/BlogzaException.php";
 		$exception = new BlogzaException($errno, $errstring, $errfile, $errline, $errcontext);
 
 		require $view;
