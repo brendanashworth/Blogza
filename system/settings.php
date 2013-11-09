@@ -21,11 +21,14 @@ class Settings {
 
 		define("BLOG_TEMPLATE", "default");
 		define("BLOG_URL", "http://myblog.com");
+		define("BLOG_TIMEZONE", "America/New_York");
 
 		define("MYSQL_HOST", "localhost");
 		define("MYSQL_USER", "dbuser");
 		define("MYSQL_PASSWORD", "dbpassword");
 		define("MYSQL_DATABASE", "blogza_database");
+
+		date_default_timezone_set(BLOG_TIMEZONE);
 	}
 
 }
