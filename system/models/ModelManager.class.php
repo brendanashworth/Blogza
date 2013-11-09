@@ -49,17 +49,20 @@ class ModelManager {
 		// Gets the Router's correct controller
 		$res = $this->router->go();
 
-		if($res == null) $res = "404.controller.php@404";
+		if($res == null) $res = "404.controller.php@NotFound@display";
 
-		// Split it by '@', which gives us the file and the class name.
-		list($file, $class) = explode("@", $res);
+		// Split it by '@', which gives us the file, class, and method name.
+		list($file, $class, $method) = explode("@", $res);
+
+		// Give the Controller the matched expressions it wants.
+		$matched = $this->router->getMatchedExpressions();
 
 		// Require the $file for the controller and create the $class.
 		require BLOGZA_DIR . "/system/controllers/" . $file;
-		$controller = new $class();
+		$controller = new $class($matched);
 
-		// Start the controller.
-		$controller->start();
+		// Run the method.
+		$controller->$method();
 	}
 
 	/**
@@ -70,7 +73,7 @@ class ModelManager {
 	**/
 	private function prepareRouter() {
 		// Require what the controller needs to implement
-		require BLOGZA_DIR . "/system/controllers/Controller.interface.php";
+		require BLOGZA_DIR . "/system/controllers/Controller.php";
 
 		// Get the routes.
 		require BLOGZA_DIR . "/system/routes.php";

@@ -9,6 +9,8 @@
 **/
 class Blogza {
 
+	protected $settings;
+
 	protected $modelmanager;
 	protected $errorhandler;
 	protected $databasemanager;
@@ -24,7 +26,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/views/View.php";
 
 		require BLOGZA_DIR . "/system/models/ModelManager.class.php";
-		require BLOGZA_DIR . "/system/models/Util.class.php";
+		require BLOGZA_DIR . "/system/models/Util.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 
@@ -38,6 +40,9 @@ class Blogza {
 	* @return 	void
 	**/
 	public function start() {
+		// Settings
+		$this->settings = new Settings();
+
 		// ErrorHandler
 		$this->errorhandler = new ErrorHandler();
 
