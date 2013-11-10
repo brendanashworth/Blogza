@@ -56,4 +56,10 @@ class AuthenticationController extends Controller {
 		require $view;
 	}
 
+	public function logout() {
+		Auth::logout();
+
+		Util::redirect(BLOG_URL . "/");
+	}
+
 }

@@ -63,7 +63,9 @@ class Util {
 		$string = stripcslashes($string);
 		$string = trim($string);
 
+		$string = preg_replace("/[^a-zA-Z0-9]+/", "", $string);
 
+		$string = trim($string);
 
 		return $string;
 	}
