@@ -19,10 +19,11 @@ $routes = array(
 "/" => "Home.controller.php@Home@start",
 
 "/install/" => "Installer.controller.php@InstallerController@start",
-"/install/step/([1-4])" => "Installer.controller.php@InstallerController@step",
+"/install/step/([1-3])" => "Installer.controller.php@InstallerController@step",
 
 "/register/" => "Authentication.controller.php@AuthenticationController@register",
 "/login/" => "Authentication.controller.php@AuthenticationController@login",
+"/logout/" => "Authentication.controller.php@AuthenticationController@logout",
 
 "/post/([0-9]+)" => "Post.controller.php@PostController@viewPost",
 

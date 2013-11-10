@@ -74,6 +74,11 @@ class View {
 				"description" => BLOG_DESC,
 				));
 
+		$this->smarty->assign("user",
+			array(
+				"user" => Auth::getUsername(),
+				));
+
 		$this->smarty->assign("template",
 			array(
 				"name" => $this->template,

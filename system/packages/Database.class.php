@@ -61,9 +61,9 @@ class Database {
 		}
 
 		// Sanitize these inputs.
-		$author  = mysqli_real_escape_string($author);
-		$title   = mysqli_real_escape_string($title);
-		$content = mysqli_real_escape_string($content);
+		//$author  = mysqli_real_escape_string(null, $author);
+		//$title   = mysqli_real_escape_string(null, $title);
+		//$content = mysqli_real_escape_string(null, $content);
 
 		// Here is the query and execution.
 		$query = "INSERT INTO `posts` (post_author, post_title, post_content) VALUES ('$author', '$title', '$content')";
@@ -155,8 +155,8 @@ class Database {
 		}
 
 		// Sanitize.
-		$username = mysqli_real_escape_string($username);
-		$password = mysqli_real_escape_string($password);
+		//$username = mysqli_real_escape_string(null, $username);
+		//$password = mysqli_real_escape_string(null, $password);
 
 		// Hash the password.
 		$password = Util::hashPassword($password);

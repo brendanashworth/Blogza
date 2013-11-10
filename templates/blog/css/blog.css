@@ -1,8 +1,4 @@
 /* Basic styling */
-.post p {
-	text-indent: 20px;
-}
-
 a:hover {
 	text-decoration: none;
 	color: #BF3030;
@@ -13,11 +9,99 @@ input[type="password"] {
 	height: 30px;
 }
 
+.block {
+	border-radius: 5px;
+	border: 1px solid #e3e3e3;
+
+	background-color: #f9f9f9;
+
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+/* Post Styling */
+.post h2,
+.post h1,
+.post h2 a,
+.post h1 a {
+	font-weight: normal;
+	color: rgb(51, 51, 51);
+}
+
+.post h2 a:hover,
+.post h1 a:hover {
+	text-decoration: underline;
+}
+
+.post h2 small,
+.post h1 small {
+	float: right;
+	color: #515151;
+
+	line-height: 3;
+}
+
+.post hr {
+	margin: 5px 0;
+	width: 100%;
+}
+
+.post p {
+	text-indent: 20px;
+	font-size: 16px;
+}
+
+/* Post Comments */
+.post .comment {
+	text-align: right;
+	padding: 5px;
+}
+
+.post .comment .author {
+	text-align: right;
+	color: #111;
+}
+
+.post .accordian-toggle {
+	padding: 5px;
+
+	border: 1px solid #dedede;
+	border-radius: 5px;
+
+	text-align: right;
+	float: right;
+}
+
+.post .accordion-group {
+	border: none;
+	float: right;
+}
+
 /* Sidebar styling */
+.sidebar-block h5 {
+	background-color: #fff;
+	padding: 5px;
+
+	border: 1px solid #e3e3e3;
+	border-radius: 5px;
+}
+
 .nav-pills.nav-stacked.nav > li > a {
 	border: 1px solid transparent;
+
+	-webkit-transition: all .6s ease;
+	   -moz-transition: all .6s ease;
+	     -o-transition: all .6s ease;
+			transition: all .6s ease;
 }
 
 .nav-pills.nav-stacked.nav > li > a:hover {
 	border: 1px solid #e3e3e3;
+	margin-left: 5px;
+	margin-right: -5px;
+
+	-webkit-transition: all .4s ease;
+	   -moz-transition: all .4s ease;
+	     -o-transition: all .4s ease;
+			transition: all .4s ease;
 }

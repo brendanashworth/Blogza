@@ -1,6 +1,6 @@
 			<div class="span3">
 
-				<div class="well">
+				<div class="block sidebar-block">
 					<center>
 						<h5>Latest Posts</h5>
 					</center>

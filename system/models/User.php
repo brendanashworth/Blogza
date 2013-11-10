@@ -83,6 +83,12 @@ class User {
 		$password    = Util::sanitizeAlphaNumerically($password);
 		$passwordrep = Util::sanitizeAlphaNumerically($passwordrep);
 
+		// Checks if the username is already taken.
+		$user = Database::getUser($username);
+		if($user != null) {
+			throw new Exception("That username is already in use.");
+		}
+
 		// Checks if the username and password are of the correct size
 		if( !(strlen($password) > 5 && strlen($password) < 21) ) {
 			throw new Exception("Your password must be within 6 and 20 characters");
@@ -91,6 +97,10 @@ class User {
 		if( !(strlen($username) > 5 && strlen($username) < 17) ) {
 			throw new Exception("Your username must be between 6 and 16 characters.");
 		}
+
+		Database::createUser($username, $password);
+
+		Auth::login($username);
 
 		Util::redirect(BLOG_URL);
 	}
@@ -115,6 +125,8 @@ class User {
 		$username = Util::sanitizeAlphaNumerically($username);
 		$password = Util::sanitizeAlphaNumerically($password);
 
+		$password = Util::hashPassword($password);
+
 		$user = Database::getUser($username);
 		if($user == null) {
 			throw new Exception("Username and/or password incorrect.");
@@ -123,6 +135,8 @@ class User {
 		if($user->getPassword() != $password) {
 			throw new Exception("Username and/or password incorrect.");
 		}
+
+		Auth::login($username);
 
 		Util::redirect(BLOG_URL);
 	}
