@@ -18,6 +18,7 @@ $routes = array(
 
 "/" => "Home.controller.php@Home@start",
 
+// NOTICE: After installation, comment out these lines. (Put a // in front of both)
 "/install/" => "Installer.controller.php@InstallerController@start",
 "/install/step/([1-3])" => "Installer.controller.php@InstallerController@step",
 
