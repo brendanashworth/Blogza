@@ -61,11 +61,14 @@ class User {
 	/**
 	* Registers a user in the database.
 	*
+	* @access 	public
 	* @param 	string 	$username 	The requested username of the new user.
 	* @param 	string 	$password 	The user's password.
 	* @param 	string 	$passwordrep 	The user's password repeated.
+	* @param 	boolean $sendemail 	Whether or not to send an email to the user.
+	* @return 	void
 	**/
-	public static function register($username, $password, $passwordrep) {
+	public static function register($username, $password, $passwordrep, $sendemail) {
 		// Checks if the user was missing any fields.
 		if(!isset($username) || !isset($password) || !isset($passwordrep)) {
 			throw new Exception("All forms must be filled out.");
@@ -100,9 +103,18 @@ class User {
 
 		Database::createUser($username, $password);
 
+		// Sends the user an email.
+		if ($sendemail) {
+			echo "Sending email.";
+			require BLOGZA_DIR . "/system/models/Mail.php";
+
+			$mail = new Mail("nobody@troll.tk", "forums@blogza.tk", "A user has registered on your blog!", "Hi there.");
+			$mail->send();
+		}
+
 		Auth::login($username);
 
-		Util::redirect(BLOG_URL);
+		//Util::redirect(BLOG_URL);
 	}
 
 	/**
