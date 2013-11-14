@@ -55,7 +55,7 @@ class Blogza {
 		// ErrorHandler
 		$this->errorhandler = new ErrorHandler();
 
-		// We're removing the ModelManager, so lets create our own Router.
+		// Router
 		$this->router = new Router();
 
 		// Get the routes.
