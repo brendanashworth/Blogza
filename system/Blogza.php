@@ -32,9 +32,9 @@ class Blogza {
 		require BLOGZA_DIR . "/system/routing/Router.php";
 
 		require BLOGZA_DIR . "/system/models/Model.php";
-		//require BLOGZA_DIR . "/system/models/ModelManager.class.php";
 		require BLOGZA_DIR . "/system/models/Util.php";
 		require BLOGZA_DIR . "/system/models/Auth.php";
+		require BLOGZA_DIR . "/system/models/Post.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 
@@ -62,13 +62,10 @@ class Blogza {
 		require BLOGZA_DIR . "/system/routes.php";
 
 		// Settle the route.
-		$res = $this->router->go();
-
-		// Split it by '@', which gives us the file, class, and method name.
-		list($file, $class, $method) = explode("@", $res);
+		list($class, $method) = explode("@", $this->router->go());
 
 		// Require the $file for the controller and create the $class.
-		require BLOGZA_DIR . "/system/controllers/" . $file;
+		require BLOGZA_DIR . "/system/controllers/" . $class . ".php";
 		$controller = new $class($this->router->getMatchedExpressions());
 
 		// Run the method.
