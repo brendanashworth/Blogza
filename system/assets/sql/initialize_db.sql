@@ -14,3 +14,12 @@ CREATE TABLE `users` (
 	`user_posts` int(10) NOT NULL,
 	PRIMARY KEY (id)
 );
+
+CREATE TABLE `comments` (
+	`id` int(100) NOT NULL AUTO_INCREMENT,
+	`comment_is_moderated` varchar(5) NOT NULL,
+	`comment_poster` varchar(16) NOT NULL,
+	`comment_date` varchar(10) NOT NULL,
+	`comment_content` varchar(200) NOT NULL,
+	PRIMARY KEY (id)
+);
