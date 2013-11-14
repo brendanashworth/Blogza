@@ -3,7 +3,7 @@
 /**
 * HTTPError class for handling HTTP errors.
 **/
-class HTTPError extends Controller {
+class HTTPErrorController extends Controller {
 
 	/**
 	* Displays the 404 error page and gives the header error.
