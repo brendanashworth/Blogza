@@ -2,11 +2,14 @@
 
 $view = new View(BLOG_TEMPLATE);
 
+$vars = array(
+	"time" => date("g:i A", time()),
+	);
+
+$view->setVariable($vars);
+
 $pages = array(
-	"header.tpl",
-	"navigation.tpl",
-	"404.tpl",
-	"footer.tpl",
+	"adminpanel.tpl",
 	);
 
 foreach($pages as $page) {
