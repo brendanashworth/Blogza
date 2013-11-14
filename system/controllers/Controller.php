@@ -8,4 +8,10 @@
 **/
 abstract class Controller {
 
+	protected $matched;
+
+	public function __construct($matched) {
+		$this->matched = $matched;
+	}
+
 }

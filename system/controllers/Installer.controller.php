@@ -4,18 +4,6 @@
 * Controller class for the /install/ route.
 **/
 class InstallerController extends Controller {
-	
-	protected $matched;
-
-	/**
-	* Creates the Installer controller.
-	*
-	* @access 	public
-	* @param 	array 	$matched 	
-	**/
-	public function __construct($matched) {
-		$this->matched = $matched;
-	}
 
 	/**
 	* Starts the Blogza Installer. This method simply forwards to /install/step/1.

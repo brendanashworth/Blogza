@@ -40,6 +40,17 @@ class Util {
 	}
 
 	/**
+	* Sets a new header.
+	*
+	* @access 	public
+	* @param 	string 	$content 	The header to add.
+	* @return 	void
+	**/
+	public static function header($content) {
+		header($content);
+	}
+
+	/**
 	* Kills the program.
 	*
 	* @access 	public

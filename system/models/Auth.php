@@ -6,6 +6,19 @@
 class Auth {
 
 	/**
+	* The list of possible ranks for the visitor.
+	*
+	* @var 	array 	A list of the possible ranks for any user.
+	*
+	**/
+	protected static $ranks = array(
+		"Guest",
+		"Registered",
+		"Moderator",
+		"Admin",
+		);
+
+	/**
 	* Construction method, made private to disallow object creation.
 	*
 	* @access 	private
@@ -58,6 +71,21 @@ class Auth {
 		} else {
 			return false;
 		}
+
+	}
+
+	/**
+	* Gets the rank of the visitor.
+	*
+	* @access 	public
+	* @return 	string 	The rank of the visitor.
+	**/
+	public static function getRank() {
+		if(!isset($_SESSION['auth_username'])) {
+			return "Guest";
+		}
+
+		// TODO implement rank.
 
 	}
 

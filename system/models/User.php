@@ -5,9 +5,12 @@
 **/
 class User {
 
-	private $username;
-	private $password;
-	private $posts;
+	protected $username;
+	protected $password;
+	protected $posts;
+
+	protected $email;
+	protected $rank;
 
 	/**
 	* Creates the BlogzaUser instance.

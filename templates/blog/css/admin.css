@@ -1,0 +1,12 @@
+h3 {
+	text-align: center;
+	font-weight: normal;
+
+	margin-top: -5px;
+	padding-top: 0px;
+}
+
+.form-fill input,
+.form-fill textarea {
+	width: 100%;
+}
