@@ -12,6 +12,10 @@ abstract class Controller {
 
 	public function __construct($matched) {
 		$this->matched = $matched;
+
+		if(method_exists($this, "auth")) {
+			$this->auth();
+		}
 	}
 
 }

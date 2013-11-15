@@ -70,13 +70,15 @@ class View {
 		$this->smarty->assign("blog",
 			array(
 				"name" => BLOG_NAME,
-				"url" => BLOG_URL,
+				"folder" => BLOG_URL,
+				"url" => BLOG_NICE_URLS ? BLOG_URL : BLOG_URL . "/index.php",
 				"description" => BLOG_DESC,
 				));
 
 		$this->smarty->assign("user",
 			array(
 				"user" => Auth::getUsername(),
+				"rank" => Auth::getRank(),
 				));
 
 		$this->smarty->assign("template",

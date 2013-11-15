@@ -12,8 +12,6 @@ class AuthenticationController extends Controller {
 	* @return 	void
 	**/
 	public function register() {
-		require BLOGZA_DIR . "/system/models/User.php";
-
 		$error = null;
 		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
 			try {
@@ -34,8 +32,6 @@ class AuthenticationController extends Controller {
 	* @return 	void
 	**/
 	public function login() {
-		require BLOGZA_DIR . "/system/models/User.php";
-
 		$error = false;
 		if(isset($_POST['username']) && isset($_POST['password'])) {
 			// The login form has been filled in.

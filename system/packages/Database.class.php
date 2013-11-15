@@ -96,14 +96,7 @@ class Database {
 		while($row = $result->fetch_assoc()) {
 			$id = $row['id'];
 
-			$posts[$id] = array(
-				"id" => $id,
-				"author" => $row['post_author'],
-				"title" => $row['post_title'],
-				"content" => $row['post_content'],
-				"date" => $row['post_date'],
-				"link" => "/post/".$id,
-				);
+			$posts[$id] = new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id);
 		}
 
 		return $posts;
@@ -148,7 +141,7 @@ class Database {
 	* @param	string	$password	The user's password. This will be hashed in this function.
 	* @return	bool|result
 	**/
-	public static function createUser($username = null, $password = null) {
+	public static function createUser($username = null, $password = null, $rank = "Registered") {
 		// If any given variables were null, throw an exception.
 		if($username == null || $password == null) {
 			throw new DBException("The username or password cannot be null!");
@@ -161,7 +154,7 @@ class Database {
 		// Hash the password.
 		$password = Util::hashPassword($password);
 
-		$query = "INSERT INTO `users` (user_name, user_password, user_posts) VALUES ('$username', '$password', '0')";
+		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_rank) VALUES ('$username', '$password', '0', '$rank')";
 
 		$result = self::queryDB($query);
 
@@ -197,9 +190,28 @@ class Database {
 			return null;
 		} else {
 			// Make the user.
-			$user = new User($found['user_name'], $found['user_password'], $found['user_posts']);
+			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank']);
 			return $user;
 		}
+	}
+
+	/**
+	* Gets all the users from the database and returns them in array format.
+	*
+	* @access 	public
+	* @return 	array 	The array of Users from the database.
+	**/
+	public static function getUsers() {
+		$query = "SELECT * FROM `users`";
+
+		$result = self::queryDB($query);
+
+		$users = array();
+		while($row = $result->fetch_assoc()) {
+			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank']);
+		}
+
+		return $users;
 	}
 
 	/**

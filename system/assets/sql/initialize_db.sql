@@ -11,6 +11,7 @@ CREATE TABLE `users` (
 	`id` int(100) NOT NULL AUTO_INCREMENT,
 	`user_name` varchar(16) NOT NULL,
 	`user_password` varchar(256) NOT NULL,
+	`user_rank` varchar(30) NOT NULL,
 	`user_posts` int(10) NOT NULL,
 	PRIMARY KEY (id)
 );

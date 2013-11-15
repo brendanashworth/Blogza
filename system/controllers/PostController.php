@@ -14,10 +14,11 @@ class PostController extends Controller {
 	}
 
 	public function viewPost() {
+		$view = BLOGZA_DIR . "/system/views/ViewPost.view.php";
+
 		$id = $this->matched[1];
 		$post = Database::getPost($id);
-
-		$view = BLOGZA_DIR . "/system/views/ViewPost.view.php";
+		$posts = Database::getPosts();
 
 		require $view;
 	}

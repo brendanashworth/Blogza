@@ -87,9 +87,19 @@ class Router {
         $path = Router::getPath();
         $method = strtolower($_SERVER['REQUEST_METHOD']);
 
-		// Checks to find which route is which.
-		foreach($this->routes[$method] as $route => $controller) {
+        $routes = empty($this->routes[$method]) ? array() : $this->routes[$method];
 
+        // Merge the 'any' routes and $method routes. $method routes take precedence.
+		foreach($this->routes['any'] as $key => $value) {
+			if(array_key_exists($key, $routes)) {
+				continue;
+			}
+
+			$routes[$key] = $value;
+		}
+
+		// Checks to find which route is which.
+		foreach($routes as $route => $controller) {
 	        // Now we check whether this is the correct page.
 	        if($path == $route) {
 	        	return $controller;
