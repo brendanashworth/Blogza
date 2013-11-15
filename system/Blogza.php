@@ -35,6 +35,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/models/Util.php";
 		require BLOGZA_DIR . "/system/models/Auth.php";
 		require BLOGZA_DIR . "/system/models/Post.php";
+		require BLOGZA_DIR . "/system/models/User.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 
@@ -60,6 +61,7 @@ class Blogza {
 
 		// Get the routes.
 		require BLOGZA_DIR . "/system/routes.php";
+		
 
 		// Settle the route.
 		list($class, $method) = explode("@", $this->router->go());

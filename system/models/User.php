@@ -8,9 +8,9 @@ class User {
 	protected $username;
 	protected $password;
 	protected $posts;
+	protected $rank;
 
 	protected $email;
-	protected $rank;
 
 	/**
 	* Creates the BlogzaUser instance.
@@ -19,9 +19,10 @@ class User {
 	* @param 	$username 	The user's display name.
 	* @param 	$password 	The user's password (hashed).
 	* @param 	$posts 		The amount of posts the user has made.
+	* @param 	$rank 		The user's rank.
 	* @return 	mixed
 	**/
-	public function __construct($username, $password, $posts) {
+	public function __construct($username, $password, $posts, $rank) {
 		if($username == null || $password == null || $posts == null) {
 			throw new Exception("The username, password, or posts cannot be null!");
 		}
@@ -29,6 +30,7 @@ class User {
 		$this->username = htmlspecialchars($username);
 		$this->password = htmlspecialchars($password);
 		$this->posts = htmlspecialchars($posts);
+		$this->rank = htmlspecialchars($rank);
 	}
 
 	/**
@@ -59,6 +61,16 @@ class User {
 	**/
 	public function getPosts() {
 		return $this->posts;
+	}
+
+	/**
+	* Gets the rank of the user.
+	*
+	* @access 	public
+	* @return 	string 	The string representation of the user's rank.
+	**/
+	public function getRank() {
+		return $this->rank;
 	}
 
 	/**
@@ -104,7 +116,7 @@ class User {
 			throw new Exception("Your username must be between 6 and 16 characters.");
 		}
 
-		Database::createUser($username, $password);
+		Database::createUser($username, $password, "Registered");
 
 		// Sends the user an email.
 		if ($sendemail) {

@@ -85,8 +85,7 @@ class Auth {
 			return "Guest";
 		}
 
-		// TODO implement rank.
-
+		return Database::getUser($_SESSION['auth_username'])->getRank();
 	}
 
 }

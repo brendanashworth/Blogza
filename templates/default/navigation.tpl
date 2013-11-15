@@ -1,3 +1,12 @@
+	{if $user.rank == 'Admin'}
+	<div class="admin-box">
+		<a href="{$blog.url}/admin/">Admin Panel</a>
+	</div>
+	<style>
+		body { margin-top: 60px !important; }
+	</style>
+	{/if}
+
 	<div class="container">
 		<div class="navbar">
 			<div class="navbar-inner">

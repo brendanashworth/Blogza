@@ -29,6 +29,7 @@ class Settings {
 		define("MYSQL_DATABASE", "blogza_database");
 
 		date_default_timezone_set(BLOG_TIMEZONE);
+		define("BLOG_NICE_URLS", !empty($_SERVER['BLOGZA_HTACCESS']) );
 	}
 
 }

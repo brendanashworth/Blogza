@@ -3,26 +3,29 @@
 	<head>
 		<title>{$blog.name} :: Admin Panel</title>
 
-		<link rel="stylesheet" href="{$blog.url}/templates/{$template.name}/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{$blog.url}/templates/{$template.name}/css/blog.css">
-		<link rel="stylesheet" href="{$blog.url}/templates/{$template.name}/css/admin.css">
+		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/blog.css">
+		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/admin.css">
 		<meta name="description" content="{$blog.description}" />
 		<meta name="author" content="boboman13" />
 
 		<style>
 		body {
 			padding-top: 40px;
-			background-image: url({$blog.url}/templates/{$template.name}/img/tweed.png);
+			background-image: url({$blog.folder}/templates/{$template.name}/img/tweed.png);
 		}
 		</style>
 
 	</head>
 
 	<body class="admin">
-		<div class="container">
-			<div class="row">
+		<div class="container-fluid">
+			<div class="row-fluid">
 				<div class="span4 block">
 					<h3>{$vars.time}</h3>
+					<p>Hello, {$user.user}.</p>
+					<br />
+					<a class="btn btn-block" href="{$blog.url}/">Return to Blog</a>
 				</div>
 				<div class="span4 block">
 
@@ -31,7 +34,7 @@
 
 				</div>
 			</div>
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span4 block">
 					<h3>create a post</h3>
 
@@ -44,16 +47,49 @@
 					</form>
 				</div>
 				<div class="span4 block">
-					<h3>posts w/o approval</h3>
+					<h3>new posts</h3>
+					<table class="table table-bordered table-hold">
+						<thead>
+							<tr>
+								<th>Author</th>
+								<th>Title</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $vars.posts as $post}
+							<tr>
+								<td>{$post->author}</td>
+								<td>{$post->title}</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
 
 				</div>
 				<div class="span4 block">
+					<h3>new comments</h3>
 
 				</div>
 			</div>
-			<div class="row">
+			<div class="row-fluid">
 				<div class="span4 block">
 					<h3>manage users</h3>
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Username</th>
+								<th>Rank</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $vars.users as $nerp => $user}
+							<tr>
+								<td>{$user->getUsername()}</td>
+								<td>{$user->getRank()}</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
 
 				</div>
 				<div class="span4 block">
@@ -64,6 +100,8 @@
 				</div>
 			</div>
 		</div>
+
+		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
 
 	</body>
 

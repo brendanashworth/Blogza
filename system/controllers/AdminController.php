@@ -12,6 +12,9 @@ class AdminController extends Controller {
 	* @return 	void
 	**/
 	public function index() {
+		$posts = Database::getPosts();
+		$users = Database::getUsers();
+
 		$view = BLOGZA_DIR . "/system/views/Admin.view.php";
 
 		require $view;
@@ -25,6 +28,19 @@ class AdminController extends Controller {
 	**/
 	public function createPost() {
 
+	}
+
+	/**
+	* Performs the authentication check on the user.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function auth() {
+		$rank = Auth::getRank();
+		if($rank !== "Admin") {
+			Util::redirect(BLOG_URL . "/login/");
+		}
 	}
 
 }
