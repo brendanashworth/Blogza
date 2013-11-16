@@ -121,14 +121,7 @@ class Database {
 		} else {
 			$row = $result->fetch_assoc();
 
-			return array(
-				"id" => $row['id'],
-				"author" => $row['post_author'],
-				"title" => $row['post_title'],
-				"content" => $row['post_content'],
-				"date" => $row['post_date'],
-				"link" => "/post/".$row['id'],
-				);
+			return new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id);
 		}
 
 	}
@@ -139,11 +132,13 @@ class Database {
 	* @access	public
 	* @param	string	$username	The user's display name. This is used for all blog posts.
 	* @param	string	$password	The user's password. This will be hashed in this function.
+	* @param 	string 	$email 		The user's email.
+	* @param 	string 	$rank 		The user's rank; this rank defaults to Registered.
 	* @return	bool|result
 	**/
-	public static function createUser($username = null, $password = null, $rank = "Registered") {
+	public static function createUser($username = null, $password = null, $email = null, $rank = "Registered") {
 		// If any given variables were null, throw an exception.
-		if($username == null || $password == null) {
+		if($username == null || $password == null || $email == null) {
 			throw new DBException("The username or password cannot be null!");
 		}
 
@@ -154,7 +149,7 @@ class Database {
 		// Hash the password.
 		$password = Util::hashPassword($password);
 
-		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_rank) VALUES ('$username', '$password', '0', '$rank')";
+		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_email, user_rank) VALUES ('$username', '$password', '0', '$email', '$rank')";
 
 		$result = self::queryDB($query);
 
@@ -190,7 +185,7 @@ class Database {
 			return null;
 		} else {
 			// Make the user.
-			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank']);
+			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank'], $found['user_email']);
 			return $user;
 		}
 	}
@@ -208,7 +203,7 @@ class Database {
 
 		$users = array();
 		while($row = $result->fetch_assoc()) {
-			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank']);
+			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_email'], $row['user_rank']);
 		}
 
 		return $users;

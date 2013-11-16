@@ -12,10 +12,12 @@ class AuthenticationController extends Controller {
 	* @return 	void
 	**/
 	public function register() {
+		if(Auth::isLogged()) Util::redirect(BLOG_URL);
+
 		$error = null;
 		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
 			try {
-				User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], false);
+				User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], false);
 			} catch (Exception $ex) {
 				$error = $ex->getMessage();
 			}
@@ -32,6 +34,8 @@ class AuthenticationController extends Controller {
 	* @return 	void
 	**/
 	public function login() {
+		if(Auth::isLogged()) Util::redirect(BLOG_URL);
+
 		$error = false;
 		if(isset($_POST['username']) && isset($_POST['password'])) {
 			// The login form has been filled in.

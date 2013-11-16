@@ -16,6 +16,9 @@
 		<input type="text" name="username" placeholder="Username"> </input>
 		<span class="help-block">Must be unique.</span>
 
+		<input type="text" name="email" placeholder="Email"> </input>
+		<span class="help-block">Your email address - make sure to check this regularly.</span>
+
 		<input type="password" name="password" placeholder="Password"> </input>
 		<br />
 		<input type="password" name="passwordrepeat" placeholder="Repeat Password"> </input>

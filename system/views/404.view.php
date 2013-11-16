@@ -2,6 +2,8 @@
 
 $view = new View(BLOG_TEMPLATE);
 
+$view->setTitle("Page Not Found");
+
 $pages = array(
 	"header.tpl",
 	"navigation.tpl",

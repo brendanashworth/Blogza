@@ -82,6 +82,17 @@ class Util {
 	}
 
 	/**
+	* Sanitizes a user email.
+	*
+	* @access 	public
+	* @param 	string 	$string 	The string to sanitize into an email.
+	* @return 	bool 	Whether or not the email is safe.
+	**/
+	public static function sanitizeEmail($string) {
+		return filter_var($string, FILTER_SANITIZE_EMAIL);
+	}
+
+	/**
 	* Hashes the given password based on the software's default hash.
 	*
 	* @access 	public

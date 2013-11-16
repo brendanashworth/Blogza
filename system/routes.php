@@ -19,17 +19,21 @@
 $this->router->get('/install/', 'InstallerController@start');
 $this->router->get('/install/step/([1-3])', 'InstallerController@step');
 
-
+// PostController
 $this->router->get('/', 'PostController@index');
+$this->router->get('/post/([0-9]+)', 'PostController@viewPost');
 
+// AuthenticationController
 $this->router->any('/register/', 'AuthenticationController@register');
 $this->router->any('/login/', 'AuthenticationController@login');
 $this->router->get('/logout/', 'AuthenticationController@logout');
 
-$this->router->get('/post/([0-9]+)', 'PostController@viewPost');
+// MemberController
+$this->router->get('/members/', 'MemberController@index');
 
+// AdminController
 $this->router->get('/admin/', 'AdminController@index');
 $this->router->get('/admin/create-post', 'AdminController@createPost');
 
-
+// Errorz
 $this->router->any('404', 'HTTPErrorController@display404');
