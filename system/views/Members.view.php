@@ -2,14 +2,11 @@
 
 $view = new View(BLOG_TEMPLATE);
 
-$view->setTitle($post->title);
+$view->setTitle("Members");
 
 $vars = array(
-	"1" => $posts[1],
-	"2" => $posts[2],
-	"3" => $posts[3],
-	
-	"post" => $post,
+	"users" => $users,
+
 	);
 
 $view->setVariable($vars);
@@ -17,8 +14,7 @@ $view->setVariable($vars);
 $pages = array(
 	"header.tpl",
 	"navigation.tpl",
-	"sidebar.tpl",
-	"viewpost.tpl",
+	"members.tpl",
 	"footer.tpl",
 	);
 

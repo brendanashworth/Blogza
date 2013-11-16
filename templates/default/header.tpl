@@ -1,7 +1,7 @@
 <html>
 
 <head>
-	<title>{$blog.name}</title>
+	<title>{$blog.name}{$title}</title>
 
 	<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/blog.css">

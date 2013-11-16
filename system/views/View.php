@@ -45,6 +45,17 @@ class View {
 	}
 
 	/**
+	* Sets the page title.
+	*
+	* @access 	public
+	* @param 	string 	$title 	The title of the page.
+	* @return 	void
+	**/
+	public function setTitle($title) {
+		$this->smarty->assign("title", " | " . $title);
+	}
+
+	/**
 	* Loads a page into the cache.
 	*
 	* @access	public
@@ -74,6 +85,8 @@ class View {
 				"url" => BLOG_NICE_URLS ? BLOG_URL : BLOG_URL . "/index.php",
 				"description" => BLOG_DESC,
 				));
+
+		$this->smarty->assign("title", "");
 
 		$this->smarty->assign("user",
 			array(

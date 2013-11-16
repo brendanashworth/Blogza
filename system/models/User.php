@@ -9,7 +9,6 @@ class User {
 	protected $password;
 	protected $posts;
 	protected $rank;
-
 	protected $email;
 
 	/**
@@ -22,7 +21,7 @@ class User {
 	* @param 	$rank 		The user's rank.
 	* @return 	mixed
 	**/
-	public function __construct($username, $password, $posts, $rank) {
+	public function __construct($username, $password, $posts, $rank, $email) {
 		if($username == null || $password == null || $posts == null) {
 			throw new Exception("The username, password, or posts cannot be null!");
 		}
@@ -31,6 +30,7 @@ class User {
 		$this->password = htmlspecialchars($password);
 		$this->posts = htmlspecialchars($posts);
 		$this->rank = htmlspecialchars($rank);
+		$this->email = htmlspecialchars($email);
 	}
 
 	/**
@@ -74,18 +74,29 @@ class User {
 	}
 
 	/**
+	* Gets the email of the user.
+	*
+	* @access 	public
+	* @return 	string 	The user's email.
+	**/
+	public function getEmail() {
+		return strtolower(trim($this->email));
+	}
+
+	/**
 	* Registers a user in the database.
 	*
 	* @access 	public
 	* @param 	string 	$username 	The requested username of the new user.
 	* @param 	string 	$password 	The user's password.
 	* @param 	string 	$passwordrep 	The user's password repeated.
+	* @param 	string 	$email 		The user's email.
 	* @param 	boolean $sendemail 	Whether or not to send an email to the user.
 	* @return 	void
 	**/
-	public static function register($username, $password, $passwordrep, $sendemail) {
+	public static function register($username, $password, $passwordrep, $email, $sendemail) {
 		// Checks if the user was missing any fields.
-		if(!isset($username) || !isset($password) || !isset($passwordrep)) {
+		if(!isset($username) || !isset($password) || !isset($passwordrep) || !isset($email)) {
 			throw new Exception("All forms must be filled out.");
 		}
 
@@ -101,10 +112,22 @@ class User {
 		$password    = Util::sanitizeAlphaNumerically($password);
 		$passwordrep = Util::sanitizeAlphaNumerically($passwordrep);
 
+		if(!Util::sanitizeEmail($email)) {
+			throw new Exception("Your email is not a real email.");
+		}
+
 		// Checks if the username is already taken.
 		$user = Database::getUser($username);
 		if($user != null) {
 			throw new Exception("That username is already in use.");
+		}
+
+		// Checks if there exists an email in the database that is the same email.
+		$users = Database::getUsers();
+		foreach($users as $user) {
+			if($user->getEmail() === $email) {
+				throw new Exception("That email is already in use.");
+			}
 		}
 
 		// Checks if the username and password are of the correct size
@@ -116,7 +139,7 @@ class User {
 			throw new Exception("Your username must be between 6 and 16 characters.");
 		}
 
-		Database::createUser($username, $password, "Registered");
+		Database::createUser($username, $password, $email, "Registered");
 
 		// Sends the user an email.
 		if ($sendemail) {
@@ -129,7 +152,7 @@ class User {
 
 		Auth::login($username);
 
-		//Util::redirect(BLOG_URL);
+		Util::redirect(BLOG_URL);
 	}
 
 	/**
