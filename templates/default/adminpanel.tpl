@@ -36,9 +36,9 @@
 			</div>
 			<div class="row-fluid">
 				<div class="span4 block">
-					<h3>create a post</h3>
+					<form method="post" action="{$blog.url}/admin/create-post" class="form-fill" id="create-post">
+						<h3>create a post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
-					<form method="post" action="{$blog.url}/admin/create-post" class="form-fill">
 						<input type="hidden" name="form" value="create-post"> </input>
 						<input type="text" name="title" placeholder="Post title..."> </input>
 						<textarea name="content" placeholder="Post content..." rows="5"> </textarea>
@@ -101,6 +101,7 @@
 			</div>
 		</div>
 
+		<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"> </script>
 		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
 
 	</body>
