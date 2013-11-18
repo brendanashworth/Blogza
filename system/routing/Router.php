@@ -37,6 +37,16 @@ class Router {
 
 		list($path, $rel) = $args;
 
+		// Goes through the route and substitutes basic patterns
+		$patterns = array(
+			"{number}" => "([0-9]+)",
+			"{alphanumeric}" => "([0-9a-zA-Z]+)",
+			);
+
+		foreach($patterns as $pattern => $regex) {
+			$path = str_replace($pattern, $regex, $path);
+		}
+
 		$this->routes[$method][$path] = $rel;
 	}
 

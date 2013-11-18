@@ -19,6 +19,20 @@ class MemberController extends Controller {
 		require $view;
 	}
 
+	/**
+	* Views a specific member.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function viewMember() {
+		$user = Database::getUser($this->matched[2]);
 
+		if($user == null) {
+			echo "User not found.";
+		} else {
+			var_dump($user);
+		}
+	}
 
 }

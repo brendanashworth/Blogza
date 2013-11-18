@@ -3,7 +3,10 @@
 
 				{foreach $vars.users as $user}
 				<div class="member">
-					<h3>A rogue user has appeared!</h3>
+					<div class="img">
+						<img src="https://minotar.net/helm/boboman13/64.png" />
+					</div>
+					<h3>{$user->getUsername()}</h3>
 				</div>
 				{/foreach}
 				

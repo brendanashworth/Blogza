@@ -21,7 +21,7 @@ $this->router->get('/install/step/([1-3])', 'InstallerController@step');
 
 // PostController
 $this->router->get('/', 'PostController@index');
-$this->router->get('/post/([0-9]+)', 'PostController@viewPost');
+$this->router->get('/post/{number}', 'PostController@viewPost');
 
 // AuthenticationController
 $this->router->any('/register/', 'AuthenticationController@register');
@@ -30,6 +30,7 @@ $this->router->get('/logout/', 'AuthenticationController@logout');
 
 // MemberController
 $this->router->get('/members/', 'MemberController@index');
+$this->router->get('/members/{alphanumeric}.{number}/', 'MemberController@viewMember');
 
 // AdminController
 $this->router->get('/admin/', 'AdminController@index');

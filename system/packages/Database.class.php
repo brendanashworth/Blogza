@@ -166,10 +166,12 @@ class Database {
 	* Gets the user from the database.
 	*
 	* @access	public
-	* @param	string	$username	The user's name.
-	* @return	User	Returns the User object if found; null if not found.
+	* @param	string|int	$identifier	The user's name or ID.
+	* @return	User		Returns the User object if found; null if not found.
 	**/
-	public static function getUser($username) {
+	public static function getUser($identifier) {
+		$useUsername = !is_numeric($identifier);
+
 		$query = "SELECT * FROM `users`";
 
 		$result = self::queryDB($query);
@@ -177,7 +179,17 @@ class Database {
 		$found = false;
 		// Lets find our user.
 		while($row = $result->fetch_assoc()) {
-			if($row['user_name'] == $username) $found = $row;
+			if($useUsername) {
+				if($row['user_name'] == $identifier) {
+					$found = $row;
+					break;
+				}
+			} else {
+				if($row['id'] == $identifier){
+					$found = $row;
+					break;
+				}
+			}
 		}
 
 		if($found == false) {
