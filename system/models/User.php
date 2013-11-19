@@ -10,6 +10,7 @@ class User {
 	protected $posts;
 	protected $rank;
 	protected $email;
+	protected $id;
 
 	/**
 	* Creates the BlogzaUser instance.
@@ -19,9 +20,11 @@ class User {
 	* @param 	$password 	The user's password (hashed).
 	* @param 	$posts 		The amount of posts the user has made.
 	* @param 	$rank 		The user's rank.
+	* @param 	$email 		The user's email to send emails to.
+	* @param 	$id 		The user's ID.
 	* @return 	mixed
 	**/
-	public function __construct($username, $password, $posts, $rank, $email) {
+	public function __construct($username, $password, $posts, $rank, $email, $id) {
 		if($username == null || $password == null || $posts == null) {
 			throw new Exception("The username, password, or posts cannot be null!");
 		}
@@ -31,6 +34,7 @@ class User {
 		$this->posts = htmlspecialchars($posts);
 		$this->rank = htmlspecialchars($rank);
 		$this->email = htmlspecialchars($email);
+		$this->id = htmlspecialchars($id);
 	}
 
 	/**
@@ -81,6 +85,26 @@ class User {
 	**/
 	public function getEmail() {
 		return strtolower(trim($this->email));
+	}
+
+	/**
+	* Gets the user's ID from the database.
+	*
+	* @access 	public
+	* @return 	int 	The user's ID.
+	**/
+	public function getID() {
+		return $this->id;
+	}
+
+	/**
+	* Gets the user's access link.
+	*
+	* @access 	public
+	* @return 	string 	The link to the users profile.
+	**/
+	public function getLink() {
+		return "/members/" . $this->getUsername() . "." . $this->getID() . "/";
 	}
 
 	/**

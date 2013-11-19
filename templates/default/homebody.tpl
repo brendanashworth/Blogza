@@ -6,7 +6,7 @@
 				{break}
 			{/if}
 			<div class="post">
-				<h2><a href="{$blog.url}{$post->link}">{$post->title}</a> <small>By this-user{*$post->author->getPassword()*}, on {$post->date}</small></h2>
+				<h2><a href="{$blog.url}{$post->link}">{$post->title}</a> <small>By <a href="{$blog.url}{$post->author->getLink()}">{$post->author->getUsername()}</a>, on {$post->date}</small></h2>
 				<hr />
 
 				<p>{$post->content}</p>

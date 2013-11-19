@@ -58,7 +58,7 @@
 						<tbody>
 							{foreach $vars.posts as $post}
 							<tr>
-								<td>{$post->author}</td>
+								<td>{$post->author->getUsername()}</td>
 								<td>{$post->title}</td>
 							</tr>
 							{/foreach}

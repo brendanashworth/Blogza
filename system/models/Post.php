@@ -33,7 +33,21 @@ class Post extends Model {
 		$this->content = $content;
 		$this->date = $date;
 
-		$this->link = empty($id) ? null : "/posts/" . $id . "/";
+		$this->link = empty($id) ? null : $this->generateUrl($title, $id);
+	}
+
+	/**
+	* Function for generating the URL for the post.
+	*
+	* @access 	private
+	* @return 	string 	The post URL.
+	**/
+	private function generateUrl($title, $id) {
+		$title = preg_replace("/[^A-Za-z0-9 ]/", "", $title);
+		$title = str_replace(" ", "-", $title);
+		$title = strtolower($title);
+
+		return "/posts/" . $title . "." . $id . "/";
 	}
 
 }

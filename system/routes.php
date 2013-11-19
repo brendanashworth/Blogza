@@ -22,7 +22,7 @@ $this->router->get('/install/step/([1-3])', 'InstallerController@step');
 // PostController
 $this->router->get('/', 'PostController@index');
 $this->router->get('/posts/', 'PostController@index');
-$this->router->get('/posts/{number}/', 'PostController@viewPost');
+$this->router->get('/posts/{alphanumericdash}.{number}/', 'PostController@viewPost');
 
 // AuthenticationController
 $this->router->any('/register/', 'AuthenticationController@register');

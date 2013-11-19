@@ -197,7 +197,7 @@ class Database {
 			return null;
 		} else {
 			// Make the user.
-			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank'], $found['user_email']);
+			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank'], $found['user_email'], $found['id']);
 			return $user;
 		}
 	}
@@ -215,7 +215,7 @@ class Database {
 
 		$users = array();
 		while($row = $result->fetch_assoc()) {
-			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_email'], $row['user_rank']);
+			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id']);
 		}
 
 		return $users;
