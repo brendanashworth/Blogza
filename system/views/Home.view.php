@@ -3,9 +3,11 @@
 $view = new View(BLOG_TEMPLATE);
 
 $vars = array(
-	"1" => $posts[1],
-	"2" => $posts[2],
-	"3" => $posts[3],
+	"posts" => $posts,
+
+	"1" => $posts[2],
+	"2" => $posts[1],
+	"3" => $posts[0],
 	);
 
 $pages = array(

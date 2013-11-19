@@ -8,7 +8,7 @@ class PostController extends Controller {
 	public function index() {
 		$view = BLOGZA_DIR . "/system/views/Home.view.php";
 
-		$posts = Database::getPosts();
+		$posts = array_reverse(Database::getPosts());
 
 		require $view;
 	}
@@ -18,6 +18,11 @@ class PostController extends Controller {
 
 		$id = $this->matched[1];
 		$post = Database::getPost($id);
+
+		if($post == null) {
+			die("404 todo PostController.php@23");
+		}
+
 		$posts = Database::getPosts();
 
 		require $view;

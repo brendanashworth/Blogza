@@ -31,7 +31,7 @@ class MemberController extends Controller {
 		if($user == null) {
 			echo "User not found.";
 		} else {
-			var_dump($user);
+			echo "User found.";
 		}
 	}
 
