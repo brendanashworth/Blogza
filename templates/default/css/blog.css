@@ -6,6 +6,19 @@
 
 body {
 	font-family: "Cambria", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color: #f4f4f4;
+}
+
+.container {
+	background-color: #fff;
+	padding: 40px;
+}
+
+.main-content {
+	margin-top: 105px;
+	bottom: -5px;
+
+	box-shadow: 0px 0px 8px #fff;
 }
 
 .block,
@@ -15,10 +28,6 @@ body {
 
 .blogza-header {
 	font-family: "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.main-content {
-	margin-top: 145px;
 }
 
 a:hover {
@@ -52,7 +61,12 @@ input[type="password"] {
 	right: 0;
 	left: 0;
 
-	background-color: #efefef;
+	background-image: url(../img/background.png);
+}
+
+.blogza-header .container {
+	background-color: transparent;
+	padding: 0px;
 }
 
 .blogza-header h1 {

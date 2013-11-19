@@ -11,7 +11,7 @@
 
  /*
  | Route style:
- | $this->router->method('/path/to/page', 'FileName.controller.php@ControllerClass@methodForRoute');
+ | $this->router->method('/path/to/page', 'ControllerClass@methodForRoute');
  |           The ^METHOD^ is the HTTP request type.
  */
 
@@ -21,7 +21,8 @@ $this->router->get('/install/step/([1-3])', 'InstallerController@step');
 
 // PostController
 $this->router->get('/', 'PostController@index');
-$this->router->get('/post/{number}', 'PostController@viewPost');
+$this->router->get('/posts/', 'PostController@index');
+$this->router->get('/posts/{number}/', 'PostController@viewPost');
 
 // AuthenticationController
 $this->router->any('/register/', 'AuthenticationController@register');
