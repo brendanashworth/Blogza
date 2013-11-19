@@ -145,13 +145,46 @@ input[type="password"] {
 /* Members */
 .member {
 	padding: 15px;
-	border-left: 5px solid #aaa;
 	margin-bottom: 10px;
+	list-style-type: none;
+
+	box-shadow: 2px 2px 3px #999;
+	border: 1px solid #bbb;
+	border-left: 5px solid #aaa;
 }
 
-.member .img,
-.member h3 {
+.member .avatar {
 	float: left;
+	border-radius: 3px;
+	border: 1px solid #aaa;
+
+	padding: 3px;
+	margin: 10px;
+
+			box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
+.member .rank {
+	float: left;
+	display: inline-block;
+	margin-top: 20px;
+	margin-right: 5px;
+}
+
+.member .name {
+	color: #333;
+	display: inline-block;
+}
+
+.member .info {
+	margin-top: 5px;
+}
+
+.member .name:hover,
+.member > a:hover > .name {
+	text-decoration: underline;
 }
 
 /* Post Comments */

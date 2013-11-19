@@ -16,7 +16,7 @@ class PostController extends Controller {
 	public function viewPost() {
 		$view = BLOGZA_DIR . "/system/views/ViewPost.view.php";
 
-		$id = $this->matched[1];
+		$id = $this->matched[2];
 		$post = Database::getPost($id);
 
 		if($post == null) {

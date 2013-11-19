@@ -1,12 +1,3 @@
-	{if $user.rank == 'Admin'}
-	<div class="admin-box">
-		<a href="{$blog.url}/admin/">Admin Panel</a>
-	</div>
-	<style>
-		body { margin-top: 60px !important; }
-	</style>
-	{/if}
-
 	<div class="blogza-header">
 		<div class="container">
 			<a href="{$blog.url}">
@@ -26,6 +17,9 @@
 					<ul class="nav nav-collapse collapse">
 						<li><a href="{$blog.url}/">Home</a></li>
 						<li><a href="{$blog.url}/members/">Members</a></li>
+						{if $user.rank == 'Admin'}
+						<li><a href="{$blog.url}/admin/">Admin Area</a></li>
+						{/if}
 					</ul>
 
 					<!-- Floated right section of the nav bar -->
