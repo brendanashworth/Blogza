@@ -13,6 +13,12 @@ h3 {
 	width: 100%;
 }
 
+.btn-fill {
+	border-radius: 1px;
+
+	margin-bottom: 1px;
+}
+
 .loader {
 	position: absolute;
 
@@ -31,4 +37,23 @@ h3 {
 	text-align: center;
 
 	cursor: hand;
+}
+
+/* Message Styles */
+.alert.popup {
+	position: fixed;
+	margin-right: 20%;
+	margin-left: 20%;
+
+	width: 60%;
+	top: 20%;
+
+	opacity: 1;
+
+	z-index: 1000;
+}
+
+.alert.msg {
+	display: none;
+	margin-bottom: 5px;
 }

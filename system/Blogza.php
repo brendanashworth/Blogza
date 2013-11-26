@@ -36,6 +36,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/models/Auth.php";
 		require BLOGZA_DIR . "/system/models/Post.php";
 		require BLOGZA_DIR . "/system/models/User.php";
+		require BLOGZA_DIR . "/system/models/Comment.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 

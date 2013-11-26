@@ -23,6 +23,7 @@ $this->router->get('/install/step/([1-3])', 'InstallerController@step');
 $this->router->get('/', 'PostController@index');
 $this->router->get('/posts/', 'PostController@index');
 $this->router->get('/posts/{alphanumericdash}.{number}/', 'PostController@viewPost');
+$this->router->any('/posts/{alphanumericdash}.{number}/comments/', 'PostController@viewComments');
 
 // AuthenticationController
 $this->router->any('/register/', 'AuthenticationController@register');
@@ -32,10 +33,12 @@ $this->router->get('/logout/', 'AuthenticationController@logout');
 // MemberController
 $this->router->get('/members/', 'MemberController@index');
 $this->router->get('/members/{alphanumeric}.{number}/', 'MemberController@viewMember');
+$this->router->any('/account/edit/', 'MemberController@edit');
 
 // AdminController
 $this->router->get('/admin/', 'AdminController@index');
-$this->router->get('/admin/create-post', 'AdminController@createPost');
+$this->router->post('/admin/create-post', 'AdminController@createPost');
+$this->router->any('/admin/update-comment', 'AdminController@updateComment');
 
 // Errorz
 $this->router->any('404', 'HTTPErrorController@display404');

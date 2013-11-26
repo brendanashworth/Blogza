@@ -19,6 +19,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `comments` (
 	`id` int(100) NOT NULL AUTO_INCREMENT,
+	`comment_post` int(10) NOT NULL,
 	`comment_is_moderated` varchar(5) NOT NULL,
 	`comment_poster` varchar(16) NOT NULL,
 	`comment_date` varchar(10) NOT NULL,
