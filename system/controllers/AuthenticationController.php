@@ -24,6 +24,9 @@ class AuthenticationController extends Controller {
 		}
 
 		$view = BLOGZA_DIR . "/system/views/Register.view.php";
+
+		$posts = array_reverse(Database::getPosts());
+
 		require $view;
 	}
 
@@ -47,9 +50,18 @@ class AuthenticationController extends Controller {
 		}
 
 		$view = BLOGZA_DIR . "/system/views/Login.view.php";
+
+		$posts = array_reverse(Database::getPosts());
+
 		require $view;
 	}
 
+	/**
+	* Runs a login attempt for the user.
+	*
+	* @access 	public
+	* @return 	void
+	**/
 	public function logout() {
 		Auth::logout();
 

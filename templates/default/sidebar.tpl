@@ -6,9 +6,16 @@
 					</center>
 
 					<ul class="nav nav-pills nav-stacked">
-						<li><a href="{$blog.url}{$vars.1->link}">{$vars.1->title}</a></li>
-						<li><a href="{$blog.url}{$vars.2->link}">{$vars.2->title}</a></li>
-						<li><a href="{$blog.url}{$vars.3->link}">{$vars.3->title}</a></li>
+					{foreach $vars.posts as $post name=temp}
+
+					{* Limits sidebar to 3 posts. *}
+					{if $smarty.foreach.temp.index == 3}
+						{break}
+					{/if}
+
+					<li><a href="{$blog.url}{$post->link}">{$post->title}</a></li>
+
+					{/foreach}
 					</ul>
 
 				</div>

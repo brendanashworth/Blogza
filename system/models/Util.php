@@ -89,7 +89,22 @@ class Util {
 	* @return 	bool 	Whether or not the email is safe.
 	**/
 	public static function sanitizeEmail($string) {
-		return filter_var($string, FILTER_SANITIZE_EMAIL);
+		$bool = filter_var($string, FILTER_SANITIZE_EMAIL);
+
+		if(!$bool) {
+			return false;
+		}
+
+		$strings = explode('@', $string);
+		if(substr_count($string, '@') != 1) {
+			return false;
+		}
+
+		if(substr_count($strings[1], '.') != 1) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

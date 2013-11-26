@@ -4,5 +4,10 @@
 					<hr />
 
 					<p>{$vars.post->content}</p>
+
+					{if $user.user != null}
+					<a class="comment-link" href="{$blog.url}{$vars.post->link}comments/">Create Comment</a>
+					{/if}
+					<a class="comment-link" href="{$blog.url}{$vars.post->link}comments/">View Comments</a>
 				</div>
 			</div>

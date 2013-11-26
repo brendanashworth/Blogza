@@ -2,11 +2,12 @@
 
 $view = new View(BLOG_TEMPLATE);
 
-$view->setTitle("Login");
+$view->setTitle("Edit Account");
 
 $vars = array(
-	"posts" => $posts,
-	"error" => $error,
+	"error" => isset($error) ? $error : false,
+	"msg" => isset($msg) ? $msg : false,
+	"user" => $user,
 	);
 
 $view->setVariable($vars);
@@ -14,8 +15,7 @@ $view->setVariable($vars);
 $pages = array(
 	"header.tpl",
 	"navigation.tpl",
-	"sidebar.tpl",
-	"login.tpl",
+	"editaccount.tpl",
 	"footer.tpl",
 	);
 

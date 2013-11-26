@@ -12,6 +12,8 @@ class User {
 	protected $email;
 	protected $id;
 
+	protected $avatar;
+
 	/**
 	* Creates the BlogzaUser instance.
 	*
@@ -35,7 +37,25 @@ class User {
 		$this->rank = htmlspecialchars($rank);
 		$this->email = htmlspecialchars($email);
 		$this->id = htmlspecialchars($id);
+
+		$this->avatar = $this->generateAvatar($email);
 	}
+
+	/**
+	* Generates the link used for Gravatar.
+	*
+	* @access 	public
+	* @param 	string 	$email 	The unhashed email.
+	* @return 	string 	The URL for the gravatar image.
+	**/
+	private function generateAvatar($email) {
+		$url = 'http://www.gravatar.com/avatar/';
+		$url .= md5( strtolower( trim( $email ) ) );
+		$url .= "?s=128";
+
+		return $url;
+	}
+
 
 	/**
 	* Gets the username.
@@ -55,6 +75,19 @@ class User {
 	**/
 	public function getPassword() {
 		return $this->password;
+	}
+
+	/**
+	* Sets the user's new password.
+	*
+	* @access 	public
+	* @param 	string 	$password 	The user's new password.
+	* @return 	void
+	**/
+	public function setPassword($password) {
+		$password = Util::sanitizeAlphaNumerically($password);
+
+		Database::updateUserPassword($this->getUsername(), $password);
 	}
 
 	/**
@@ -105,6 +138,16 @@ class User {
 	**/
 	public function getLink() {
 		return "/members/" . $this->getUsername() . "." . $this->getID() . "/";
+	}
+
+	/**
+	* Gets the user's avatar link.
+	*
+	* @access 	public
+	* @return 	string
+	**/
+	public function getAvatar() {
+		return $this->avatar;
 	}
 
 	/**

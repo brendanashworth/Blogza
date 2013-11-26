@@ -6,6 +6,7 @@ $vars = array(
 	"time" => date("g:i A", time()),
 	"users" => $users,
 	"posts" => $posts,
+	"comments" => $comments,
 	);
 
 $view->setVariable($vars);

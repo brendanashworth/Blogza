@@ -5,11 +5,8 @@ $view = new View(BLOG_TEMPLATE);
 $view->setTitle($post->title);
 
 $vars = array(
-	"1" => $posts[1],
-	"2" => $posts[2],
-	"3" => $posts[3],
-	
 	"post" => $post,
+	"posts" => $posts,
 	);
 
 $view->setVariable($vars);

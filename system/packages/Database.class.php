@@ -26,7 +26,7 @@ class Database {
 	/**
 	* Checks whether the Database is initialized.
 	*
-	* This test only tests for the `posts` table.
+	* Note: this test only tests for the `posts` table.
 	*
 	* @access 	public
 	* @return 	boolean 	Returns true if it is initialized, returns false if isn't initialized.
@@ -39,6 +39,12 @@ class Database {
 		return $result;
 	}
 
+	/**
+	* Initializes the database. Danger: This is a very dangerous method and can be quite volatile.
+	*
+	* @access 	public
+	* @return 	void
+	**/
 	public static function initialize() {
 		$load = file_get_contents(BLOGZA_DIR . "/system/assets/sql/initialize_db.sql");
 
@@ -61,12 +67,15 @@ class Database {
 		}
 
 		// Sanitize these inputs.
-		//$author  = mysqli_real_escape_string(null, $author);
-		//$title   = mysqli_real_escape_string(null, $title);
-		//$content = mysqli_real_escape_string(null, $content);
+		$author = Util::sanitizeAlphaNumerically($author);
+
+		$title   = mysqli_real_escape_string(self::newConnection(), addslashes($title));
+		$content = mysqli_real_escape_string(self::newConnection(), addslashes($content));
+
+		$date = date("m/d/y");
 
 		// Here is the query and execution.
-		$query = "INSERT INTO `posts` (post_author, post_title, post_content) VALUES ('$author', '$title', '$content')";
+		$query = "INSERT INTO `posts` (post_author, post_title, post_content, post_date) VALUES ('$author', '$title', '$content', '$date')";
 
 		$result = self::queryDB($query);
 
@@ -84,7 +93,7 @@ class Database {
 	* Gets all the posts in array format.
 	*
 	* @access	public
-	* @return	array
+	* @return	array 	An array of all the Post objects.
 	**/
 	public static function getPosts() {
 		$query = "SELECT * FROM `posts`"; // Direct query into DB, no variables.
@@ -102,6 +111,13 @@ class Database {
 		return $posts;
 	}
 
+	/**
+	* Gets the Post object by identifier $id.
+	*
+	* @access 	public
+	* @param 	int 	$id 	The ID of the post.
+	* @return 	Post 	The Post object representation of the post.
+	**/
 	public static function getPost($id) {
 		if($id == null) {
 			throw new DBException("The post ID cannot be null!");
@@ -109,9 +125,9 @@ class Database {
 			throw new DBException("The post ID needs to be an integer!");
 		}
 
-		//$id = mysqli_real_escape_string($id);
+		$id = mysqli_real_escape_string(self::newConnection(), $id); // Useless, no. Safe, yes.
 
-		$query = "SELECT * FROM `posts` WHERE id='$id'";
+		$query = "SELECT * FROM `posts` WHERE `id`='$id'";
 
 		$result = self::queryDB($query);
 
@@ -143,8 +159,12 @@ class Database {
 		}
 
 		// Sanitize.
-		//$username = mysqli_real_escape_string(null, $username);
-		//$password = mysqli_real_escape_string(null, $password);
+		$username = Util::sanitizeAlphaNumerically($username);
+		$password = Util::sanitizeAlphaNumerically($password);
+		
+		$email = mysqli_real_escape_string(self::newConnection(), addslashes($email)); // No special sanitization. :(
+
+		$rank = Util::sanitizeAlphaNumerically($rank);
 
 		// Hash the password.
 		$password = Util::hashPassword($password);
@@ -170,34 +190,21 @@ class Database {
 	* @return	User		Returns the User object if found; null if not found.
 	**/
 	public static function getUser($identifier) {
-		$useUsername = !is_numeric($identifier);
-
-		$query = "SELECT * FROM `users`";
+		if(is_numeric($identifier)) {
+			$query = "SELECT * FROM `users` WHERE `id`='$identifier'";
+		} else {
+			$username = Util::sanitizeAlphaNumerically($identifier);
+			$query = "SELECT * FROM `users` WHERE `user_name`='$username'";
+		}
 
 		$result = self::queryDB($query);
 
-		$found = false;
-		// Lets find our user.
-		while($row = $result->fetch_assoc()) {
-			if($useUsername) {
-				if($row['user_name'] == $identifier) {
-					$found = $row;
-					break;
-				}
-			} else {
-				if($row['id'] == $identifier){
-					$found = $row;
-					break;
-				}
-			}
-		}
-
-		if($found == false) {
-			// Return null
+		// User not found or multiple entries for the same user. If either are true, return null.
+		if(mysqli_num_rows($result) != 1) {
 			return null;
 		} else {
-			// Make the user.
-			$user = new User($found['user_name'], $found['user_password'], $found['user_posts'], $found['user_rank'], $found['user_email'], $found['id']);
+			$row = $result->fetch_assoc();
+			$user = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id']);
 			return $user;
 		}
 	}
@@ -222,6 +229,115 @@ class Database {
 	}
 
 	/**
+	* Updates the user with a new password.
+	*
+	* @access 	public
+	* @param 	$user 	The username to update.
+	* @param 	$password 	The new user's password.
+	* @return 	void
+	**/
+	public static function updateUserPassword($user, $password) {
+		$user = Util::sanitizeAlphaNumerically($user);
+		$password = Util::sanitizeAlphaNumerically($password);
+
+		$password = Util::hashPassword($password);
+
+		$query = "UPDATE `users` SET `user_password`='$password' WHERE `user_name`='$user'";
+
+		self::queryDB($query);
+	}
+
+	/**
+	* Updates the user's email in the database.
+	*
+	* @access 	public
+	* @param 	string 	$user 	The user's name.
+	* @param 	string 	$email 	The user's new email.
+	* @return 	void
+	**/
+	public static function updateUserEmail($user, $email) {
+		$user = Util::sanitizeAlphaNumerically($user);
+		if(!Util::sanitizeEmail($email)) {
+			throw new Exception("Not a valid email.");
+		}
+
+		$email = mysqli_real_escape_string(self::newConnection(), addslashes($email));
+
+		$query = "UPDATE `users` SET `user_email`='$email' WHERE `user_name`='$user'";
+
+		self::queryDB($query);
+	}
+
+	/**
+	* Gets the comments for the specified post.
+	*
+	* @access 	public
+	* @param 	int 	$post 	The id of the post to get the comments for.
+	* @return 	array
+	**/
+	public static function getComments($post) {
+		if(!is_numeric($post)) {
+			throw new Exception("The post ID must be numeric.");
+		}
+
+		$query = "SELECT * FROM `comments` WHERE `id`='$post'";
+
+		$result = self::queryDB($query);
+
+		// Checks if there are no comments.
+		if(mysqli_num_rows($result) < 1) {
+			return null;
+		} else {
+			$comments = array();
+			while($row = $result->fetch_assoc()) {
+				$poster = self::getUser($row['comment_poster']);
+				$comments[] = new Comment($row['id'], $row['comment_post'], $poster, $row['comment_is_moderated'], $row['comment_content'], $row['comment_date']);
+			}
+
+			return $comments;
+		}
+	}
+
+	/**
+	* Gets all comments that are not approved by the admin panel.
+	*
+	* @access 	public
+	* @return 	array 	The array of Comments that are not approved.
+	**/
+	public static function getCommentsNotApproved() {
+		$query = "SELECT * FROM `comments` WHERE `comment_is_moderated`=0";
+
+		$result = self::queryDB($query);
+
+		$comments = array();
+		while($row = $result->fetch_assoc()) {
+			$poster = self::getUser($row['comment_poster']);
+			$comments[] = new Comment($row['id'], $row['comment_post'], $poster, $row['comment_is_moderated'], $row['comment_content'], $row['comment_date']);
+		}
+
+		return $comments;
+	}
+
+	/**
+	* Updates the comment_is_moderated field to the supplied value.
+	*
+	* @access 	public
+	* @param 	int 	$comment 	The id of the comment.
+	* @param 	string 	$value 		The value to update the field with.
+	* @return 	void
+	**/
+	public static function updateCommentApproved($comment, $value = false) {
+		if(!is_numeric($comment)) {
+			throw new Exception("Not a valid post comment ID.");
+		}
+		$value = Util::sanitizeAlphaNumerically($value);
+
+		$query = "UPDATE `comments` SET `comment_is_moderated`='$value' WHERE `id`='$comment'";
+
+		self::queryDB($query);
+	}
+
+	/**
 	* This function checks the connection to the database. 
 	*
 	* Via mysqli_connect, it returns whether or not the connection was successful.
@@ -231,7 +347,7 @@ class Database {
 	**/
 	public static function checkConnection() {
 		try {
-			$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+			$mysqli = self::newConnection();
 		} catch (mysqli_sql_exception $e) {
 			return false;
 		}
@@ -252,7 +368,7 @@ class Database {
 			throw new DBException("The query cannot be null!");
 		}
 		
-		$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+		$mysqli = self::newConnection();
 
 		// Query!
 		$result = mysqli_query($mysqli, $query);
@@ -278,7 +394,7 @@ class Database {
 			throw new DBException("The query cannot be null!");
 		}
 
-		$mysqli = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+		$mysqli = self::newConnection();
 
 		$result = mysqli_multi_query($mysqli, $query);
 
@@ -287,6 +403,16 @@ class Database {
 		}
 
 		return $result;
+	}
+
+	/**
+	* Creates and returns a new MySQLi connection for sanitization usage and queries.
+	*
+	* @access 	private
+	* @return 	mysqli 	The MySQLi object.
+	**/
+	private static function newConnection() {
+		return mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
 	}
 	
 }

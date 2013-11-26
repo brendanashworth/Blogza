@@ -2,11 +2,12 @@
 
 $view = new View(BLOG_TEMPLATE);
 
-$view->setTitle("Login");
+$view->setTitle($post->title . " | Comments");
 
 $vars = array(
 	"posts" => $posts,
-	"error" => $error,
+	"post" => $post,
+	"comments" => $comments,
 	);
 
 $view->setVariable($vars);
@@ -15,7 +16,7 @@ $pages = array(
 	"header.tpl",
 	"navigation.tpl",
 	"sidebar.tpl",
-	"login.tpl",
+	"comments.tpl",
 	"footer.tpl",
 	);
 

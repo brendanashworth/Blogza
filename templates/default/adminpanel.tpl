@@ -28,7 +28,9 @@
 					<a class="btn btn-block" href="{$blog.url}/">Return to Blog</a>
 				</div>
 				<div class="span4 block">
-
+					<h3>Updates</h3>
+					<p>You are running <strong>1.4.2</strong>.</p>
+					<p>The latest is <strong>1.4.3</strong>.</p>
 				</div>
 				<div class="span4 block">
 
@@ -37,13 +39,21 @@
 			<div class="row-fluid">
 				<div class="span4 block">
 					<form method="post" action="{$blog.url}/admin/create-post" class="form-fill" id="create-post">
+						<div class="alert msg"> </div>
+
 						<h3>create a post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
-						<input type="hidden" name="form" value="create-post"> </input>
-						<input type="text" name="title" placeholder="Post title..."> </input>
-						<textarea name="content" placeholder="Post content..." rows="5"> </textarea>
+						<input id="title" type="text" name="title" placeholder="Post title..."> </input>
+						<textarea id="content" name="content" rows="5">Post content...</textarea>
 
-						<input type="submit" value="Create Post" class="btn btn-info btn-block"> </input>
+						<div class="row-fluid">
+							<div class="span3">
+								<a href="#" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
+							</div>
+							<div class="span9">
+								<input type="submit" value="Create Post" class="btn btn-success btn-block"> </input>
+							</div>
+						</div>
 					</form>
 				</div>
 				<div class="span4 block">
@@ -68,6 +78,34 @@
 				</div>
 				<div class="span4 block">
 					<h3>new comments</h3>
+
+					<table class="table table-bordered table-hold">
+						<thead>
+							<tr>
+								<th>Poster</th>
+								<th>Content</th>
+								<th>Vote</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $vars.comments as $comment}
+
+							<tr id="comment-{$comment->id}">
+								<td>{$comment->author->getUsername()}</td>
+								<td>{$comment->content}</td>
+								<td>
+									<a href="#ok.{$comment->id}" class="vote-btn btn btn-fill btn-success">
+										<i class="icon-ok"> </i>
+									</a>
+									<a href="#remove.{$comment->id}" class="vote-btn btn btn-fill btn-danger">
+										<i class="icon-remove"> </i>
+									</a>
+								</td>
+							</tr>
+
+							{/foreach}
+						</tbody>
+					</table>
 
 				</div>
 			</div>
@@ -100,6 +138,15 @@
 				</div>
 			</div>
 		</div>
+
+		<noscript>
+			<style> .container-fluid { opacity: 0.2; } body { background: #222 !important; } </style>
+			<div class="alert alert-error popup">
+				<h3>Error!</h3>
+
+				<p>Your browser does not support Javascript. You must be running Javascript to use the admin panel. <a href="http://enable-javascript.com" target="_blank">Learn how here.</a></p>
+			</div>
+		</noscript>
 
 		<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"> </script>
 		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
