@@ -7,6 +7,13 @@
 
 $(document).ready(function() {
 
+	// Post creation editor.
+	$('#post-editor').click(function(event) {
+		event.preventDefault();
+
+		$('#post-editor-modal').modal();
+	});
+
 	// Post creation event.
 	$('#create-post').submit(function(event) {
 		event.preventDefault();
