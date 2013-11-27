@@ -10,8 +10,9 @@ $(document).ready(function() {
 	// Post creation editor.
 	$('#post-editor').click(function(event) {
 		event.preventDefault();
+		console.log("clicked");
 
-		$('#post-editor-modal').modal();
+		$('#post-editor-modal').modal('show');
 	});
 
 	// Post creation event.
