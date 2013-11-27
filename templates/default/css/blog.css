@@ -37,6 +37,10 @@ body {
 	text-align: center;
 }
 
+.center * {
+	float: none;
+}
+
 a:hover {
 	text-decoration: none;
 	color: #BF3030;
