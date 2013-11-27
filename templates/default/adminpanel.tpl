@@ -48,7 +48,7 @@
 
 						<div class="row-fluid">
 							<div class="span3">
-								<a href="#" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
+								<a href="#" id="post-editor" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
 							</div>
 							<div class="span9">
 								<input type="submit" value="Create Post" class="btn btn-success btn-block"> </input>
@@ -139,6 +139,23 @@
 			</div>
 		</div>
 
+		<div class="modal hide fade" id="post-editor-modal">
+			<div class="modal-header">
+				<h3>Post Creation</h3>
+
+
+			</div>
+			<div class="modal-body">
+
+
+			</div>
+			<div class="modal-footer">
+
+
+
+			</div>
+		</div>
+
 		<noscript>
 			<style> .container-fluid { opacity: 0.2; } body { background: #222 !important; } </style>
 			<div class="alert alert-error popup">
@@ -149,6 +166,7 @@
 		</noscript>
 
 		<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"> </script>
+		<script src="{$blog.folder}/templates/{$template.name}/js/bootstrap.min.js"> </script>
 		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
 
 	</body>
