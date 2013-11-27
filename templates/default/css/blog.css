@@ -37,10 +37,6 @@ body {
 	text-align: center;
 }
 
-.center * {
-	float: none;
-}
-
 a:hover {
 	text-decoration: none;
 	color: #BF3030;
@@ -165,7 +161,6 @@ input[type="password"] {
 }
 
 .avatar {
-	float: left;
 	border-radius: 3px;
 	border: 1px solid #aaa;
 
@@ -175,6 +170,11 @@ input[type="password"] {
 			box-sizing: border-box;
 	   -moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
+}
+
+.member .avatar,
+.member-main-box .avatar {
+	float: left;
 }
 
 .member .rank {
