@@ -38,7 +38,7 @@ $this->router->any('/account/edit/', 'MemberController@edit');
 // AdminController
 $this->router->get('/admin/', 'AdminController@index');
 $this->router->post('/admin/create-post', 'AdminController@createPost');
-$this->router->any('/admin/update-comment', 'AdminController@updateComment');
+$this->router->post('/admin/update-comment', 'AdminController@updateComment');
 
 // Errorz
 $this->router->any('404', 'HTTPErrorController@display404');
