@@ -160,8 +160,7 @@ input[type="password"] {
 	border-left: 5px solid #aaa;
 }
 
-.member .avatar,
-.member-main .avatar {
+.avatar {
 	float: left;
 	border-radius: 3px;
 	border: 1px solid #aaa;
