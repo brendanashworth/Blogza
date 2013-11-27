@@ -33,8 +33,6 @@
 					<img class="avatar" src="{$vars.user->getAvatar()}" width="128px" height="128px">
 				</p>
 
-				<br />
-
 				<p>We utilize Gravatar for avatars. Please visit <a href="http://en.gravatar.com/support/how-to-sign-up/">their website</a> for how to change your avatar.</p>
 
 			</div>
