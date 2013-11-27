@@ -48,7 +48,7 @@
 
 						<div class="row-fluid">
 							<div class="span3">
-								<a href="#" id="post-editor" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
+								<a href="#" data-toggle="modal" data-target="#post-editor-modal" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
 							</div>
 							<div class="span9">
 								<input type="submit" value="Create Post" class="btn btn-success btn-block"> </input>
