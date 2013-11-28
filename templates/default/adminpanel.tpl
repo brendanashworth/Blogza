@@ -8,14 +8,6 @@
 		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/admin.css">
 		<meta name="description" content="{$blog.description}" />
 		<meta name="author" content="boboman13" />
-
-		<style>
-		body {
-			padding-top: 40px;
-			background-image: url({$blog.folder}/templates/{$template.name}/img/tweed.png);
-		}
-		</style>
-
 	</head>
 
 	<body class="admin">
@@ -25,7 +17,7 @@
 					<h3>{$vars.time}</h3>
 					<p>Hello, {$user.user}.</p>
 					<br />
-					<a class="btn btn-block" href="{$blog.url}/">Return to Blog</a>
+					<a class="btn" href="{$blog.url}/"><i class="icon-chevron-left"></i> Return</a>
 				</div>
 				<div class="span4 block">
 					<h3>Updates</h3>
@@ -48,7 +40,7 @@
 
 						<div class="row-fluid">
 							<div class="span3">
-								<a href="#" data-toggle="modal" data-target="#post-editor-modal" class="btn btn-info btn-block"> <i class="icon-align-left"> </i> Editor</a>
+								<a href="#" class="btn btn-primary btn-block btn-admin" id="edit-btn"><i class="icon-align-left icon-white"></i> Editor</a>
 							</div>
 							<div class="span9">
 								<input type="submit" value="Create Post" class="btn btn-success btn-block"> </input>
@@ -139,21 +131,37 @@
 			</div>
 		</div>
 
-		<div class="modal hide fade" id="post-editor-modal">
-			<div class="modal-header">
-				<h3>Post Creation</h3>
+		<div class="modal hide" id="post-editor">
+
+			<form method="post" action="{$blog.url}/admin/create-post" class="form-fill">
+				<div class="modal-header">
+					<button type="button" class="close">&times;</button>
+					<h3>Post Creation</h3>
+
+				</div>
+				<div class="modal-body form-fill">
+					<input type="text" placeholder="Title" name="title"> </input>
+
+					<div class="edit-tools">
+						<a href="#"> <i class="icon-bold"> </i> </a>
+						<a href="#"> <i class="icon-italic"> </i> </a>
+						<a href="#"> <i class="icon-text-height"> </i> </a>
+
+						<div class="separator"> </div>
+
+						<a href="#"> <i class="icon-align-left"> </i> </a>
+						<a href="#"> <i class="icon-align-center"> </i> </a>
+						<a href="#"> <i class="icon-align-right"> </i> </a>
+					</div>
+					<textarea rows="15"></textarea>
+
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-success btn-block" value="Create Post"> </input>
 
 
-			</div>
-			<div class="modal-body">
-
-
-			</div>
-			<div class="modal-footer">
-
-
-
-			</div>
+				</div>
+			</form>
 		</div>
 
 		<noscript>
@@ -166,7 +174,6 @@
 		</noscript>
 
 		<script src="http://jqueryjs.googlecode.com/files/jquery-1.2.6.min.js"> </script>
-		<script src="{$blog.folder}/templates/{$template.name}/js/bootstrap.min.js"> </script>
 		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
 
 	</body>

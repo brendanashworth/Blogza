@@ -18,6 +18,28 @@ class Util {
 	}
 
 	/**
+	* Aborts the running application and displays an error page.
+	*
+	* @access 	public
+	* @param 	mixed 	$id 	The type of error that occurred.
+	* @return 	void
+	**/
+	public static function abort($id) {
+		switch ($id) {
+
+			case 1:
+				Util::kill("MySQL connection error has occurred.");
+				break;
+
+			case 404:
+				Util::header("HTTP/1.0 404 Not Found");
+				Util::kill("404 error, page not found.");
+				break;
+
+		}
+	}
+
+	/**
 	* Redirect the user to the URL given.
 	*
 	* @access 	public
