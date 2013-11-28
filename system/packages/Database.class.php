@@ -412,7 +412,13 @@ class Database {
 	* @return 	mysqli 	The MySQLi object.
 	**/
 	private static function newConnection() {
-		return mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE);
+		if( ! $con = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE)) {
+			Util::abort(1);
+			return null;
+		} else {
+			return $con;
+		}
+
 	}
 	
 }

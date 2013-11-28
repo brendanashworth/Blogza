@@ -1,10 +1,76 @@
 /* Just general styling. */
+body {
+	background: #000;
+}
+
 h3 {
 	text-align: center;
 	font-weight: normal;
 
 	margin-top: -5px;
 	padding-top: 0px;
+}
+
+.container-fluid {
+	padding-top: 40px;
+	background-image: url(http://subtlepatterns.com/patterns/tweed.png);
+
+	-webkit-transition: all .75s linear;
+	   -moz-transition: all .75s linear;
+			transition: all .75s linear;
+}
+
+.body-dark {
+	background: #000 !important;
+	opacity: 0.3;
+
+	-webkit-transition: all .75s linear;
+	   -moz-transition: all .75s linear;
+			transition: all .75s linear;
+}
+
+/* Edit Post Modal */
+#post-editor textarea {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+
+	box-shadow: 0px 0px 3px #ddd;
+}
+
+.edit-tools {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+
+	border: 1px solid #aaa;
+	background-color: #ddd;
+	box-shadow: 0px 0px 3px #ddd;
+
+	padding: 8px 2px;
+}
+
+.edit-tools a {
+	padding: 8px;
+	border-radius: 3px;
+
+	border: 1px solid #aaa;
+	background-color: #ececec;
+
+	-webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+			transition: all .2s linear;
+}
+
+.edit-tools a:hover {
+	box-shadow: 0px 0px 2px #888 inset;
+
+	-webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+			transition: all .2s linear;
+}
+
+.edit-tools .separator {
+	display: inline-block;
+	margin-right: 5px;
 }
 
 /* Some nice inputs stuff */
@@ -56,4 +122,40 @@ h3 {
 .alert.msg {
 	display: none;
 	margin-bottom: 5px;
+}
+
+/* Button Styles */
+.btn-admin {
+	background: #FFF;
+	box-shadow: 0px 0px 3px #999 inset;
+
+	border: 2px solid #30c0fb;
+	border-radius: 4px;
+
+	color: #333;
+	text-shadow: 1px 1px #eee;
+
+	-webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+			transition: all .2s linear;
+}
+
+.btn-admin:hover {
+	color: #FFF;
+	text-shadow: 1px 1px #333;
+
+	background: #30c0fb;
+	box-shadow: 0px 0px 3px #999;
+
+	-webkit-transition: all .2s linear;
+	   -moz-transition: all .2s linear;
+			transition: all .2s linear;
+}
+
+.btn-admin.btn-success {
+	border: 2px solid #74c474;
+}
+
+.btn-admin.btn-success:hover {
+	background-color: #74c474;
 }

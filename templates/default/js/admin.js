@@ -5,14 +5,44 @@
 * @copyright
 **/
 
+/**
+* Gets the selection from the user.
+**/
+function getSelection() {
+	return (!!document.getSelection) ? document.getSelection() :
+			(!!window.getSelection) ? window.getSelection() :
+			document.selection.getRange().text;
+}
+
 $(document).ready(function() {
 
-	// Post creation editor.
-	$('#post-editor').click(function(event) {
-		event.preventDefault();
-		console.log("clicked");
+	// Tools for the editor.
+	$(".edit-tools a").click(function(event) {
+		console.log(getSelection());
 
-		$('#post-editor-modal').modal('show');
+
+	});
+
+	// Post creation editor.
+	$("#edit-btn").click(function(event) {
+		event.preventDefault();
+
+		// Black.
+		$(".container-fluid").addClass("body-dark");
+
+		// Show our modal.
+		$("#post-editor").removeClass("hide");
+	});
+
+	$("#post-editor .close").click(function(event) {
+		event.preventDefault();
+
+		// Remove blackness.
+		$(".container-fluid").removeClass("body-dark");
+
+		// Hide our modal.
+		$("#post-editor").addClass("hide");
+
 	});
 
 	// Post creation event.

@@ -1,35 +1,18 @@
+
 <?php
-
-/**
-* The settings file for the Blogza application.
-*
-* You can fill these settings out according to the wiki:
-* @link 	https://github.com/boboman13/Blogza/wiki/Setting-up-the-configuration-file	
-* @author 	boboman13
-**/
 class Settings {
-
-	/**
-	* Defines all the settings for Blogza.
-	*
-	* @access 	public
-	* @return 	Settings
-	**/
-	public function __construct() {
-		define("BLOG_NAME", "My Blog");
-		define("BLOG_DESC", "This is a blog powered by the Blogza blog framework.");
-
-		define("BLOG_TEMPLATE", "default");
-		define("BLOG_URL", "http://myblog.com");
-		define("BLOG_TIMEZONE", "America/New_York");
-
-		define("MYSQL_HOST", "localhost");
-		define("MYSQL_USER", "dbuser");
-		define("MYSQL_PASSWORD", "dbpassword");
-		define("MYSQL_DATABASE", "blogza_database");
-
-		date_default_timezone_set(BLOG_TIMEZONE);
-		define("BLOG_NICE_URLS", !empty($_SERVER['BLOGZA_HTACCESS']) );
-	}
-
+public function __construct() {
+// All the settings for the blog. 
+define('BLOG_NAME', 'Blogza');
+define('BLOG_DESC', 'Blogza is an open source blogging framework.');
+define('BLOG_URL', 'http://blogza.tk');
+define('MYSQL_HOST', 'localhost');
+define('MYSQL_USER', 'root');
+define('MYSQL_PASSWORD', '84Ff&ZB_9nDxG.B');
+define('MYSQL_DATABASE', 'blogza');
+define('BLOG_TEMPLATE', 'default');
+define('BLOG_TIMEZONE', 'America/New_York');
+date_default_timezone_set(BLOG_TIMEZONE);
+define("BLOG_NICE_URLS", !empty($_SERVER['BLOGZA_HTACCESS']) );
+}
 }
