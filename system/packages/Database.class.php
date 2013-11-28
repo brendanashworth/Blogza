@@ -11,6 +11,9 @@ class Database {
 	/* These are the cached query results. */
 	private static $posts = null;
 
+	/* This is the amount of sent queries. */
+	public static $queries = 0;
+
 	/**
 	* Creates the Database instance.
 	*
@@ -376,6 +379,9 @@ class Database {
 		// Did we encounter an error?
 		if( !$result && !$bool ) {
 			Util::kill("MySQL error occurred.");
+		} else {
+			// Now we collect the basic stats.
+			self::queries = self::queries + 1;
 		}
 
 		return $result;
