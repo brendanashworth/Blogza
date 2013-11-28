@@ -88,6 +88,11 @@ class View {
 
 		$this->smarty->assign("title", "");
 
+		$this->smarty->assign("stats", array(
+			"queries" => DB::queries,
+
+			));
+
 		$this->smarty->assign("user",
 			array(
 				"user" => Auth::getUsername(),
