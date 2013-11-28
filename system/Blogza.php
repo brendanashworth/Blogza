@@ -17,6 +17,8 @@ class Blogza {
 
 	protected $router;
 
+	public static $start;
+
 	/**
 	* Creates the Blogza instance. This class is the controller for the entire blog.
 	*
@@ -24,14 +26,21 @@ class Blogza {
 	* @return 	Blogza
 	**/
 	public function __construct() {
+		// Records the program start time.
+		self::$start = microtime();
+
+		// Starts our session.
 		session_start();
 
+		// Requires all the necessary files.
 		require BLOGZA_DIR . "/system/settings.php";
+
 		require BLOGZA_DIR . "/system/views/View.php";
+		require BLOGZA_DIR . "/system/controllers/Controller.php";
+		require BLOGZA_DIR . "/system/models/Model.php";
 
 		require BLOGZA_DIR . "/system/routing/Router.php";
-
-		require BLOGZA_DIR . "/system/models/Model.php";
+		
 		require BLOGZA_DIR . "/system/models/Util.php";
 		require BLOGZA_DIR . "/system/models/Auth.php";
 		require BLOGZA_DIR . "/system/models/Post.php";
@@ -39,8 +48,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/models/Comment.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
-
-		require BLOGZA_DIR . "/system/controllers/Controller.php";
+		
 		require BLOGZA_DIR . "/system/controllers/ErrorHandler.php";
 	}
 
@@ -62,7 +70,6 @@ class Blogza {
 
 		// Get the routes.
 		require BLOGZA_DIR . "/system/routes.php";
-		
 
 		// Settle the route.
 		list($class, $method) = explode("@", $this->router->go());

@@ -89,8 +89,8 @@ class View {
 		$this->smarty->assign("title", "");
 
 		$this->smarty->assign("stats", array(
-			"queries" => DB::queries,
-
+			"queries" => Database::$queries,
+			"time" => microtime() - Blogza::$start,
 			));
 
 		$this->smarty->assign("user",

@@ -381,7 +381,7 @@ class Database {
 			Util::kill("MySQL error occurred.");
 		} else {
 			// Now we collect the basic stats.
-			self::queries = self::queries + 1;
+			self::$queries = self::$queries + 1;
 		}
 
 		return $result;
