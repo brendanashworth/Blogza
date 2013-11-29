@@ -203,7 +203,7 @@ class Database {
 		$result = self::queryDB($query);
 
 		// User not found or multiple entries for the same user. If either are true, return null.
-		if(mysqli_num_rows($result) != 1) {
+		if($result == false || mysqli_num_rows($result) != 1) {
 			return null;
 		} else {
 			$row = $result->fetch_assoc();
@@ -272,23 +272,56 @@ class Database {
 	}
 
 	/**
-	* Gets the comments for the specified post.
+	* Creates a comment for a post.
 	*
 	* @access 	public
-	* @param 	int 	$post 	The id of the post to get the comments for.
-	* @return 	array
+	* @param 	int 	$post 	The ID of the post that the comment is on.
+	* @param 	string 	$author 	The name of the comment's author.
+	* @param 	string 	$content 	The content of the post.
+	* @return 	void
 	**/
-	public static function getComments($post) {
+	public static function createComment($post, $author, $content) {
+		// Sanitize input.
 		if(!is_numeric($post)) {
 			throw new Exception("The post ID must be numeric.");
 		}
 
-		$query = "SELECT * FROM `comments` WHERE `id`='$post'";
+		$author = Util::sanitizeAlphaNumerically($author);
+		$content = mysqli_real_escape_string(self::newConnection(), addslashes($content));
+
+		$ismod = "false";
+		$date = date('m/d/y');
+
+		$query = "INSERT INTO `comments` (comment_post, comment_is_moderated, comment_poster, comment_date, comment_content) VALUES ('$post', '$ismod', '$author', '$date', '$content')";
+
+		self::queryDB($query);
+	}
+
+	/**
+	* Gets the comments for the specified post.
+	*
+	* @access 	public
+	* @param 	int 	$post 	The id of the post to get the comments for.
+	* @param 	bool 	$all 	If true, use all comments. Defaults to false for only approved comments.
+	* @return 	array
+	**/
+	public static function getComments($post, $all = false) {
+		if(!is_numeric($post)) {
+			throw new Exception("The post ID must be numeric.");
+		}
+
+		$query = "SELECT * FROM `comments` WHERE `comment_post`='$post'";
+
+		// Should we only use moderated comments?
+		if(!$all) {
+			$query .= " AND `comment_is_moderated`=1";
+		}
 
 		$result = self::queryDB($query);
 
 		// Checks if there are no comments.
 		if(mysqli_num_rows($result) < 1) {
+			echo $query;
 			return null;
 		} else {
 			$comments = array();
@@ -378,7 +411,7 @@ class Database {
 
 		// Did we encounter an error?
 		if( !$result && !$bool ) {
-			Util::kill("MySQL error occurred.");
+			//Util::kill("MySQL error occurred.");
 		} else {
 			// Now we collect the basic stats.
 			self::$queries = self::$queries + 1;

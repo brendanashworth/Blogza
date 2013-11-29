@@ -1,6 +1,10 @@
 /* Just general styling. */
+h1, h2, h3, h4, h5, h6 {
+	font-family: "Ubuntu", "Cambria", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
 body {
-	background: #000;
+	font-family: "Fenix", "Cambria", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 h3 {
@@ -9,24 +13,35 @@ h3 {
 
 	margin-top: -5px;
 	padding-top: 0px;
+
+	border-bottom: 1px solid #aaa;
 }
 
 .container-fluid {
-	padding-top: 40px;
-	background-image: url(http://subtlepatterns.com/patterns/tweed.png);
+	padding: 20px 20px;
+	background: #ccc;
 
 	-webkit-transition: all .75s linear;
 	   -moz-transition: all .75s linear;
 			transition: all .75s linear;
 }
 
+.block {
+	border: 1px solid #777;
+	border-radius: 0px;
+}
+
 .body-dark {
-	background: #000 !important;
+	background: #000;
 	opacity: 0.3;
 
 	-webkit-transition: all .75s linear;
 	   -moz-transition: all .75s linear;
 			transition: all .75s linear;
+}
+
+.modal {
+	top: 5%;
 }
 
 /* Edit Post Modal */
@@ -127,13 +142,16 @@ h3 {
 /* Button Styles */
 .btn-admin {
 	background: #FFF;
-	box-shadow: 0px 0px 3px #999 inset;
+
+			box-shadow: none;
+	   -moz-box-shadow: none;
+	-webkit-box-shadow: none;
 
 	border: 2px solid #30c0fb;
 	border-radius: 4px;
 
 	color: #333;
-	text-shadow: 1px 1px #eee;
+	text-shadow: none;
 
 	-webkit-transition: all .2s linear;
 	   -moz-transition: all .2s linear;
@@ -142,10 +160,8 @@ h3 {
 
 .btn-admin:hover {
 	color: #FFF;
-	text-shadow: 1px 1px #333;
 
 	background: #30c0fb;
-	box-shadow: 0px 0px 3px #999;
 
 	-webkit-transition: all .2s linear;
 	   -moz-transition: all .2s linear;
@@ -158,4 +174,12 @@ h3 {
 
 .btn-admin.btn-success:hover {
 	background-color: #74c474;
+}
+
+.btn-admin.btn-danger {
+	border: 2px solid #e06359;
+}
+
+.btn-admin.btn-danger:hover {
+	background-color: #e06359;
 }

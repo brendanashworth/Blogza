@@ -34,6 +34,7 @@ class ErrorHandler {
 		// Prepare the variables needed for the View, then start the View.
 		require BLOGZA_DIR . "/system/models/BlogzaException.php";
 		$exception = new BlogzaException($errno, $errstring, $errfile, $errline, $errcontext);
+		$backtrace = debug_backtrace();
 
 		require $view;
 

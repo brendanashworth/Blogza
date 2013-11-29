@@ -90,7 +90,7 @@ class View {
 
 		$this->smarty->assign("stats", array(
 			"queries" => Database::$queries,
-			"time" => microtime() - Blogza::$start,
+			"time" => round(microtime() - Blogza::$start, 5),
 			));
 
 		$this->smarty->assign("user",

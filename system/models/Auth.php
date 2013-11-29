@@ -85,7 +85,13 @@ class Auth {
 			return "Guest";
 		}
 
-		return Database::getUser($_SESSION['auth_username'])->getRank();
+		$user = Database::getUser($_SESSION['auth_username']);
+
+		if($user == null) {
+			return "Guest";
+		}
+
+		return $user->getRank();;
 	}
 
 }

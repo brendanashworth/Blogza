@@ -17,7 +17,7 @@
 
 // NOTICE: After installation, comment out these lines. (Put a // in front of both)
 $this->router->get('/install/', 'InstallerController@start');
-$this->router->get('/install/step/([1-3])', 'InstallerController@step');
+$this->router->any('/install/step/([1-3])', 'InstallerController@step');
 
 // PostController
 $this->router->get('/', 'PostController@index');

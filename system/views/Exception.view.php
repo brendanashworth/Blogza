@@ -16,7 +16,7 @@ if(!isset($exception)) {
 	<head>
 		<title>Uh oh! An error has occurred!</title>
 		<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.1/css/bootstrap.min.css">
-		<link rel="stylesheet" href="http://10.0.1.34/blog/templates/default/css/error.css">
+		<link rel="stylesheet" href="http://www.blogza.tk/templates/default/css/error.css">
 	</head>
 
 	<body>
@@ -24,9 +24,39 @@ if(!isset($exception)) {
 
 			<div class="col-md-4">
 				<ul class="nav nav-pills nav-stacked nav-error-files">
-					<li><a href="#1">
-						<?php echo $exception->err_file; ?> : <?php echo $exception->err_line; ?>
-					</a></li>
+					<?php
+
+					$print = false;
+					foreach($backtrace as $file) {
+						//if(!isset($file["file"])) break;
+						if($exception->err_file == @$file["file"] && $exception->err_line == $file["line"]) {
+							$print = true;
+						}
+
+						if($print) {
+							?>
+							<li><a href="#">
+								<?php
+
+								echo $file["file"] . " : " . $file["line"];
+								
+								if(isset($file["class"])) {
+									$type = !isset($file["type"]) ? "->" : $file["type"];
+
+									echo "<br />";
+									echo "<strong> " . $file["class"] . $type . $file["function"] . "(); </strong>";
+								} else if(isset($file["function"])) {
+									echo "<br />";
+									echo "<strong> " . $file["function"] . "(); </strong>";
+								}
+
+								?>
+							</a></li>
+							<?php
+						}
+					}
+
+					?>
 				</ul>
 			</div>
 

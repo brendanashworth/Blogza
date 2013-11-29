@@ -4,7 +4,7 @@
 				</div>
 				<div class="span4">
 					<p style="text-align: right;">
-						<img src="http://10.0.1.34/blog/blogza-logo.png" />
+						<img src="http://www.blogza.tk/templates/default/img/blogza-logo.png" />
 					</p>
 				</div>
 

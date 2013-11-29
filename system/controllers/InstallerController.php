@@ -51,7 +51,7 @@ class InstallerController extends Controller {
 	protected function step1() {
 		if(isset($_POST['blogname']) && isset($_POST['blogdesc']) && isset($_POST['blogurl'])  &&
 		   isset($_POST['host'])     && isset($_POST['user'])     && isset($_POST['password']) && isset($_POST['dbname']) ) {
-		   	require BLOGZA_DIR . "/system/models/Model.php";
+
 		   	require BLOGZA_DIR . "/system/models/Installer.php";
 			// All the fields were filled out. Wow, thats a lot of fields.
 			$installer = new Installer();
@@ -123,7 +123,15 @@ class InstallerController extends Controller {
 	* @return 	void
 	**/
 	protected function step3() {
-		echo "Step 3.";
+		$step = 3;
+		$error = false;
+		if(isset($_POST['error'])) {
+			$error = $_POST['error'];
+		}
+
+		$view = BLOGZA_DIR . "/system/views/install-step3.view.php";
+
+		require $view;
 	}
 
 }

@@ -28,9 +28,12 @@ class Post extends Model {
 			$author = Database::getUser($author);
 		}
 
+		// We use Markup to translate our post stuff.
+		$markup = new Markup();
+
 		$this->title = $title;
 		$this->author = $author;
-		$this->content = $content;
+		$this->content = $markup->process($content);
 		$this->date = $date;
 
 		$this->link = empty($id) ? null : $this->generateUrl($title, $id);

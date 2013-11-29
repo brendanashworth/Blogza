@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 	// Tools for the editor.
 	$(".edit-tools a").click(function(event) {
-		console.log(getSelection());
+		console.log(window.getSelection());
 
 
 	});
@@ -83,16 +83,18 @@ $(document).ready(function() {
 		if(btn.attr('href').indexOf('ok') == 1) {
 			var id = btn.attr('href').substring(4, 14);
 
-			// Lets OK the post with Ajax.
+			console.log(id);
+
+			// Lets OK the comment with Ajax.
 			$.ajax({
 				type: "POST",
 				url: "update-comment",
 				data: {
 					value: "true",
-					id: id,
+					comment_id: id,
 				},
 
-				success: function(result) {
+				complete: function(result) {
 					$("#comment-".concat(id)).fadeOut('slow');
 
 					console.log("Approved a comment: ".concat(id));
@@ -104,19 +106,20 @@ $(document).ready(function() {
 		} else if (btn.attr('href').indexOf('remove') == 1) {
 			var id = btn.attr('href').substring(8, 18);
 
-			// Lets kill the post with Ajax.
+			// Lets kill the comment with Ajax.
 			$.ajax({
 				type: "POST",
 				url: "update-comment",
 				data: {
 					value: "false",
-					id: id,
+					comment_id: id,
 				},
 
-				success: function(result) {
+				complete: function(result) {
 					$("#comment-".concat(id)).fadeOut('slow');
 
 					console.log("Deleted a comment: ".concat(id));
+					console.log("Log: ".concat(result.responseText));
 				}
 
 			});

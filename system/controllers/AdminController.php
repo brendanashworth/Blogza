@@ -55,12 +55,14 @@ class AdminController extends Controller {
 
 			$id = $_POST['comment_id'];
 			if(!is_numeric($id)) {
-				Util::kill("Your comment ID is not numeric.");
+				echo "Your comment ID is not numeric.";
+			} else {
+				Database::updateCommentApproved($id, $value);
+				echo "Approved to $value correctly.";
 			}
 
-			Database::updateCommentApproved($id, $value);
-
-			echo $value . " " . $id;
+		} else {
+			echo "JS Error: Missing one or two fields.";
 		}
 
 	}

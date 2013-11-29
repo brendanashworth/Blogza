@@ -28,8 +28,12 @@ class PostController extends Controller {
 	}
 
 	public function viewComments() {
-		if(Auth::isLogged() && isset($_POST['comment'])) {
-			die("make post.");
+		if(Auth::isLogged() && isset($_POST['content'])) {
+			$post = $this->matched[2];
+			$author = Auth::getUsername();
+			$content = $_POST['content'];
+
+			Database::createComment($post, $author, $content);
 		}
 
 		$view = BLOGZA_DIR . "/system/views/ViewComments.view.php";
