@@ -8,6 +8,9 @@
 **/
 class Database {
 
+	/* This is the MySQLi connection object. */
+	private static $conn = null;
+
 	/* These are the cached query results. */
 	private static $posts = null;
 
@@ -63,7 +66,7 @@ class Database {
 	* @param	string 	$content 	The content of the post.
 	* @return 	bool|result
 	**/
-	public static function createPost($author = null, $title = null, $content = null) {
+	public static function createPost($author = null, $title = null, $content = null, $status = "done") {
 		// If any were null, throw an exception.
 		if($author == null || $title == null || $content == null) {
 			throw new DBException("The author, title, or content cannot be null!");
@@ -71,6 +74,7 @@ class Database {
 
 		// Sanitize these inputs.
 		$author = Util::sanitizeAlphaNumerically($author);
+		$status = Util::sanitizeAlphaNumerically($status);
 
 		$title   = mysqli_real_escape_string(self::newConnection(), addslashes($title));
 		$content = mysqli_real_escape_string(self::newConnection(), addslashes($content));
@@ -78,7 +82,7 @@ class Database {
 		$date = date("m/d/y");
 
 		// Here is the query and execution.
-		$query = "INSERT INTO `posts` (post_author, post_title, post_content, post_date) VALUES ('$author', '$title', '$content', '$date')";
+		$query = "INSERT INTO `posts` (post_author, post_title, post_content, post_date, post_status) VALUES ('$author', '$title', '$content', '$date', '$status')";
 
 		$result = self::queryDB($query);
 
@@ -108,7 +112,7 @@ class Database {
 		while($row = $result->fetch_assoc()) {
 			$id = $row['id'];
 
-			$posts[$id] = new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id);
+			$posts[$id] = new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id, $row['post_status']);
 		}
 
 		return $posts;
@@ -122,13 +126,11 @@ class Database {
 	* @return 	Post 	The Post object representation of the post.
 	**/
 	public static function getPost($id) {
-		if($id == null) {
-			throw new DBException("The post ID cannot be null!");
-		} else if (!is_numeric($id)) {
+		if (!is_numeric($id)) {
 			throw new DBException("The post ID needs to be an integer!");
 		}
 
-		$id = mysqli_real_escape_string(self::newConnection(), $id); // Useless, no. Safe, yes.
+		$id = mysqli_real_escape_string(self::newConnection(), addslashes($id)); // Useless, no. Safe, yes.
 
 		$query = "SELECT * FROM `posts` WHERE `id`='$id'";
 
@@ -140,7 +142,7 @@ class Database {
 		} else {
 			$row = $result->fetch_assoc();
 
-			return new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id);
+			return new Post($row['post_title'], $row['post_author'], $row['post_content'], $row['post_date'], $id, $row['post_status']);
 		}
 
 	}
@@ -289,7 +291,7 @@ class Database {
 		$author = Util::sanitizeAlphaNumerically($author);
 		$content = mysqli_real_escape_string(self::newConnection(), addslashes($content));
 
-		$ismod = "false";
+		$ismod = "no";
 		$date = date('m/d/y');
 
 		$query = "INSERT INTO `comments` (comment_post, comment_is_moderated, comment_poster, comment_date, comment_content) VALUES ('$post', '$ismod', '$author', '$date', '$content')";
@@ -314,7 +316,7 @@ class Database {
 
 		// Should we only use moderated comments?
 		if(!$all) {
-			$query .= " AND `comment_is_moderated`=1";
+			$query .= " AND `comment_is_moderated`='yes'";
 		}
 
 		$result = self::queryDB($query);
@@ -341,7 +343,7 @@ class Database {
 	* @return 	array 	The array of Comments that are not approved.
 	**/
 	public static function getCommentsNotApproved() {
-		$query = "SELECT * FROM `comments` WHERE `comment_is_moderated`=0";
+		$query = "SELECT * FROM `comments` WHERE `comment_is_moderated`='no'";
 
 		$result = self::queryDB($query);
 
@@ -411,7 +413,7 @@ class Database {
 
 		// Did we encounter an error?
 		if( !$result && !$bool ) {
-			//Util::kill("MySQL error occurred.");
+			Util::kill("MySQL error occurred.");
 		} else {
 			// Now we collect the basic stats.
 			self::$queries = self::$queries + 1;
@@ -439,6 +441,9 @@ class Database {
 
 		if( !$result && !$bool ) {
 			Util::kill("MySQL error occurred.");
+		} else {
+			// Basic stats generating.
+			self::$queries = self::$queries + 1;
 		}
 
 		return $result;
@@ -451,11 +456,17 @@ class Database {
 	* @return 	mysqli 	The MySQLi object.
 	**/
 	private static function newConnection() {
-		if( ! $con = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE)) {
+		// Check for an already connected MySQLi object.
+		if(self::$conn != null) {
+			return self::$conn;
+		}
+
+		if( ! $conn = mysqli_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE)) {
 			Util::abort(1);
 			return null;
 		} else {
-			return $con;
+			self::$conn = $conn;
+			return $conn;
 		}
 
 	}
