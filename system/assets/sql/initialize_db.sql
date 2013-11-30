@@ -4,6 +4,7 @@ CREATE TABLE `posts` (
     `post_title` varchar(100) NOT NULL,
     `post_content` varchar(10000) NOT NULL,
     `post_date` varchar(10) NOT NULL,
+    `post_status` varchar(15) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -20,7 +21,7 @@ CREATE TABLE `users` (
 CREATE TABLE `comments` (
 	`id` int(100) NOT NULL AUTO_INCREMENT,
 	`comment_post` int(10) NOT NULL,
-	`comment_is_moderated` varchar(5) NOT NULL,
+	`comment_is_moderated` varchar(10) NOT NULL,
 	`comment_poster` varchar(16) NOT NULL,
 	`comment_date` varchar(10) NOT NULL,
 	`comment_content` varchar(200) NOT NULL,
