@@ -91,7 +91,7 @@ class Auth {
 			return "Guest";
 		}
 
-		return $user->getRank();;
+		return htmlentities($user->getRank());
 	}
 
 }

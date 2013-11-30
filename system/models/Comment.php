@@ -27,11 +27,11 @@ class Comment {
 	public function __construct($id, $post, $author, $ismoderated, $content, $date) {
 		$markup = new Markup();
 
-		$this->id = $id;
-		$this->author = $author;
-		$this->ismoderated = $ismoderated;
-		$this->content = $markup->process($content);
-		$this->date = $date;
+		$this->id = htmlentities($id);
+		$this->author = htmlentities($author);
+		$this->ismoderated = htmlentities($ismoderated);
+		$this->content = $markup->process(htmlentities($content)); // Call htmlentities() BEFORE Markup.
+		$this->date = htmlentities($date);
 	}
 
 }

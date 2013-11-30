@@ -31,12 +31,12 @@ class User {
 			throw new Exception("The username, password, or posts cannot be null!");
 		}
 
-		$this->username = htmlspecialchars($username);
-		$this->password = htmlspecialchars($password);
-		$this->posts = htmlspecialchars($posts);
-		$this->rank = htmlspecialchars($rank);
-		$this->email = htmlspecialchars($email);
-		$this->id = htmlspecialchars($id);
+		$this->username = htmlentities($username);
+		$this->password = htmlentities($password);
+		$this->posts = htmlentities($posts);
+		$this->rank = htmlentities($rank);
+		$this->email = htmlentities($email);
+		$this->id = htmlentities($id);
 
 		$this->avatar = $this->generateAvatar($email);
 	}

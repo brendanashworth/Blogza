@@ -9,6 +9,7 @@ class Post extends Model {
 	public $author;
 	public $content;
 	public $date;
+	public $status;
 
 	public $link;
 
@@ -21,9 +22,10 @@ class Post extends Model {
 	* @param 	string 	$content 	The content of the post.
 	* @param 	string 	$date 		The creation date of the post.
 	* @param 	int 	$id 		The ID of the post. Defaults to null.
+	* @param 	string 	$status 	The status of the post.
 	* @return 	Post
 	**/
-	public function __construct($title, $author, $content, $date, $id) {
+	public function __construct($title, $author, $content, $date, $id, $status) {
 		if( !($author instanceof User) ) {
 			$author = Database::getUser($author);
 		}
@@ -31,12 +33,13 @@ class Post extends Model {
 		// We use Markup to translate our post stuff.
 		$markup = new Markup();
 
-		$this->title = $title;
-		$this->author = $author;
-		$this->content = $markup->process($content);
-		$this->date = $date;
+		$this->title = htmlentities($title);
+		$this->author = htmlentities($author);
+		$this->content = $markup->process(htmlentities($content)); // Be sure to call htmlentities() BEFORE we process Markup.
+		$this->date = htmlentities($date);
+		$this->status = htmlentities($status);
 
-		$this->link = empty($id) ? null : $this->generateUrl($title, $id);
+		$this->link = empty($id) ? null : $this->generateUrl(htmlentities($title), htmlentities($id));
 	}
 
 	/**
