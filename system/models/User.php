@@ -35,7 +35,7 @@ class User {
 		$this->password = htmlentities($password);
 		$this->posts = htmlentities($posts);
 		$this->rank = htmlentities($rank);
-		$this->email = htmlentities($email);
+		$this->email = htmlentities(stripslashes($email));
 		$this->id = htmlentities($id);
 
 		$this->avatar = $this->generateAvatar($email);
