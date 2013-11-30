@@ -6,22 +6,50 @@
 **/
 
 /**
-* Gets the selection from the user.
+* Creates a post via AJAX/POST.
 **/
-function getSelection() {
-	return (!!document.getSelection) ? document.getSelection() :
-			(!!window.getSelection) ? window.getSelection() :
-			document.selection.getRange().text;
+function createPost(title, content, box) {
+	$(box.concat(" .loader")).addClass("show");
+
+	if(title == "" || title == "Post title..."
+		|| content == "" || content == "Post content...") {
+
+		$(box.concat(" .loader")).removeClass("show");
+
+		$(box.concat(" .msg")).fadeIn('slow');
+		$(box.concat(" .msg")).html("Try being original.");
+
+		setTimeout(function() {
+			$(box.concat(" .msg")).fadeOut('slow');
+		}, 5000);
+
+		return;
+	}
+
+	// Run the ajax.
+	$.ajax({
+		type: "POST",
+	 	url: "create-post",
+	 	data: {
+	 		title: title,
+	 		content: content,
+	 	},
+
+		complete: function(result) {
+			$(box.concat(" .loader")).removeClass("show");
+
+			$(box.concat(" .msg")).fadeIn('slow');
+			$(box.concat(" .msg")).html(result.responseText);
+
+			setTimeout(function() {
+				$(box.concat(" .msg")).fadeOut('slow');
+			}, 5000);
+		}
+	});
+
 }
 
 $(document).ready(function() {
-
-	// Tools for the editor.
-	$(".edit-tools a").click(function(event) {
-		console.log(window.getSelection());
-
-
-	});
 
 	// Post creation editor.
 	$("#edit-btn").click(function(event) {
@@ -45,33 +73,24 @@ $(document).ready(function() {
 
 	});
 
+	// Submitting via the post editor.
+	$('#post-editor-form').submit(function(event) {
+		event.preventDefault();
+
+		var title = $("#post-editor input[name=title]").val(),
+		content = $("#post-editor textarea[name=content]").val();
+
+		createPost(title, content, "#post-editor");
+	});
+
 	// Post creation event.
 	$('#create-post').submit(function(event) {
 		event.preventDefault();
 
-		$("#create-post .loader").addClass("show");
+		var title = $("#create-post #title").val(),
+		content = $("#create-post #content").val();
 
-		// Run the ajax.
-		$.ajax({
-			type: "POST",
-		 	url: "create-post",
-		 	data: {
-		 		title: $("#create-post #title").val(),
-		 		content: $("#create-post #content").val(),
-		 	},
-
-			complete: function(result) {
-				$("#create-post .loader").removeClass("show");
-
-				$("#create-post .msg").fadeIn('slow');
-				$("#create-post .msg").html(result.responseText);
-
-				setTimeout(function() {
-					$("#create-post .msg").fadeOut('slow');
-				}, 5000);
-			}
-		});
-
+		createPost(title, content, "#create-post");
 	});
 
 	// Comment approval event.
@@ -90,15 +109,12 @@ $(document).ready(function() {
 				type: "POST",
 				url: "update-comment",
 				data: {
-					value: "true",
+					value: "yes",
 					comment_id: id,
 				},
 
-				complete: function(result) {
+				success: function(result) {
 					$("#comment-".concat(id)).fadeOut('slow');
-
-					console.log("Approved a comment: ".concat(id));
-					console.log("Log: ".concat(result.responseText));
 				}
 
 			});
@@ -111,15 +127,12 @@ $(document).ready(function() {
 				type: "POST",
 				url: "update-comment",
 				data: {
-					value: "false",
+					value: "delete",
 					comment_id: id,
 				},
 
-				complete: function(result) {
+				success: function(result) {
 					$("#comment-".concat(id)).fadeOut('slow');
-
-					console.log("Deleted a comment: ".concat(id));
-					console.log("Log: ".concat(result.responseText));
 				}
 
 			});

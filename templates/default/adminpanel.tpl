@@ -38,7 +38,7 @@
 
 						<h3>New Post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
-						<input id="title" type="text" name="title" placeholder="Post title..."> </input>
+						<input id="title" type="text" name="title" value="Post title..."> </input>
 						<textarea id="content" name="content" rows="5">Post content...</textarea>
 
 						<div class="row-fluid">
@@ -52,8 +52,15 @@
 					</form>
 				</div>
 				<div class="span4 block">
-					<h3>Latest Posts</h3>
-					<table class="table table-bordered table-hold">
+					<h3>Posts</h3>
+
+					<div class="posts-breakdown">
+						<p><strong class="done">6</strong> Finished</p>
+						<p><strong class="draft">2</strong> Drafts</p>
+						<p><strong class="trash">3</strong> Trashed</p>
+					</div>
+
+					<table class="table table-bordered table-hold hide">
 						<thead>
 							<tr>
 								<th>Author</th>
@@ -136,13 +143,15 @@
 
 		<div class="modal hide" id="post-editor">
 
-			<form method="post" action="{$blog.url}/admin/create-post" class="form-fill">
+			<form method="post" action="{$blog.url}/admin/create-post" class="form-fill" id="post-editor-form">
 				<div class="modal-header">
 					<button type="button" class="close">&times;</button>
-					<h3>Post Creation</h3>
+					<h3>Post Creation <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
 				</div>
 				<div class="modal-body form-fill">
+					<div class="alert msg"> </div>
+
 					<input type="text" placeholder="Title" name="title"> </input>
 
 					<div class="edit-tools">
@@ -156,7 +165,7 @@
 						<a href="#"> <i class="icon-align-center"> </i> </a>
 						<a href="#"> <i class="icon-align-right"> </i> </a>
 					</div>
-					<textarea rows="15"></textarea>
+					<textarea name="content" rows="15"></textarea>
 
 				</div>
 				<div class="modal-footer">

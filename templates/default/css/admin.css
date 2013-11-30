@@ -5,9 +5,10 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
 	font-family: "Fenix", "Cambria", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-image: url(http://subtlepatterns.com/patterns/brushed.png);
 }
 
-h3 {
+.container-fluid h3 {
 	text-align: center;
 	font-weight: normal;
 
@@ -17,9 +18,13 @@ h3 {
 	border-bottom: 1px solid #aaa;
 }
 
+.modal h3 {
+	text-align: center;
+	font-weight: normal;
+}
+
 .container-fluid {
 	padding: 20px 20px;
-	background: #ccc;
 
 	-webkit-transition: all .75s linear;
 	   -moz-transition: all .75s linear;
@@ -120,6 +125,10 @@ h3 {
 	cursor: hand;
 }
 
+.table td {
+	background-color: #fff;
+}
+
 /* Message Styles */
 .alert.popup {
 	position: fixed;
@@ -182,4 +191,43 @@ h3 {
 
 .btn-admin.btn-danger:hover {
 	background-color: #e06359;
+}
+
+/* Posts Breakdown */
+.posts-breakdown {
+	padding: 20px;
+
+	border-radius: 100%;
+	border: 1px solid #ccc;
+
+	width: 100px;
+	height: 100px;
+
+	background-color: #555;
+	box-shadow: 0px 0px 4px #aaa;
+
+	margin: 0px auto;
+}
+
+.posts-breakdown p {
+	font-size: 16px;
+
+	text-align: center;
+	color: #eee;
+}
+
+.posts-breakdown strong {
+	font-size: 22px;
+}
+
+.posts-breakdown strong.done {
+	color: #38E156;
+}
+
+.posts-breakdown strong.draft {
+	color: #FFE940;
+}
+
+.posts-breakdown strong.trash {
+	color: #A2222F;
 }
