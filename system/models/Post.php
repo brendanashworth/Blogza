@@ -34,7 +34,7 @@ class Post extends Model {
 		$markup = new Markup();
 
 		$this->title = htmlentities($title);
-		$this->author = htmlentities($author);
+		$this->author = $author;
 		$this->content = $markup->process(htmlentities($content)); // Be sure to call htmlentities() BEFORE we process Markup.
 		$this->date = htmlentities($date);
 		$this->status = htmlentities($status);

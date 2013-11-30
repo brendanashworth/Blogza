@@ -18,7 +18,7 @@ class Comment {
 	* @access 	public
 	* @param 	int 	$id 	ID of the comment.
 	* @param 	int 	$post 	ID of the post.
-	* @param 	string 	$author 	Username of the comment's author.
+	* @param 	User	$author 	The comment's author.
 	* @param 	bool 	$ismoderated 	Whether or not the comment has been moderated yet. Not used on all systems.
 	* @param 	string 	$content 	The content of the post.
 	* @param 	string 	$date 	The date at which the comment was made.
@@ -28,7 +28,7 @@ class Comment {
 		$markup = new Markup();
 
 		$this->id = htmlentities($id);
-		$this->author = htmlentities($author);
+		$this->author = $author;
 		$this->ismoderated = htmlentities($ismoderated);
 		$this->content = $markup->process(htmlentities($content)); // Call htmlentities() BEFORE Markup.
 		$this->date = htmlentities($date);
