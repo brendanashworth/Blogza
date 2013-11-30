@@ -33,9 +33,9 @@ class Post extends Model {
 		// We use Markup to translate our post stuff.
 		$markup = new Markup();
 
-		$this->title = htmlentities($title);
+		$this->title = htmlentities(stripslashes($title));
 		$this->author = $author;
-		$this->content = $markup->process(htmlentities($content)); // Be sure to call htmlentities() BEFORE we process Markup.
+		$this->content = $markup->process(htmlentities(stripslashes($content))); // Be sure to call htmlentities() BEFORE we process Markup.
 		$this->date = htmlentities($date);
 		$this->status = htmlentities($status);
 
