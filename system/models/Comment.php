@@ -28,7 +28,7 @@ class Comment {
 		$markup = new Markup();
 
 		$this->id = htmlentities($id);
-		$this->author = htmlentities($author);
+		$this->author = $author;
 		$this->ismoderated = htmlentities($ismoderated);
 		$this->content = $markup->process(htmlentities(stripslashes($content))); // Call htmlentities() BEFORE Markup.
 		$this->date = htmlentities($date);
