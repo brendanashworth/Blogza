@@ -10,6 +10,7 @@ class Markup {
 		"[/BOLD]" => "</b>",
 		"[ITALIC]" => "<i>",
 		"[/ITALIC]" => "</i>",
+		"[BR]" => "<br />",
 		);
 
 	/**

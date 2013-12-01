@@ -34,6 +34,8 @@ class AdminController extends Controller {
 			$title = $_POST['title'];
 			$content = $_POST['content'];
 
+			$content = str_replace("\n", "[BR]"); // Replace line breaks with Markup breaks.
+
 			Database::createPost(Auth::getUsername(), $title, $content);
 			echo "Post created.";
 		} else {
