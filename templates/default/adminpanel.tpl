@@ -52,30 +52,13 @@
 					</form>
 				</div>
 				<div class="span4 block">
-					<h3>Posts</h3>
+					<h3>Posts Status</h3>
 
 					<div class="posts-breakdown">
 						<p><strong class="done">6</strong> Finished</p>
 						<p><strong class="draft">2</strong> Drafts</p>
 						<p><strong class="trash">3</strong> Trashed</p>
 					</div>
-
-					<table class="table table-bordered table-hold hide">
-						<thead>
-							<tr>
-								<th>Author</th>
-								<th>Title</th>
-							</tr>
-						</thead>
-						<tbody>
-							{foreach $vars.posts as $post}
-							<tr>
-								<td>{$post->author->getUsername()}</td>
-								<td>{$post->title}</td>
-							</tr>
-							{/foreach}
-						</tbody>
-					</table>
 
 				</div>
 				<div class="span4 block">
@@ -133,6 +116,33 @@
 
 				</div>
 				<div class="span4 block">
+					<h3>Edit Posts</h3>
+
+					<table class="table table-bordered table-hold">
+						<thead>
+							<tr>
+								<th>Action</th>
+								<th>Author</th>
+								<th>Title</th>
+							</tr>
+						</thead>
+						<tbody>
+							{foreach $vars.posts as $post name=posts}
+							{if $smarty.foreach.posts.index == 5}
+								{break}
+							{/if}
+							<tr>
+								<td>
+									<a href="#edit.{$post->id}" class="edit-btn btn btn-admin btn-fill btn-success">
+										<i class="icon-pencil"> </i>
+									</a>
+								</td>
+								<td>{$post->author->getUsername()}</td>
+								<td id="post-{$post->id}">{$post->title}</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
 
 				</div>
 				<div class="span4 block">
@@ -140,6 +150,32 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="modal hide" id="edit-post">
+			<form method="post" action="{$blog.url}/admin/update-post" class="form-fill" id="edit-post-form">
+				<div class="modal-header">
+					<button type="button" class="close">&times;</button>
+					<h3>Edit Post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /><h3>
+				</div>
+				<div class="modal-body">
+					<div class="alert msg"> </div>
+					<h2 name="title">Title</h2>
+
+					<input type="hidden" value="" name="id" />
+
+					<div>
+					</div>
+
+					<textarea class="content" rows="15"></textarea>
+
+				</div>
+				<div class="modal-footer">
+					<input type="submit" class="btn btn-admin btn-success btn-block" value="Update Post"> </input>
+
+				</div>
+
+			</form>
+		</div>	
 
 		<div class="modal hide" id="post-editor">
 

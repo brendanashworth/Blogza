@@ -12,7 +12,7 @@ class AdminController extends Controller {
 	* @return 	void
 	**/
 	public function index() {
-		$posts = Database::getPosts();
+		$posts = array_reverse(Database::getPosts());
 		$users = Database::getUsers();
 
 		$comments = Database::getCommentsNotApproved();
@@ -44,6 +44,34 @@ class AdminController extends Controller {
 	}
 
 	/**
+	* Gets the post. This is an Ajax / POST only feature.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function getPost() {
+		if(!empty($_POST['id'])) {
+			$id = $_POST['id'];
+
+			if(!is_numeric($id)) {
+				echo "Post ID must be numeric.";
+			} else {
+				// Now we get the Post.
+
+				$post = Database::getPost($id);
+				$markup = new Markup();
+
+				$content = $markup->processBackwards($post->content);
+				$content = str_replace("[BR]", "\n", $content);
+
+				echo $content;
+			}
+		} else {
+			echo "JS Error: Missing Post ID.";
+		}
+	}
+
+	/**
 	* Updates a comment's moderated status. This is an Ajax / POST only feature.
 	*
 	* @access 	public
@@ -67,6 +95,26 @@ class AdminController extends Controller {
 			echo "JS Error: Missing one or two fields.";
 		}
 
+	}
+
+	/**
+	* Updates a post's status, content, and title. This is an Ajax / POST only feature.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function updatePost() {
+		if(!empty($_POST['content']) && !empty($_POST['id'])) {
+			$id = $_POST['id'];
+			$content = $_POST['content'];
+
+			$content = str_replace("\n", "[BR]", $content); // Replace line breaks with Markup breaks.
+
+			Database::updatePost($id, $content);
+			echo "Post updated.";
+		} else {
+			echo "You are missing one or two fields.";
+		}
 	}
 
 	/**

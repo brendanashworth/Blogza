@@ -97,6 +97,30 @@ class Database {
 	}
 
 	/**
+	* Updates the post to the new content.
+	*
+	* @access 	public
+	* @param 	int 	$id 	The ID of the post.
+	* @param 	string 	$content 	The post's new content.
+	* @return 	void
+	**/
+	public static function updatePost($id = null, $content = null) {
+		if($id == null || $content == null) {
+			throw new Exception("The post ID or content cannot be null!");
+		}
+
+		if(!is_numeric($id)) {
+			throw new Exception("The post ID must be numeric!");
+		}
+
+		$content = mysqli_real_escape_string(self::newConnection(), addslashes($content));
+
+		$query = "UPDATE `posts` SET `post_content`='$content' WHERE id='$id'";
+
+		self::queryDB($query);
+	}
+
+	/**
 	* Gets all the posts in array format.
 	*
 	* @access	public

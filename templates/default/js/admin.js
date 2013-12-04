@@ -49,7 +49,90 @@ function createPost(title, content, box) {
 
 }
 
+/**
+* Gets the Post via Ajax / POST.
+**/
+function getPost(id, callback) {
+
+	// Gets the post via Ajax.
+	$.ajax({
+		type: "POST",
+		url: "get-post",
+		data: {
+			id: id,
+		},
+
+		complete: function(result) {
+			callback(result.responseText);
+		}
+
+	});
+}
+
+/**
+* Updates a comment via AJAX/POST.
+**/
+function updateComment(id, value) {
+
+	// Ajax time.
+	$.ajax({
+		type: "POST",
+		url: "update-comment",
+		data: {
+			value: value,
+			comment_id: id,
+		},
+
+		success: function(result) {
+			$("#comment-".concat(id)).fadeOut('slow');
+		}
+	});
+}
+
+/* Updates the post. */
+function updatePost(id, content, callback) {
+
+	// Ajax for the win!
+	$.ajax({
+		type: "POST",
+		url: "update-post",
+		data: {
+			id: id,
+			content: content,
+		},
+
+		success: function(result) {
+			callback(result.responseText);
+		}
+
+	});
+}
+
 $(document).ready(function() {
+
+	// Post edit listener.
+	$(".edit-btn").click(function(event) {
+		event.preventDefault();
+
+		var href = $(this).attr('href');
+		var id = href.substring(6, 16);
+		var title = $("#post-".concat(id));
+		var post = getPost(id, function(response) {
+
+			// This is called after Ajax, which is passed $response.
+			$(".container-fluid").addClass("body-dark");
+
+			$("#edit-post").removeClass("hide");
+
+			// Load the content.
+			$("#edit-post-form .content").val(response);
+			$("#edit-post-form h2").html(title);
+
+			$("#edit-post-form input[name=id]").val(id);
+		});
+
+		
+	});
 
 	// Post creation editor.
 	$("#edit-btn").click(function(event) {
@@ -62,25 +145,28 @@ $(document).ready(function() {
 		$("#post-editor").removeClass("hide");
 	});
 
-	$("#post-editor .close").click(function(event) {
+	// Closing a modal
+	$(".modal .close").click(function(event) {
 		event.preventDefault();
 
-		// Remove blackness.
 		$(".container-fluid").removeClass("body-dark");
 
-		// Hide our modal.
-		$("#post-editor").addClass("hide");
-
+		$(".modal").addClass("hide");
 	});
 
 	// Submitting via the post editor.
-	$('#post-editor-form').submit(function(event) {
+	$('#edit-post-form').submit(function(event) {
 		event.preventDefault();
 
-		var title = $("#post-editor input[name=title]").val(),
-		content = $("#post-editor textarea[name=content]").val();
+		var content = $("#edit-post-form .content").val();
+		var id = $("#edit-post-form input[name=id]").val();
 
-		createPost(title, content, "#post-editor");
+		updatePost(id, content, function(result) {
+			//$("#edit-post-form .alert").val(result);
+
+			$("#edit-post").addClass("hide");
+			$(".container-fluid").removeClass("body-dark");
+		});
 	});
 
 	// Post creation event.
@@ -102,41 +188,14 @@ $(document).ready(function() {
 		if(btn.attr('href').indexOf('ok') == 1) {
 			var id = btn.attr('href').substring(4, 14);
 
-			console.log(id);
-
 			// Lets OK the comment with Ajax.
-			$.ajax({
-				type: "POST",
-				url: "update-comment",
-				data: {
-					value: "yes",
-					comment_id: id,
-				},
-
-				success: function(result) {
-					$("#comment-".concat(id)).fadeOut('slow');
-				}
-
-			});
+			updateComment(id, 'yes');
 
 		} else if (btn.attr('href').indexOf('remove') == 1) {
 			var id = btn.attr('href').substring(8, 18);
 
 			// Lets kill the comment with Ajax.
-			$.ajax({
-				type: "POST",
-				url: "update-comment",
-				data: {
-					value: "delete",
-					comment_id: id,
-				},
-
-				success: function(result) {
-					$("#comment-".concat(id)).fadeOut('slow');
-				}
-
-			});
-
+			updateComment(id, 'delete');
 
 		}
 
