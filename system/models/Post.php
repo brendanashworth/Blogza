@@ -5,6 +5,7 @@
 **/
 class Post extends Model {
 
+	public $id;
 	public $title;
 	public $author;
 	public $content;
@@ -37,6 +38,7 @@ class Post extends Model {
 		$this->author = $author;
 		$this->content = $markup->process(htmlentities(stripslashes($content))); // Be sure to call htmlentities() BEFORE we process Markup.
 		$this->date = htmlentities($date);
+		$this->id = htmlentities($id);
 		$this->status = htmlentities($status);
 
 		$this->link = empty($id) ? null : $this->generateUrl(htmlentities($title), htmlentities($id));

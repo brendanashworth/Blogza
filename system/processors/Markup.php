@@ -39,4 +39,20 @@ class Markup {
 		return $text;
 	}
 
+	/**
+	* Processes the given text out of our Markup and into the raw Markup language.
+	*
+	* @access 	public
+	* @param 	string 	$text 	The text to process out of Markup.
+	* @return 	string 	Unprocessed text.
+	**/
+	public function processBackwards($text) {
+		// Goes through all the $markups and switches *reverse*.
+		foreach($this->markups as $repl => $tag) {
+			$text = str_replace($tag, $repl, $text);
+		}
+
+		return $text;
+	}
+
 }
