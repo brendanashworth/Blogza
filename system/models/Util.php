@@ -33,10 +33,16 @@ class Util {
 
 			case 404:
 				Util::header("HTTP/1.0 404 Not Found");
-				Util::kill("404 error, page not found.");
+				//Util::kill("404 error, page not found.");
+
+				$view = BLOGZA_DIR . "/system/views/404.view.php";
+				require $view;
+
 				break;
 
 		}
+
+		exit();
 	}
 
 	/**
