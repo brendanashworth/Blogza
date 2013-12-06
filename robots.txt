@@ -1,0 +1,5 @@
+# Robots.txt for a Blogza powered blog.
+
+User-agent: *
+
+Disallow: /admin/
