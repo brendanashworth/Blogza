@@ -21,7 +21,7 @@ class PostController extends Controller {
 		$posts = array_reverse(Database::getPosts());
 
 		if($post == null) {
-			die("404 todo PostController.php #1");
+			Util::abort(404);
 		}
 
 		require $view;
@@ -43,7 +43,7 @@ class PostController extends Controller {
 		$posts = array_reverse(Database::getPosts());
 
 		if($post == null) {
-			die("404 todo PostController.php #2");
+			Util::abort(404);
 		}
 
 		$comments = Database::getComments($id);
