@@ -8,11 +8,15 @@
 **/
 class Database {
 
+	/* ** DATABASE PROTOCOL *
+	 *
+	 * 1) 'WHERE' fields should always be heavily sanitized.
+	 * 2) All SQL queries must exist in this class and this class only. No outside access to the SQLi object is allowed. (security)
+	 * 3) If no special sanitization method exists, use addslashes() *then* mysqli_real_escape_string().
+	 */
+
 	/* This is the MySQLi connection object. */
 	private static $conn = null;
-
-	/* These are the cached query results. */
-	private static $posts = null;
 
 	/* This is the amount of sent queries. */
 	public static $queries = 0;
@@ -190,6 +194,10 @@ class Database {
 		// Sanitize.
 		$username = Util::sanitizeAlphaNumerically($username);
 		$password = Util::sanitizeAlphaNumerically($password);
+
+		if(!Util::sanitizeEmail($email)) {
+			throw new Exception("Not a valid email.");
+		}
 		
 		$email = mysqli_real_escape_string(self::newConnection(), addslashes($email)); // No special sanitization. :(
 
