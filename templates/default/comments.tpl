@@ -8,6 +8,7 @@
 				<p><strong><a href="#post-comment">Be the first one.</a></strong></p>
 				{/if}
 
+				<hr />
 				{else}
 
 				{foreach $vars.comments as $comment}
@@ -24,10 +25,17 @@
 
 				{/if}
 
+				{if $vars.msg != false}
+				<br />
+				<div class="alert">
+					<p>{$vars.msg}</p>
+				</div>
+				{/if}
+
 				{if $user.user != null}
 				<form method="post" id="post-comment" class="form-fill">
 					<h3>Post a Comment</h3>
-					<textarea form="post-comment" name="content" rows="4" cols="500">This post is so...</textarea>
+					<textarea form="post-comment" name="content" rows="4" cols="500"></textarea>
 					<br />
 
 					<input type="submit" class="btn btn-primary"> </input>

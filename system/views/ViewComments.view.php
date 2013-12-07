@@ -8,6 +8,7 @@ $vars = array(
 	"posts" => $posts,
 	"post" => $post,
 	"comments" => $comments,
+	"msg" => $msg,
 	);
 
 $view->setVariable($vars);

@@ -28,23 +28,26 @@ class PostController extends Controller {
 	}
 
 	public function viewComments() {
-		if(Auth::isLogged() && isset($_POST['content'])) {
-			$post = $this->matched[2];
-			$author = Auth::getUsername();
-			$content = $_POST['content'];
-
-			Database::createComment($post, $author, $content);
-		}
-
-		$view = BLOGZA_DIR . "/system/views/ViewComments.view.php";
-
 		$id = $this->matched[2];
 		$post = Database::getPost($id);
-		$posts = array_reverse(Database::getPosts());
 
 		if($post == null) {
 			Util::abort(404);
 		}
+
+		$msg = false;
+		if(Auth::isLogged() && isset($_POST['content'])) {
+			$author = Auth::getUsername();
+			$content = $_POST['content'];
+
+			Database::createComment($id, $author, $content);
+
+			$msg = "Comment created, awaiting moderator approval.";
+		}
+
+		$view = BLOGZA_DIR . "/system/views/ViewComments.view.php";
+
+		$posts = array_reverse(Database::getPosts());
 
 		$comments = Database::getComments($id);
 
