@@ -355,7 +355,6 @@ class Database {
 
 		// Checks if there are no comments.
 		if(mysqli_num_rows($result) < 1) {
-			echo $query;
 			return null;
 		} else {
 			$comments = array();
