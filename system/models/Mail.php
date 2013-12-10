@@ -1,5 +1,8 @@
 <?php
 
+ini_set('error_reporting', 'on');
+error_reporting(E_ALL);
+
 /**
 * Mail class.
 **/
@@ -28,7 +31,7 @@ class Mail {
 			throw new Exception("None of the fields can be null for an email!");
 		}
 
-		$this->to = "blogzatest@hmamail.com";
+		$this->to = $to;
 		$this->from = $from;
 		$this->subject = $subject;
 		$this->message = $message;
@@ -68,12 +71,14 @@ class Mail {
 	**/
 	public function send() {
 		// Compile the headers.
+		$this->addHeader("From: " . $this->from);
+
 		$header = "";
 		foreach($this->headers as $head) {
 			$header .= $head . "\r\n";
 		}
 
-		mail($this->to, $this->subject, $this->message, $header);
+		$resp = mail($this->to, $this->subject, $this->message, $header);
 	}
 
 }
