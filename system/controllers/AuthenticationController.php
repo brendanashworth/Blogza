@@ -16,15 +16,24 @@ class AuthenticationController extends Controller {
 
 		$error = null;
 		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
-			try {
-				User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], true);
-			} catch (Exception $ex) {
-				$error = $ex->getMessage();
+			// Check for CSRF first, then complete registration.
+			if(!CSRFHandler::check()) {
+				$error = "CSRF token is missing; if this is in error, contact the blog administrator.";
+			} else {
+
+				try {
+					// Register now; don't forget to catch the errors.
+					User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], true);
+				} catch (Exception $ex) {
+					$error = $ex->getMessage();
+				}
+
 			}
 		}
 
 		$view = BLOGZA_DIR . "/system/views/Register.view.php";
 
+		CSRFHandler::generate();
 		$posts = array_reverse(Database::getPosts());
 
 		require $view;
@@ -41,16 +50,23 @@ class AuthenticationController extends Controller {
 
 		$error = false;
 		if(isset($_POST['username']) && isset($_POST['password'])) {
-			// The login form has been filled in.
-			try {
-				User::login($_POST['username'], $_POST['password']);
-			} catch (Exception $ex) {
-				$error = $ex->getMessage();
+			// Check for CSRF.
+			if(!CSRFHandler::check()) {
+				$error = "CSRF token is missing; if this is in error, contact the blog administrator.";
+			} else {
+
+				// The login form has been filled in.
+				try {
+					User::login($_POST['username'], $_POST['password']);
+				} catch (Exception $ex) {
+					$error = $ex->getMessage();
+				}
 			}
 		}
 
 		$view = BLOGZA_DIR . "/system/views/Login.view.php";
 
+		CSRFHandler::generate();
 		$posts = array_reverse(Database::getPosts());
 
 		require $view;

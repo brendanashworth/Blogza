@@ -9,6 +9,7 @@ $vars = array(
 	"post" => $post,
 	"comments" => $comments,
 	"msg" => $msg,
+	"error" => $error,
 	);
 
 $view->setVariable($vars);

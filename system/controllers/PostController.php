@@ -36,17 +36,24 @@ class PostController extends Controller {
 		}
 
 		$msg = false;
+		$error = false;
 		if(Auth::isLogged() && isset($_POST['content'])) {
-			$author = Auth::getUsername();
-			$content = $_POST['content'];
+			if(!CSRFHandler::check()) {
+				$error = "CSRF token missing from request; contact blog administrator if in error.";
+			} else {
+				// Passed CSRF check, you shall now pass.
+				$author = Auth::getUsername();
+				$content = $_POST['content'];
 
-			Database::createComment($id, $author, $content);
+				Database::createComment($id, $author, $content);
 
-			$msg = "Comment created, awaiting moderator approval.";
+				$msg = "Comment created, awaiting moderator approval.";
+			}
 		}
 
 		$view = BLOGZA_DIR . "/system/views/ViewComments.view.php";
 
+		CSRFHandler::generate();
 		$posts = array_reverse(Database::getPosts());
 
 		$comments = Database::getComments($id);

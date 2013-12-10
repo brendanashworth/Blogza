@@ -47,6 +47,12 @@ class MemberController extends Controller {
 		if(!Auth::isLogged()) Util::redirect(BLOG_URL . "/login/");
 
 		do if(!empty($_POST['email'])) {
+			// Anti-CSRF.
+			if(!CSRFHandler::check()) {
+				$error = "CSRF token missing from request; contact blog administrator if in error.";
+				break;
+			}
+
 			$email = $_POST['email'];
 			
 			if(!Util::sanitizeEmail($email)) {
@@ -68,6 +74,12 @@ class MemberController extends Controller {
 
 		// We add the do / while (false) to allow breaking.
 		do if(!empty($_POST['password']) || !empty($_POST['passwordrep'])) {
+			// CSRF.
+			if(!CSRFHandler::check()) {
+				$error = "CSRF token missing from request; contact blog administrator if in error.";
+				break;
+			}
+
 			if(empty($_POST['password']) || empty($_POST['passwordrep'])) {
 				$error = "You must fill in both password fields.";
 				break;
@@ -91,6 +103,7 @@ class MemberController extends Controller {
 
 		$view = BLOGZA_DIR . "/system/views/EditAccount.view.php";
 
+		CSRFHandler::generate();
 		$user = Database::getUser(Auth::getUsername());
 
 		require $view;

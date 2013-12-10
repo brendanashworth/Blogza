@@ -110,6 +110,11 @@ class View {
 				"dateyear" => date("Y"),
 			));
 
+		$this->smarty->assign("protect",
+			array(
+				"csrf_token" => CSRFHandler::generate(),
+				));
+
 	}
 	
 }

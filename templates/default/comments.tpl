@@ -31,12 +31,20 @@
 					<p>{$vars.msg}</p>
 				</div>
 				{/if}
+				{if $vars.error != false}
+				<br />
+				<div class="alert alert-error">
+					<p>{$vars.error}</p>
+				</div>
+				{/if}
 
 				{if $user.user != null}
 				<form method="post" id="post-comment" class="form-fill">
 					<h3>Post a Comment</h3>
 					<textarea form="post-comment" name="content" rows="4" cols="500"></textarea>
 					<br />
+
+					<input type="hidden" name="csrf_token" value="{$protect.csrf_token}"> </input>
 
 					<input type="submit" class="btn btn-primary"> </input>
 				</form>

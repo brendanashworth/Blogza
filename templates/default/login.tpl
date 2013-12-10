@@ -19,6 +19,8 @@
 					<span class="help-block">Forgot your password? <a href="{$blog.url}/reset-password/">Reset your password.</a></span>
 					<br />
 
+					<input type="hidden" name="csrf_token" value="{$protect.csrf_token}"> </input>
+
 					<input type="submit" name="submit" class="btn btn-success"> </input>
 				</form>
 			</div>

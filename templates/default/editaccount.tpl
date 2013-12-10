@@ -22,6 +22,8 @@
 					<input type="password" name="passwordrep" placeholder="Password Repeat"> </input>
 					<span class="help-block">Use a secure password!</span>
 
+					<input type="hidden" name="csrf_token" value="{$protect.csrf_token}"> </input>
+
 					<input type="submit" class="btn btn-success"> </input>
 				</form>
 			</div>
