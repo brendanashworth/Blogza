@@ -210,10 +210,15 @@ class User {
 
 		// Sends the user an email.
 		if ($sendemail) {
-			echo "Sending email.";
-			require BLOGZA_DIR . "/system/models/Mail.php";
+			$content = '
+			<html><body><h1>Thanks for registering on ' . BLOG_NAME . '!</h1>
+			<p>Dear ' . $username . ', </p>
+			<p>This email is to remind you of your registration on ' . BLOG_NAME . '. If you did not register on the website, please notify one of our administrators.</p>
+			<p>Check back for the latest posts at <a href="' . BLOG_URL . '">our site</a>.</p></body></html>
+			';
 
-			$mail = new Mail("nobody@troll.tk", "forums@blogza.tk", "A user has registered on your blog!", "Hi there.");
+			$mail = new Mail($email, "noreply@blogza.tk", "Welcome to " . BLOG_NAME . ".", $content);
+			$mail->setHTML(true);
 			$mail->send();
 		}
 

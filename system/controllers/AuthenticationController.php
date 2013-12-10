@@ -17,7 +17,7 @@ class AuthenticationController extends Controller {
 		$error = null;
 		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordrepeat'])) {
 			try {
-				User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], false);
+				User::register($_POST['username'], $_POST['password'], $_POST['passwordrepeat'], $_POST['email'], true);
 			} catch (Exception $ex) {
 				$error = $ex->getMessage();
 			}
