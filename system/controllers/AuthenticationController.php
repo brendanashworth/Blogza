@@ -19,6 +19,8 @@ class AuthenticationController extends Controller {
 			// Check for CSRF first, then complete registration.
 			if(!CSRFHandler::check()) {
 				$error = "CSRF token is missing; if this is in error, contact the blog administrator.";
+			} else if (!CAPTCHAHandler::check()) {
+				$error = "Incorrect CAPTCHA, please try again.";
 			} else {
 
 				try {

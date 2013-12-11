@@ -24,6 +24,9 @@
 		<input type="password" name="passwordrepeat" placeholder="Repeat Password"> </input>
 		<span class="help-block">Use a secure password!</span>
 
+		<input type="text" name="captcha_token" placeholder="{$protect.captcha_question}"> </input>
+		<span class="help-block">Prove you aren't a bot.</span>
+
 		<input type="hidden" name="csrf_token" value="{$protect.csrf_token}"> </input>
 
 		<input type="submit" class="btn btn-success"> </input>

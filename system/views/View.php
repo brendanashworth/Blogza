@@ -113,6 +113,7 @@ class View {
 		$this->smarty->assign("protect",
 			array(
 				"csrf_token" => CSRFHandler::generate(),
+				"captcha_question" => CAPTCHAHandler::generate(),
 				));
 
 	}

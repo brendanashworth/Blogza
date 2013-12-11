@@ -51,6 +51,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/processors/Markup.php";
 
 		require BLOGZA_DIR . "/system/protection/CSRFHandler.php";
+		require BLOGZA_DIR . "/system/protection/CAPTCHAHandler.php";
 
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 		
