@@ -207,7 +207,7 @@ class Database {
 		// Hash the password.
 		$password = Util::hashPassword($password);
 
-		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_email, user_rank, user_ips) VALUES ('$username', '$password', '0', '$email', '$rank', $ip)";
+		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_email, user_rank, user_ips) VALUES ('$username', '$password', '0', '$email', '$rank', '$ip')";
 
 		$result = self::queryDB($query);
 
