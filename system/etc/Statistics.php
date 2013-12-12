@@ -1,7 +1,7 @@
 <?php
 
 /**
-*
+* Statistics class.
 **/
 class Statistics {
 
@@ -18,7 +18,5 @@ class Statistics {
 			Database::addUserIP(Auth::getUsername(), $ip);
 		}
 	}
-
-
 
 }
