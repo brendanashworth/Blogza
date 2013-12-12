@@ -7,6 +7,12 @@ class CAPTCHAHandler {
 
 	private static $question = null;
 
+	/**
+	* Generates the CAPTCHA answer and question.
+	*
+	* @access 	public
+	* @return 	string 	The CAPTCHA question.
+	**/
 	public static function generate() {
 		if(self::$question != null) {
 			return self::$question;
