@@ -185,10 +185,10 @@ class Database {
 	* @param 	string 	$rank 		The user's rank; this rank defaults to Registered.
 	* @return	bool|result
 	**/
-	public static function createUser($username = null, $password = null, $email = null, $rank = "Registered") {
+	public static function createUser($username = null, $password = null, $email = null, $rank = "Registered", $ip) {
 		// If any given variables were null, throw an exception.
-		if($username == null || $password == null || $email == null) {
-			throw new DBException("The username or password cannot be null!");
+		if($username == null || $password == null || $email == null || empty($rank) || empty($ip)) {
+			throw new DBException("The username, password, email, rank, and/or IP cannot be null!");
 		}
 
 		// Sanitize.
@@ -199,14 +199,15 @@ class Database {
 			throw new Exception("Not a valid email.");
 		}
 		
-		$email = mysqli_real_escape_string(self::newConnection(), addslashes($email)); // No special sanitization. :(
+		$email = mysqli_real_escape_string(self::newConnection(), addslashes($email));
+		$ip = mysqli_real_escape_string(self::newConnection(), addslashes($ip));
 
 		$rank = Util::sanitizeAlphaNumerically($rank);
 
 		// Hash the password.
 		$password = Util::hashPassword($password);
 
-		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_email, user_rank) VALUES ('$username', '$password', '0', '$email', '$rank')";
+		$query = "INSERT INTO `users` (user_name, user_password, user_posts, user_email, user_rank, user_ips) VALUES ('$username', '$password', '0', '$email', '$rank', $ip)";
 
 		$result = self::queryDB($query);
 
@@ -217,6 +218,63 @@ class Database {
 			// Uh... why didn't it return true or false? Was it just bypassed?
 			return false;
 		}
+	}
+
+	/**
+	* Adds a user's IP to the user's list.
+	*
+	* This is a multi-query function; first it queries the database for the current user's IPs, then it queries the database again
+	* to append the new IP to the list of IPs it had previously retrieved from the database. This function does not add the IP if
+	* it already exists in the database.
+	*
+	* @access 	public
+	* @param 	$user 	string|int 	The username of the user OR the user's id.
+	* @param 	$ip 	string 	The IP address to add.
+	* @return 	void
+	**/
+	public static function addUserIP($user, $ip) {
+		//$ip = preg_match('/([^0-9]|\.)+/', '', $ip);
+		$ip = mysqli_real_escape_string(self::newConnection(), addslashes($ip));
+
+		if(is_numeric($user)) {
+			$query = "SELECT * FROM `users` WHERE `id`='$user'";
+		} else {
+			$user = Util::sanitizeAlphaNumerically($user);
+			$query = "SELECT * FROM `users` WHERE `user_name`='$user'";
+		}
+
+		$result = self::queryDB($query);
+
+		if($result == false || mysqli_num_rows($result) != 1) {
+			return;
+		} else {
+			$row = $result->fetch_assoc();
+			$current = $row['user_ips'];
+		}
+
+		if(empty($current)) {
+			$give = $ip;
+		} else {
+			$temp = explode(',', $current);
+			if(in_array($ip, $temp)) {
+				// We don't need to add an IP that already exists.
+				return;
+			} else {
+				var_dump($temp);
+			}
+			$give = $current . "," . $ip;
+		}
+
+		$give = mysqli_real_escape_string(self::newConnection(), addslashes($give));
+
+		if(is_numeric($user)) {
+			$query = "UPDATE `users` SET `user_ips`='$give' WHERE `id`='$user'";
+		} else {
+			$user = Util::sanitizeAlphaNumerically($user);
+			$query = "UPDATE `users` SET `user_ips`='$give' WHERE `user_name`='$user'";
+		}
+		
+		$result = self::queryDB($query);
 	}
 
 	/**

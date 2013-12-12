@@ -15,6 +15,7 @@ CREATE TABLE `users` (
 	`user_email` varchar(30) NOT NULL,
 	`user_rank` varchar(30) NOT NULL,
 	`user_posts` int(10) NOT NULL,
+	`user_ips` varchar(10000) NOT NULL,
 	PRIMARY KEY (id)
 );
 

@@ -56,6 +56,8 @@ class Blogza {
 		require BLOGZA_DIR . "/system/packages/Database.class.php";
 		
 		require BLOGZA_DIR . "/system/controllers/ErrorHandler.php";
+
+		require BLOGZA_DIR . "/system/etc/Statistics.php";
 	}
 
 	/**
@@ -86,6 +88,10 @@ class Blogza {
 
 		// Run the method.
 		$controller->$method();
+
+
+		// Called after the website loads.
+		Statistics::generate();
 	}
 
 }

@@ -178,6 +178,7 @@ class User {
 		$username    = Util::sanitizeAlphaNumerically($username);
 		$password    = Util::sanitizeAlphaNumerically($password);
 		$passwordrep = Util::sanitizeAlphaNumerically($passwordrep);
+		$ip = $_SERVER['REMOTE_ADDR'];
 
 		if(!Util::sanitizeEmail($email)) {
 			throw new Exception("Your email is not a real email.");
@@ -206,7 +207,7 @@ class User {
 			throw new Exception("Your username must be between 6 and 16 characters.");
 		}
 
-		Database::createUser($username, $password, $email, "Registered");
+		Database::createUser($username, $password, $email, "Registered", $ip);
 
 		// Sends the user an email.
 		if ($sendemail) {
