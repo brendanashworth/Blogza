@@ -259,8 +259,6 @@ class Database {
 			if(in_array($ip, $temp)) {
 				// We don't need to add an IP that already exists.
 				return;
-			} else {
-				var_dump($temp);
 			}
 			$give = $current . "," . $ip;
 		}
