@@ -17,6 +17,8 @@ class AdminController extends Controller {
 
 		$comments = Database::getCommentsNotApproved();
 
+		$commentsAmount = count($comments) < 1 ? "" : count($comments);
+
 		$view = BLOGZA_DIR . "/system/views/Admin.view.php";
 
 		require $view;
@@ -37,6 +39,7 @@ class AdminController extends Controller {
 			$content = str_replace("\n", "[BR]", $content); // Replace line breaks with Markup breaks.
 
 			Database::createPost(Auth::getUsername(), $title, $content);
+			Database::addPost(Auth::getUsername());
 			echo "Post created.";
 		} else {
 			echo "You are missing one or two fields.";
@@ -109,6 +112,7 @@ class AdminController extends Controller {
 			$content = $_POST['content'];
 
 			$content = str_replace("\n", "[BR]", $content); // Replace line breaks with Markup breaks.
+			$content = html_entity_decode($content); // Keep our HTML entities safe.
 
 			Database::updatePost($id, $content);
 			echo "Post updated.";
