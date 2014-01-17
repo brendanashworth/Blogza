@@ -23,7 +23,7 @@ error_reporting(E_ALL);
  | utilized in the code.
  */
 
-require('system/Blogza.php');
+require(BLOGZA_DIR . '/system/Blogza.php');
 
 /* ----------------------------------------
  | Creates the Blogza object

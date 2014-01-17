@@ -109,4 +109,24 @@ class MemberController extends Controller {
 		require $view;
 	}
 
+	/**
+	* Handles password resets for user accounts.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function passwordReset() {
+		Util::kill("Feature not yet enabled.");
+		if(Auth::isLogged()) Util::redirect(BLOG_URL);
+
+		if(!empty($this->matched[1])) {
+			// The user is giving us the thing from his email.
+			$key = Util::sanitizeAlphaNumerically($this->matched[1]);
+
+
+		}
+
+		echo "Password reset.";
+	}
+
 }

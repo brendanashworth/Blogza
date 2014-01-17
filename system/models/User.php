@@ -11,6 +11,7 @@ class User {
 	protected $rank;
 	protected $email;
 	protected $id;
+	protected $ips = array();
 
 	protected $avatar;
 
@@ -26,7 +27,7 @@ class User {
 	* @param 	$id 		The user's ID.
 	* @return 	mixed
 	**/
-	public function __construct($username, $password, $posts, $rank, $email, $id) {
+	public function __construct($username, $password, $posts, $rank, $email, $id, $ips) {
 		if($username == null || $password == null || $posts == null) {
 			throw new Exception("The username, password, or posts cannot be null!");
 		}
@@ -37,6 +38,9 @@ class User {
 		$this->rank = htmlentities($rank);
 		$this->email = htmlentities(stripslashes($email));
 		$this->id = htmlentities($id);
+		for($i = 0; $i < count(explode(',', $ips)); $i++) {
+			$this->ips[] = explode(',', $ips)[$i];
+		}
 
 		$this->avatar = $this->generateAvatar($email);
 	}
@@ -46,12 +50,13 @@ class User {
 	*
 	* @access 	public
 	* @param 	string 	$email 	The unhashed email.
+	* @param 	int 	$size 	The size of the image.
 	* @return 	string 	The URL for the gravatar image.
 	**/
-	private function generateAvatar($email) {
+	private function generateAvatar($email, $size = '128') {
 		$url = 'http://www.gravatar.com/avatar/';
 		$url .= md5( strtolower( trim( $email ) ) );
-		$url .= "?s=128";
+		$url .= "?s=".$size;
 
 		return $url;
 	}
@@ -144,10 +149,25 @@ class User {
 	* Gets the user's avatar link.
 	*
 	* @access 	public
+	* @param 	int 	$size 	The size of the avatar.
 	* @return 	string
 	**/
-	public function getAvatar() {
+	public function getAvatar($size = '') {
+		if(!empty($size)) {
+			$this->avatar = $this->generateAvatar($this->email, $size);
+		}
+
 		return $this->avatar;
+	}
+
+	/**
+	* Gets the user's logged-in IPs.
+	*
+	* @access 	public
+	* @return 	array
+	**/
+	public function getIPs() {
+		return implode(', ', $this->ips);
 	}
 
 	/**

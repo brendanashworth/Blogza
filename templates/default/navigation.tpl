@@ -44,6 +44,7 @@
 							</a>
 
 							<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+								<!--<li><a href="{$blog.url}/member/{$user.user}/">View Profile</a></li>-->
 								<li><a href="{$blog.url}/account/edit/">Edit Account</a></li>
 								<li class="divider"></li>
 								<li><a href="{$blog.url}/logout/">Logout</a></li>

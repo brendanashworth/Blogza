@@ -19,6 +19,8 @@ class AdminController extends Controller {
 
 		$commentsAmount = count($comments) < 1 ? "" : count($comments);
 
+		$admin = Database::getUser(Auth::getUsername());
+
 		$view = BLOGZA_DIR . "/system/views/Admin.view.php";
 
 		require $view;
@@ -60,17 +62,69 @@ class AdminController extends Controller {
 				echo "Post ID must be numeric.";
 			} else {
 				// Now we get the Post.
-
 				$post = Database::getPost($id);
 				$markup = new Markup();
 
 				$content = $markup->processBackwards($post->content);
 				$content = str_replace("[BR]", "\n", $content);
 
-				echo $content;
+				$return = array(
+					'code' => '200',
+					'post' => array(
+						'id' => $post->id,
+						'title' => $post->title,
+						'author' => $post->author,
+						'content' => $post->content,
+						'date' => $post->date,
+						'status' => $post->status,
+						),
+					);
+
+				echo json_encode($return);
 			}
 		} else {
-			echo "JS Error: Missing Post ID.";
+			$return = array(
+				'code' => '500',
+				'error' => 'You did not specify the POST variable "id".',
+				);
+
+			echo json_encode($return);
+		}
+	}
+
+	/**
+	* Gets a User's data. This is an Ajax / POST only feature and echoes back JSON-encoded data.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function getUser() {
+		if(!empty($_POST['user'])) {
+			$username = Util::sanitizeAlphaNumerically($_POST['user']);
+
+			$user = Database::getUser($username);
+
+			$return = array(
+				'code' => '200',
+				'user' => array(
+					'username' => $user->getUsername(),
+					'posts' => $user->getPosts(),
+					'email' => $user->getEmail(),
+					'rank' => $user->getRank(),
+					'avatar' => $user->getAvatar(),
+					'ips' => $user->getIPs(),
+					),
+				);
+
+			$json = json_encode($return);
+			echo $json;
+		} else {
+			$return = array(
+				'code' => '500',
+				'error' => 'You did not specify the POST variable "user".',
+				);
+
+			echo json_encode($return);
 		}
 	}
 
@@ -111,7 +165,7 @@ class AdminController extends Controller {
 			$id = $_POST['id'];
 			$content = $_POST['content'];
 
-			$content = str_replace("\n", "[BR]", $content); // Replace line breaks with Markup breaks.
+			$content = str_replace("\r\n", "[BR]", $content); // Replace line breaks with Markup breaks.
 			$content = html_entity_decode($content); // Keep our HTML entities safe.
 
 			Database::updatePost($id, $content);
@@ -119,6 +173,21 @@ class AdminController extends Controller {
 		} else {
 			echo "You are missing one or two fields.";
 		}
+	}
+
+	/**
+	* Allows the admin to login as another user.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function loginAsUser() {
+		$username = $this->matched[1];
+
+		Auth::logout();
+		Auth::login($username);
+
+		Util::redirect(BLOG_URL);
 	}
 
 	/**

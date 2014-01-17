@@ -186,6 +186,18 @@ input[type="password"] {
 	-webkit-box-sizing: border-box;
 }
 
+.avatar-small {
+	border-radius: 3px;
+	border: 1px solid #aaa;
+
+	padding: 2px;
+	margin: 2px;
+
+			box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+
 .member .avatar,
 .member-main-box .avatar {
 	float: left;

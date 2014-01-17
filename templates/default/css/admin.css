@@ -5,7 +5,19 @@ h1, h2, h3, h4, h5, h6 {
 
 body {
 	font-family: "Fenix", "Cambria", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background-image: url(http://subtlepatterns.com/patterns/brushed.png);
+	background-image: url(../img/adminbackground.png);
+}
+
+.body-hold {
+	float: left;
+	width: 80%;
+}
+
+.container-sidebar {
+	float: left;
+	width: 16%;
+
+	padding-top: 20px;
 }
 
 .container-fluid h3 {
@@ -47,6 +59,62 @@ body {
 
 .modal {
 	top: 5%;
+}
+
+.padded-item {
+	padding: 10px;
+	margin: 5px;
+}
+
+/* Sidebar */
+.sidebar {
+	margin: 0px;
+
+	background-color: #5c5c5c;
+	box-shadow: 0px 0px 3px #333;
+}
+
+.sidebar > li {
+	width: 100%;
+	display: block;
+	list-style-type: none;
+}
+
+.sidebar > li > a {
+	border-right: 0px solid #ccc;
+
+	display: block;
+	padding: 10px 10px;
+
+	color: #c8c8c8;
+	text-shadow: 1px 1px #333;
+	text-decoration: none;
+
+	font-size: 16px;
+
+			transition: all .3s linear;
+	   -moz-transition: all .3s linear;
+	-webkit-transition: all .3s linear;
+}
+
+.sidebar > li > a.active {
+	border-right: 3px solid #cdcdcd;
+
+	color: #cacaca;
+}
+
+.sidebar > li > a:hover,
+.sidebar > li > a.active {
+	box-shadow: 0px 0px 4px #222 inset;
+	border-right: 3px solid #ccc;
+
+			transition: all .3s linear;
+	   -moz-transition: all .3s linear;
+	-webkit-transition: all .3s linear;
+}
+
+.sidebar > li > a > span.badge {
+	float: right;
 }
 
 /* Edit Post Modal */
@@ -99,6 +167,11 @@ body {
 	width: 100%;
 }
 
+.no-margin {
+	margin: 0px 0px !important;
+	margin-bottom: 0px;
+}
+
 .btn-fill {
 	border-radius: 1px;
 
@@ -127,6 +200,42 @@ body {
 
 .table td {
 	background-color: #fff;
+}
+
+/* List Styles */
+.table-list {
+	list-style-type: none;
+	border: 1px solid #ddd;
+
+	margin-left: 0px;
+}
+
+.table-list li {
+	background-color: #fff;
+	border-bottom: 1px solid #eee;
+	padding: 2px;
+}
+
+.table-list li:hover {
+	background-color: rgb(255, 255, 225);
+}
+
+.table-list .table-inner-block {
+	background-color: rgb(255, 235, 235);
+
+	float: right;
+	display: inline-block;
+
+	padding: 5px 10px;
+	min-height: 34px;
+}
+
+.table-list p {
+	color: #333;
+	display: inline-block;
+}
+.table-list p > small {
+	color: #888;
 }
 
 /* Message Styles */

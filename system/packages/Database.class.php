@@ -276,6 +276,44 @@ class Database {
 	}
 
 	/**
+	* Adds another number to the user's post amount.
+	*
+	* @access 	public
+	* @param 	string|int 	$user 	The username or ID of the user.
+	* @return 	void
+	**/
+	public static function addPost($user) {
+		// Get the amount of current posts.
+		if(is_numeric($user)) {
+			$query = "SELECT * FROM `users` WHERE `id`='$user'";
+		} else {
+			$user = Util::sanitizeAlphaNumerically($user);
+			$query = "SELECT * FROM `users` WHERE `user_name`='$user'";
+		}
+
+		$result = self::queryDB($query);
+
+		if($result == false || mysqli_num_rows($result) != 1) {
+			return;
+		} else {
+			$row = $result->fetch_assoc();
+			$posts = $row['user_posts'];
+		}
+
+		$num = $posts + 1;
+		$num = mysqli_real_escape_string(self::newConnection(), addslashes($num));
+
+		if(is_numeric($user)) {
+			$query = "UPDATE `users` SET `user_posts`='$num' WHERE `id`='$user'";
+		} else {
+			$user = Util::sanitizeAlphaNumerically($user);
+			$query = "UPDATE `users` SET `user_posts`='$num' WHERE `user_name`='$user'";
+		}
+		
+		$result = self::queryDB($query);
+	}
+
+	/**
 	* Gets the user from the database.
 	*
 	* @access	public
@@ -297,7 +335,7 @@ class Database {
 			return null;
 		} else {
 			$row = $result->fetch_assoc();
-			$user = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id']);
+			$user = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id'], $row['user_ips']);
 			return $user;
 		}
 	}
@@ -315,7 +353,7 @@ class Database {
 
 		$users = array();
 		while($row = $result->fetch_assoc()) {
-			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id']);
+			$users[] = new User($row['user_name'], $row['user_password'], $row['user_posts'], $row['user_rank'], $row['user_email'], $row['id'], $row['user_ips']);
 		}
 
 		return $users;

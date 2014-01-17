@@ -16,7 +16,7 @@
 					<input type="text" name="username" placeholder="Username"> </input>
 					<br />
 					<input type="password" name="password" placeholder="Password"> </input>
-					<span class="help-block">Forgot your password? <a href="{$blog.url}/reset-password/">Reset your password.</a></span>
+					<span class="help-block">Forgot your password? <a href="{$blog.url}/account/reset-password/">Reset your password.</a></span>
 					<br />
 
 					<input type="hidden" name="csrf_token" value="{$protect.csrf_token}"> </input>
