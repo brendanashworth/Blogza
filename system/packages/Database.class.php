@@ -400,6 +400,40 @@ class Database {
 	}
 
 	/**
+	* Updates the user's username in the database.
+	*
+	* @access 	public
+	* @param 	string 	$user 	The user's name.
+	* @param 	string 	$newname 	The user's new username.
+	* @return 	void
+	**/
+	public static function updateUserName($user, $newname) {
+		$user = Util::sanitizeAlphaNumerically($user);
+		$newname = Util::sanitizeAlphaNumerically($newname);
+
+		$query = "UPDATE `users` SET `user_name`='$newname' WHERE `user_name`='$user'";
+
+		self::queryDB($query);
+	}
+
+	/**
+	* Updates a user's rank in the database.
+	*
+	* @access 	public
+	* @param 	string 	$user 	The user's name.
+	* @param 	string 	$rank 	The user's new rank.
+	* @return 	void
+	**/
+	public static function updateUserRank($user, $rank) {
+		$user = Util::sanitizeAlphaNumerically($user);
+		$rank = Util::sanitizeAlphaNumerically($rank);
+
+		$query = "UPDATE `users` SET `user_rank`='$rank' WHERE `user_name`='$rank'";
+
+		self::queryDB($query);
+	}
+
+	/**
 	* Creates a comment for a post.
 	*
 	* @access 	public

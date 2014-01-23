@@ -238,6 +238,11 @@ body {
 	color: #888;
 }
 
+/* Admin-specific Avatar Styles */
+.avatar-small {
+	background-color: #fff;
+}
+
 /* Message Styles */
 .alert.popup {
 	position: fixed;

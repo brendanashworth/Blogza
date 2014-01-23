@@ -5,15 +5,15 @@
 **/
 class User {
 
-	protected $username;
-	protected $password;
-	protected $posts;
-	protected $rank;
-	protected $email;
-	protected $id;
+	public $username;
+	public $password;
+	public $posts;
+	public $rank;
+	public $email;
+	public $id;
 	protected $ips = array();
 
-	protected $avatar;
+	public $avatar;
 
 	/**
 	* Creates the BlogzaUser instance.
@@ -66,6 +66,7 @@ class User {
 	* Gets the username.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	string 	The username.
 	**/
 	public function getUsername() {
@@ -76,6 +77,7 @@ class User {
 	* Gets the hashed password.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	string 	The hashed password.
 	**/
 	public function getPassword() {
@@ -99,6 +101,7 @@ class User {
 	* Gets the amount of posts from the user.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	int 	The amount of posts the user has made.
 	**/
 	public function getPosts() {
@@ -109,6 +112,7 @@ class User {
 	* Gets the rank of the user.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	string 	The string representation of the user's rank.
 	**/
 	public function getRank() {
@@ -119,6 +123,7 @@ class User {
 	* Gets the email of the user.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	string 	The user's email.
 	**/
 	public function getEmail() {
@@ -129,6 +134,7 @@ class User {
 	* Gets the user's ID from the database.
 	*
 	* @access 	public
+	* @deprecated
 	* @return 	int 	The user's ID.
 	**/
 	public function getID() {

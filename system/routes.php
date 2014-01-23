@@ -45,6 +45,7 @@ $this->router->get('/admin/', 'AdminController@index');
 $this->router->post('/admin/create-post', 'AdminController@createPost');
 $this->router->post('/admin/get-post', 'AdminController@getPost');
 $this->router->post('/admin/get-user', 'AdminController@getUser');
+$this->router->any('/admin/save-user', 'AdminController@saveUser');
 $this->router->post('/admin/update-post', 'AdminController@updatePost');
 $this->router->post('/admin/update-comment', 'AdminController@updateComment');
 $this->router->get('/admin/sudo/{alphanumeric}', 'AdminController@loginAsUser');

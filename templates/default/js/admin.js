@@ -86,6 +86,24 @@ function getUser(name, callback) {
 
 }
 
+/* Saves the user via Ajax / POST. It returns JSON. */
+function saveUser(user, callback) {
+
+	// Saves the user via Ajax.
+	$.ajax({
+		type: "POST",
+		url: "save-user",
+		data: {
+			user: user,
+		},
+
+		complete: function(result) {
+			callback(jQuery.parseJSON(result.responseText));
+		}
+	});
+
+}
+
 /**
 * Updates a comment via AJAX/POST.
 **/
@@ -128,7 +146,7 @@ function updatePost(id, content, callback) {
 /* Creates the user box */
 function createUserBox(user) {
 	var object = '<div class="box">';
-	object = object.concat('<div class="alert msg" id="#view-user-alert"> </div>');
+	object = object.concat('<div class="alert" id="view-user-alert"> </div>');
 	object = object.concat('<form method="post" action="save-user" class="form-horizontal"><h3>'+user.username+'</h3><a href="#" class="btn btn-admin btn-primary">Return</a><hr />');
 	object = object.concat('<div class="control-group"><label class="control-label">Username</label><div class="controls"><input type="text" name="username" value="'+user.username+'" /></div></div>');
 	object = object.concat('<div class="control-group"><label class="control-label">Email</label><div class="controls"><input type="text" name="email" value="'+user.email+'" /></div></div>');
@@ -185,6 +203,27 @@ function searchUsers(event) {
 			$(this).show();
 		}
 	});
+}
+
+function selectComment(event) {
+	event.preventDefault();
+
+	var btn = $(this);
+
+	if(btn.attr('href').indexOf('ok') == 1) {
+		var id = btn.attr('href').substring(4, 14);
+
+		// Lets OK the comment with Ajax.
+		updateComment(id, 'yes');
+
+	} else if (btn.attr('href').indexOf('remove') == 1) {
+		var id = btn.attr('href').substring(8, 18);
+
+		// Lets kill the comment with Ajax.
+		updateComment(id, 'delete');
+
+	}
+
 }
 
 function returnToUserList(event) {
@@ -279,26 +318,10 @@ $(document).ready(function() {
 	});
 
 	// Comment approval event.
-	$(".vote-btn").click(function(event) {
-		event.preventDefault();
-
-		var btn = $(this);
-
-		if(btn.attr('href').indexOf('ok') == 1) {
-			var id = btn.attr('href').substring(4, 14);
-
-			// Lets OK the comment with Ajax.
-			updateComment(id, 'yes');
-
-		} else if (btn.attr('href').indexOf('remove') == 1) {
-			var id = btn.attr('href').substring(8, 18);
-
-			// Lets kill the comment with Ajax.
-			updateComment(id, 'delete');
-
-		}
-
-	});
+	$(".vote-btn")
+		.bind('click', function(event) {
+			selectComment(event);
+		});
 
 	$("#search-user input[name=username]")
 		.bind('mouseout keyup', function(event) {
@@ -329,6 +352,21 @@ $(document).ready(function() {
 			$("#user-profile a")
 				.bind('click', function(event) {
 					returnToUserList(event);
+				});
+
+			$("#user-profile form")
+				.bind('submit', function(event) {
+					event.preventDefault();
+
+					var user = {
+						username: $("#user-profile form input[name=username]").val(),
+						email: $("#user-profile form input[name=email]").val(),
+						rank: $("#user-profile form input[name=rank]").val(),
+					}
+
+					saveUser(JSON.stringify(user), function(response) {
+						$("#user-profile #view-user-alert").html(response.message);
+					});
 				});
 		});
 

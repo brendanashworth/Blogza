@@ -129,6 +129,58 @@ class AdminController extends Controller {
 	}
 
 	/**
+	* Saves a user into the database. This is an Ajax / POST only feature and echoes back JSON-encoded data.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	public function saveUser() {
+		if(!empty($_REQUEST['user'])) {
+			$input = array();
+
+			foreach(json_decode($_REQUEST['user']) as $obj => $value) {
+				$input[$obj] = $value;
+			}
+
+			// User stuff.
+			$username = $input['username'];
+			$email = $input['email'];
+			$rank = $input['rank'];
+
+			// Get the real user.
+			$user = Database::getUser($username);
+
+			$msg = array();
+			if($user->username !== $username) {
+				Database::updateUserName($user->username, $username);
+				$msg[] = "Username updated.";
+			}
+			if($user->email !== $email) {
+				Database::updateUserEmail($user->username, $email);
+				$msg[] = "Email updated.";
+			}
+			if($user->rank !== $rank) {
+				Database::updateUserRank($user->username, $rank);
+				$msg[] = "Rank updated.";
+			}
+			
+			$return = array(
+				'code' => '200',
+				'message' => implode('\r\n', $msg),
+				);
+
+			echo json_encode($return);
+		} else {
+			$return = array(
+				'code' => '500',
+				'error' => 'You did not specify the POST variable "user".',
+				);
+
+			echo json_encode($return);
+		}
+	}
+
+	/**
 	* Updates a comment's moderated status. This is an Ajax / POST only feature.
 	*
 	* @access 	public
