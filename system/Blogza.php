@@ -33,6 +33,10 @@ class Blogza {
 		session_start();
 
 		// Requires all the necessary files.
+		if(!file_exists(BLOGZA_DIR . "/system/settings.php")) {
+			$content = file_get_contents(BLOGZA_DIR . "/system/settings.default.php");
+			file_put_contents(BLOGZA_DIR . "/system/settings.php", $content);
+		}
 		require BLOGZA_DIR . "/system/settings.php";
 
 		require BLOGZA_DIR . "/system/views/View.php";
