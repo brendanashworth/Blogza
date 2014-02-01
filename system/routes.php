@@ -15,7 +15,7 @@
  |           The ^METHOD^ is the HTTP request type.
  */
 
-// NOTICE: After installation, comment out these lines. (Put a // in front of both)
+// NOTICE: Uncomment these lines (remove the //) to view the installer.
 //$this->router->get('/install/', 'InstallerController@start');
 //$this->router->any('/install/step/([1-3])', 'InstallerController@step');
 
