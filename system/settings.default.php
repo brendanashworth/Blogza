@@ -7,7 +7,7 @@
 		// All the settings for the blog. 
 		define('BLOG_NAME', 'Blogza');
 		define('BLOG_DESC', 'Edit your settings.php file to add a description!');
-		define('BLOG_URL', ''); // such as http://example.com - no trailing slash.
+		define('BLOG_URL', 'http://example.com'); // such as http://example.com - no trailing slash.
 
 		define('MYSQL_HOST', 'localhost');
 		define('MYSQL_USER', 'blogza');
@@ -20,9 +20,5 @@
 		// Don't touch the following.
 		date_default_timezone_set(BLOG_TIMEZONE);
 		define("BLOG_NICE_URLS", !empty($_SERVER['BLOGZA_HTACCESS']) );
-		if(empty(BLOG_URL)) {
-			// Defines the URL as http://{server_address} if it isn't set already.
-			define('BLOG_URL', 'http://' . $_SERVER['SERVER_ADDRESS']);
-		}
 	}
 }
