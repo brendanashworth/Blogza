@@ -26,6 +26,8 @@ class MinificationController extends Controller {
 	* @return 	void
 	**/
 	private function setExpires($time = 7200) {
+		header('Pragma: public');
+		header('Cache-Control: public, max-age=' . $time);
 		header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + $time));
 	}
 
