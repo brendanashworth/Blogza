@@ -17,6 +17,8 @@ class Blogza {
 
 	protected $router;
 
+	protected $phpunit = false;
+
 	public static $start;
 
 	/**
@@ -72,6 +74,17 @@ class Blogza {
 	* @return 	void
 	**/
 	public function start() {
+		// Hold up! We handle this differently if we're using phpunit.
+		if($this->phpunit) {
+			// This will be set if it isn't from localhost.
+			if(isset($_SERVER['REMOTE_ADDR'])) {
+				exit;
+			}
+
+			$_SERVER['REQUEST_METHOD'] = 'GET';
+			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+		}
+
 		// Settings
 		$this->settings = new Settings();
 
@@ -97,6 +110,17 @@ class Blogza {
 
 		// Called after the website loads.
 		Statistics::generate();
+	}
+
+	/**
+	* Sets whether or not Blogza is running in phpunit.
+	*
+	* @access 	public
+	* @param 	bool 	$val 	The value to set it as phpunit.
+	* @return 	void
+	**/
+	public function setPHPUnit($val) {
+		$this->phpunit = $val;
 	}
 
 }
