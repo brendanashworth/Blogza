@@ -13,6 +13,6 @@
 	</div>
 
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script src="{$blog.folder}/templates/{$template.name}/js/bootstrap.min.js"></script>
+	<script src="{$blog.folder}/asset/js/bootstrap.min.js"></script>
 
 </body>

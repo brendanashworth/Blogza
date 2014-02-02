@@ -6,9 +6,9 @@
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu">
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Fenix">
 
-		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/bootstrap.min.css">
-		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/blog.css">
-		<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/admin.css">
+		<link rel="stylesheet" href="{$blog.folder}/asset/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{$blog.folder}/asset/css/blog.css">
+		<link rel="stylesheet" href="{$blog.folder}/asset/css/admin.css">
 		<meta name="description" content="{$blog.description}" />
 		<meta name="author" content="boboman13" />
 	</head>
@@ -30,7 +30,7 @@
 						<form method="post" action="{$blog.url}/admin/create-post" class="form-fill" id="create-post">
 							<div class="alert msg"> </div>
 
-							<h3>New Post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
+							<h3>New Post <img class="loader" src="{$blog.folder}/asset/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
 							<input id="title" type="text" name="title" value="Post title..."> </input>
 							<textarea id="content" name="content" rows="5">Post content...</textarea>
@@ -147,11 +147,6 @@
 									<li id="{$user->getUsername()}">
 										<img class="avatar-small" src="{$user->getAvatar(22)}" alt="{$user->getUsername()}" />
 										<p>{$user->getUsername()} <small>{$user->getEmail()}</small></p>
-											<!--<td>{$user->getRank()}</td>
-											<td>{$user->getPosts()}</td>
-											<td>{$user->getIPs()}</td>
-											<td><a href="{$blog.url}/admin/sudo/{$user->getUsername()}" class="btn btn-admin btn-large btn-success" target="_blank">Login</a></td>
-										</tr>-->
 									</li>
 								</a>
 								{/foreach}
@@ -223,7 +218,7 @@
 			<form method="post" action="{$blog.url}/admin/update-post" class="form-fill" id="edit-post-form">
 				<div class="modal-header">
 					<button type="button" class="close">&times;</button>
-					<h3>Edit Post <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /><h3>
+					<h3>Edit Post <img class="loader" src="{$blog.folder}/asset/img/ajax-loader.gif" width="16px" height="16px" /><h3>
 				</div>
 				<div class="modal-body">
 					<div class="alert msg"> </div>
@@ -247,7 +242,7 @@
 			<form method="post" action="{$blog.url}/admin/create-post" class="form-fill" id="post-editor-form">
 				<div class="modal-header">
 					<button type="button" class="close">&times;</button>
-					<h3>Post Creation <img class="loader" src="{$blog.folder}/templates/{$template.name}/img/ajax-loader.gif" width="16px" height="16px" /></h3>
+					<h3>Post Creation <img class="loader" src="{$blog.folder}/asset/img/ajax-loader.gif" width="16px" height="16px" /></h3>
 
 				</div>
 				<div class="modal-body form-fill">
@@ -287,7 +282,7 @@
 		</noscript>
 
 		<script src="//code.jquery.com/jquery-1.10.2.min.js"> </script>
-		<script src="{$blog.folder}/templates/{$template.name}/js/admin.js"> </script>
+		<script src="{$blog.folder}/asset/js/admin.js"> </script>
 
 	</body>
 

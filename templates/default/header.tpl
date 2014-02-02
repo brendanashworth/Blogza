@@ -4,9 +4,8 @@
 <head>
 	<title>{$blog.name}{$title}</title>
 
-	<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/bootstrap.min.css">
-	<!--<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/bootstrap-responsive.min.css">-->
-	<link rel="stylesheet" href="{$blog.folder}/templates/{$template.name}/css/blog.css">
+	<link rel="stylesheet" href="{$blog.folder}/asset/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{$blog.folder}/asset/css/blog.css">
 
 	<meta name="description" content="{$blog.description}" />
 	<meta name="author" content="boboman13" />
