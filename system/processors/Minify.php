@@ -16,6 +16,7 @@ class Minify {
 		);
 
 	private $jsReplace = array(
+		"#//.+\n#" => "", // One line comments
 		"/\n+/" => "", // New lines
 		"/\t+/" => "", // Tabs
 		"!/\*.*?\*/!s" => "", // Comments
