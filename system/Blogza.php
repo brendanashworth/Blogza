@@ -74,17 +74,6 @@ class Blogza {
 	* @return 	void
 	**/
 	public function start() {
-		// Hold up! We handle this differently if we're using phpunit.
-		if($this->phpunit) {
-			// This will be set if it isn't from localhost.
-			if(isset($_SERVER['REMOTE_ADDR'])) {
-				exit;
-			}
-
-			$_SERVER['REQUEST_METHOD'] = 'GET';
-			$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-		}
-
 		// Settings
 		$this->settings = new Settings();
 
@@ -121,6 +110,24 @@ class Blogza {
 	**/
 	public function setPHPUnit($val) {
 		$this->phpunit = $val;
+	}
+
+	/**
+	* Starts the PHP unit test.
+	*
+	* @access 	public
+	* @return 	void
+	**/
+	private function startPHPUnit() {
+		// This will be set if it isn't from localhost.
+		if(isset($_SERVER['REMOTE_ADDR'])) {
+			exit;
+		}
+
+		$_SERVER['REQUEST_METHOD'] = 'GET';
+		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+
+		$this->start();
 	}
 
 }

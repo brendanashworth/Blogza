@@ -58,9 +58,10 @@ $blogza->setPHPUnit(true);
  | the Blogza framework files. It then
  | then displays all output itself.
  */
- $blogza->start();
+ $blogza->startPHPUnit();
 
 /* ----------------------------------------
  | Sets $output to the buffered output.
  | --------------------------------------*/
  $output = ob_get_clean();
+           ob_end_flush();
