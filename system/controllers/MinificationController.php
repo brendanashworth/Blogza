@@ -36,6 +36,7 @@ class MinificationController extends Controller {
 
 			$file = $minify->minifyCSS($contents);
 			echo $file;
+			ob_end_flush();
 		} else {
 			header("HTTP/1.0 404 Not Found");
 			echo "404";
@@ -60,6 +61,7 @@ class MinificationController extends Controller {
 
 			$file = $minify->minifyJS($contents);
 			echo $file;
+			ob_end_flush();
 		} else {
 			header("HTTP/1.0 404 Not Found");
 			echo "404";
@@ -82,6 +84,7 @@ class MinificationController extends Controller {
 			$contents = file_get_contents($route . $filename);
 
 			echo $contents;
+			ob_end_flush();
 		} else {
 			header("HTTP/1.0 404 Not Found");
 			echo "404";
@@ -119,6 +122,7 @@ class MinificationController extends Controller {
 			$contents = file_get_contents($route . $filename);
 
 			echo $contents;
+			ob_end_flush();
 		} else {
 			header("HTTP/1.0 404 Not Found");
 			echo "404";
