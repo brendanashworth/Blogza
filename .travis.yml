@@ -7,4 +7,4 @@ php:
 notifications:
   email: false
 
-script: phpunit
+script: phpunit phpunit.php
