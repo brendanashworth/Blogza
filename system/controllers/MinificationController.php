@@ -76,7 +76,7 @@ class MinificationController extends Controller {
 			$contents = file_get_contents($route . $filename);
 			$minify = new Minify();
 
-			$file = $minify->minifyJS($contents);
+			$file = $contents; //$file = $minify->minifyJS($contents);
 
 			ob_start("ob_gzhandler");
 			echo $file;
