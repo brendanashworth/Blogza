@@ -50,5 +50,11 @@ $this->router->post('/admin/update-post', 'AdminController@updatePost');
 $this->router->post('/admin/update-comment', 'AdminController@updateComment');
 $this->router->get('/admin/sudo/{alphanumeric}', 'AdminController@loginAsUser');
 
+// MinificationController
+$this->router->get('/asset/css/{filename}', 'MinificationController@getCSS');
+$this->router->get('/asset/js/{filename}', 'MinificationController@getJS');
+$this->router->get('/asset/font/{filename}', 'MinificationController@getFont');
+$this->router->get('/asset/img/{filename}', 'MinificationController@getImg');
+
 // Errorz
 $this->router->any('404', 'HTTPErrorController@display404');

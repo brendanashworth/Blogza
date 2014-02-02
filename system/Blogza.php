@@ -53,6 +53,7 @@ class Blogza {
 		require BLOGZA_DIR . "/system/models/Mail.php";
 
 		require BLOGZA_DIR . "/system/processors/Markup.php";
+		require BLOGZA_DIR . "/system/processors/Minify.php";
 
 		require BLOGZA_DIR . "/system/protection/CSRFHandler.php";
 		require BLOGZA_DIR . "/system/protection/CAPTCHAHandler.php";

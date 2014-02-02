@@ -42,6 +42,7 @@ class Router {
 			"{number}" => "([0-9]+)",
 			"{alphanumeric}" => "([0-9a-zA-Z]+)",
 			"{alphanumericdash}" => "([0-9a-zA-Z-]+)",
+			"{filename}" => "([0-9a-zA-Z\.-]+)",
 			);
 
 		foreach($patterns as $pattern => $regex) {
