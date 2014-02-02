@@ -118,7 +118,7 @@ class Blogza {
 	* @access 	public
 	* @return 	void
 	**/
-	private function startPHPUnit() {
+	public function startPHPUnit() {
 		// This will be set if it isn't from localhost.
 		if(isset($_SERVER['REMOTE_ADDR'])) {
 			exit;
