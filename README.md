@@ -1,4 +1,4 @@
-Blogza
+[Blogza](http://blogza.net)
 ======
 
 > Blogza is an open source blogging framework, designed to make blogging enjoyable and keep it simple. The software is designed to be structured well to keep development easy and keep the website fast.
