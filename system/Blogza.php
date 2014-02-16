@@ -13,7 +13,6 @@ class Blogza {
 
 	protected $modelmanager;
 	protected $errorhandler;
-	protected $databasemanager;
 
 	protected $router;
 
