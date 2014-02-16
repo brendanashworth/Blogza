@@ -18,21 +18,6 @@ class MySQLDatabase extends Database {
 	/* This is the MySQLi connection object. */
 	private static $conn = null;
 
-	/* This is the amount of sent queries. */
-	public static $queries = 0;
-
-	/**
-	* Creates the Database instance.
-	*
-	* Private to restrict creation of the object.
-	*
-	* @access	private
-	* @return	Database
-	**/
-	private function __construct() {
-
-	}
-
 	/**
 	* Checks whether the Database is initialized.
 	*
@@ -602,7 +587,7 @@ class MySQLDatabase extends Database {
 			Util::kill("MySQL error occurred.");
 		} else {
 			// Basic stats generating.
-			self::$queries = self::$queries + 1;
+			self::addQuery();
 		}
 
 		return $result;

@@ -60,7 +60,9 @@ class Blogza {
 		require BLOGZA_DIR . "/system/protection/CSRFHandler.php";
 		require BLOGZA_DIR . "/system/protection/CAPTCHAHandler.php";
 
+		// set up the database
 		require BLOGZA_DIR . "/system/database/Database.php";
+		Database::setImplementation("MySQLDatabase");
 		
 		require BLOGZA_DIR . "/system/controllers/ErrorHandler.php";
 
