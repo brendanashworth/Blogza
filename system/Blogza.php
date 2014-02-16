@@ -16,8 +16,6 @@ class Blogza {
 
 	protected $router;
 
-	protected $phpunit = false;
-
 	public static $start;
 
 	/**
