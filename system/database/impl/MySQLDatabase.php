@@ -218,7 +218,7 @@ class MySQLDatabase extends Database {
 	* @return 	void
 	**/
 	public static function addUserIP($user, $ip) {
-		//$ip = preg_match('/([^0-9]|\.)+/', '', $ip);
+		//$ip = preg_match('/^(0-9\.)+$/', '', $ip);
 		$ip = mysqli_real_escape_string(self::newConnection(), addslashes($ip));
 
 		if(is_numeric($user)) {
