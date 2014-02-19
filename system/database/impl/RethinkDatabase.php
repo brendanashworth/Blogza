@@ -15,6 +15,8 @@ class RethinkDatabase extends Database {
 	 * 3) If no special sanitization method exists, use addslashes() *then* mysqli_real_escape_string().
 	 */
 
+	private static $conn = null;
+
 	/**
 	* Checks whether the Database is initialized.
 	*
@@ -280,10 +282,16 @@ class RethinkDatabase extends Database {
 	* Creates and returns a new Rethink connection for sanitization usage and queries.
 	*
 	* @access 	private
-	* @return 	mysqli 	The Rethink object.
+	* @return 	rdb 	The Rethink object.
 	**/
 	private static function newConnection() {
-		
+		// check if its already connected
+		if(self::$conn != null) {
+			return self::$conn;
+		}
+
+		// connect to rethinkdb
+		self::$conn = r\connect(DB_HOST);
 	}
 	
 }
