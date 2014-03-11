@@ -11,8 +11,7 @@
 function createPost(title, content, box) {
 	$(box.concat(" .loader")).addClass("show");
 
-	if(title == "" || title == "Post title..."
-		|| content == "" || content == "Post content...") {
+	if(title === "" || title == "Post title..." || content === "" || content == "Post content...") {
 
 		$(box.concat(" .loader")).removeClass("show");
 
@@ -32,7 +31,7 @@ function createPost(title, content, box) {
 	 	url: "create-post",
 	 	data: {
 	 		title: title,
-	 		content: content,
+	 		content: content
 	 	},
 
 		complete: function(result) {
@@ -57,7 +56,7 @@ function getPost(id, callback) {
 		type: "POST",
 		url: "get-post",
 		data: {
-			id: id,
+			id: id
 		},
 
 		complete: function(result) {
@@ -75,7 +74,7 @@ function getUser(name, callback) {
 		type: "POST",
 		url: "get-user",
 		data: {
-			user: name,
+			user: name
 		},
 
 		complete: function(result) {
@@ -94,7 +93,7 @@ function saveUser(user, callback) {
 		type: "POST",
 		url: "save-user",
 		data: {
-			user: user,
+			user: user
 		},
 
 		complete: function(result) {
@@ -115,7 +114,7 @@ function updateComment(id, value) {
 		url: "update-comment",
 		data: {
 			value: value,
-			comment_id: id,
+			comment_id: id
 		},
 
 		success: function(result) {
@@ -133,7 +132,7 @@ function updatePost(id, content, callback) {
 		url: "update-post",
 		data: {
 			id: id,
-			content: content,
+			content: content
 		},
 
 		success: function(result) {
@@ -210,14 +209,16 @@ function selectComment(event) {
 
 	var btn = $(this);
 
+	var id;
+	
 	if(btn.attr('href').indexOf('ok') == 1) {
-		var id = btn.attr('href').substring(4, 14);
+		id = btn.attr('href').substring(4, 14);
 
 		// Lets OK the comment with Ajax.
 		updateComment(id, 'yes');
 
 	} else if (btn.attr('href').indexOf('remove') == 1) {
-		var id = btn.attr('href').substring(8, 18);
+		id = btn.attr('href').substring(8, 18);
 
 		// Lets kill the comment with Ajax.
 		updateComment(id, 'delete');
@@ -361,8 +362,8 @@ $(document).ready(function() {
 					var user = {
 						username: $("#user-profile form input[name=username]").val(),
 						email: $("#user-profile form input[name=email]").val(),
-						rank: $("#user-profile form input[name=rank]").val(),
-					}
+						rank: $("#user-profile form input[name=rank]").val()
+					};
 
 					saveUser(JSON.stringify(user), function(response) {
 						$("#user-profile #view-user-alert").html(response.message);
