@@ -56,13 +56,28 @@ class AuthenticationController extends Controller {
 			if(!CSRFHandler::check()) {
 				$error = "CSRF token is missing; if this is in error, contact the blog administrator.";
 			} else {
-
-				// The login form has been filled in.
-				try {
-					User::login($_POST['username'], $_POST['password']);
-				} catch (Exception $ex) {
-					$error = $ex->getMessage();
-				}
+				//set how long we want them to have to wait after 5 wrong attempts
+				$blocktime = 5; //make them wait 5 mins
+				
+				//check if user failed login more than 4 times and block time didn't expire yet
+		        	if(isset($_SESSION['failed_attempts']) && $_SESSION['failed_attempts'] > 4 && $_SESSION['failed_attempt'] >= time())
+		            		$this->view->setAlert("Login temporarily blocked for ".$blocktime." minutes!");
+		            	else{
+					// The login form has been filled in.
+					try {
+						User::login($_POST['username'], $_POST['password']);
+					} catch (Exception $ex) {
+						//add a fail attempt and set the time it expires
+						//set how long we want them to have to wait after 5 wrong attempts
+						$time = 305; //make them wait 5 mins
+						if(isset($_SESSION['failed_attempts']))
+							++$_SESSION['failed_attempts']; 
+						else
+							$_SESSION['failed_attempts'] = 1;
+						$_SESSION['failed_attempt'] = time() + $blocktime * 60;
+						$error = $ex->getMessage();
+					}
+		            	}
 			}
 		}
 
