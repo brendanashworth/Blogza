@@ -286,6 +286,12 @@ class User {
 		}
 
 		Auth::login($username);
+		
+		//if we have set failed attempts, remove
+		if(isset($_SESSION['failed_attempts']))
+                	unset($_SESSION['failed_attempts']);
+                if(isset($_SESSION['failed_attempt']))
+                	unset($_SESSION['failed_attempt']);
 
 		Util::redirect(BLOG_URL);
 	}
