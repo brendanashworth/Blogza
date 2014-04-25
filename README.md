@@ -16,7 +16,7 @@ Then set the web base directory (via Apache, nginx, Lighttpd, etc) to /var/www/B
 
 Then edit the `system/settings.php` to the wished settings. Right after, edit the `system/routes.php` and uncomment the 19th and 20th lines. Navigate to `http://{web_server}/install/` and follow the installation instructions. It will go up to the first admin user creation.
 
-Immediately afterwards, navigate to `http://{web_server}/` and comment the 19th and 20th lines in `system/settings.php`. Your Blogza blog is now installed.
+Immediately afterwards, navigate to `http://{web_server}/` and comment the 19th and 20th lines in `system/routes.php`. Your Blogza blog is now installed.
 
 ### Contributing
 Simply fork the project, add your changes to the local repository, then submit a pull request in the `master` branch to contribute. The pull request will then be looked over by the project manager/s.
