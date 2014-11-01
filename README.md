@@ -1,10 +1,9 @@
 [Blogza](http://blogza.net)
 ======
 
-> Blogza is an open source blogging framework, designed to make blogging enjoyable and keep it simple. The software is designed to be structured well to keep development easy and keep the website fast.
+> Blogza is an open source blogging framework, designed to make blogging enjoyable and keep it simple. The software is designed to be structured well to keep development easy and keep the website fast. **Deprecated in favor of [Ghost](https://github.com/TryGhost/Ghost).**
 
-[![Build Status](https://travis-ci.org/boboman13/Blogza.png?branch=master)](https://travis-ci.org/boboman13/Blogza)
-[![Stories in Ready](https://badge.waffle.io/boboman13/Blogza.png?label=ready)](https://waffle.io/boboman13/Blogza) 
+[![Build Status](https://travis-ci.org/brendanashworth/Blogza.png?branch=master)](https://travis-ci.org/brendanashworth/Blogza)
 
 ### Setup
 ```bash
